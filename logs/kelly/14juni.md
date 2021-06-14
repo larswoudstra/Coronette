@@ -1,4 +1,9 @@
 # Logboek 14 juni 2021
 
-* 13:00 - 15:00: setting up Github repository
-* TODO: coming together with fellow students to discuss the start of the project (choosing a model, cleaning up the data)
+## VANDAAG ##
+* Github repository opzetten
+
+## MORGEN (15-6) ##
+* Samenkomen met de medestudenten om de start van ons project te bespreken
+* Bespreken wat voor model we gaan gebruiken
+* Beginnen met data cleaning
