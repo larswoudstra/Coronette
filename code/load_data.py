@@ -1,7 +1,7 @@
 import pandas as pd
 
 # load the data
-covid_df = pd.read_csv("covid.train.csv")
+covid_df = pd.read_csv("data_covid/covid.train.csv")
 # print(covid_df.head())
 
 # check if there are any missing values
