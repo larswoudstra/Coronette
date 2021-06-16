@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
 
+########################################
 # Part 1: loading and cleaning the data
 
 # load the data
@@ -28,9 +29,10 @@ labels = labels.to_numpy()
 train_data, val_data, train_labels, val_labels = train_test_split(data, labels,
                                                     train_size=0.7, random_state=14)
 
-
 # NOTE: use MinMax scaler to normalize data?
 
+
+########################################
 # Part 2: creating the model
 
 # we start by creating a simple neural network
@@ -57,7 +59,7 @@ def build_neural_net():
     return model
 
 
-###############################################################################
+########################################
 # Part 3: training the model
 
 # initialize model
@@ -73,7 +75,7 @@ history = model.fit(train_data, train_labels, epochs=500)
 # print(f'Test loss: {loss:.3}')
 
 
-###############################################################################
+########################################
 # Part 4: evaluating the model
 
 y_pred = model.predict(val_data)
