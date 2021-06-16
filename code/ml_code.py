@@ -52,11 +52,7 @@ def build_neural_net():
     model.add(layers.Dense(units=1, activation='linear'))
 
     # calculate the accuracy of the model ##### mean_squared_error als loss?
-<<<<<<< HEAD
     model.compile(loss='mean_squared_error', optimizer='adam')
-=======
-    model.compile(loss='mse', optimizer='adam', metrics=['mse'])
->>>>>>> a308548ef531b65bea9a8e4f92983e5e5c8db647
 
     return model
 
