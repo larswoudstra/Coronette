@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import numpy as np
+import matplotlib.pyplot as plt
 
 ###############################################################################
 # Part 1: loading and cleaning the data
@@ -58,13 +59,13 @@ def build_neural_net():
     model.add(layers.Dense(units=1))
 
     # calculate the accuracy of the model ##### mean_squared_error als loss?
-    model.compile(loss='mean_squared_error', optimizer='rmsprop', metrics=['mse'])
+    model.compile(loss='mean_squared_error', optimizer='adam')
 
     return model
 
 
 ###############################################################################
-# Part 3: training and evaluating the model
+# Part 3: training the model
 
 # initialize model
 model = build_neural_net()
@@ -72,9 +73,20 @@ model = build_neural_net()
 # train model ######## grootte batch? hier doen ze validation split?
 history = model.fit(train_data, train_labels, epochs=500)
 
-# retrieve loss and accuracy of the model
-loss, accuracy  = model.evaluate(val_data, val_labels)
+# # retrieve loss and accuracy of the model
+# loss, accuracy = model.evaluate(val_data, val_labels)
+#
+# # Print to 3 decimals
+# print(f'Test loss: {loss:.3}')
 
-# Print to 3 decimals
-print(f'Test loss: {loss:.3}')
-print(f'Test accuracy: {accuracy:.3}')
+
+###############################################################################
+# Part 4: evaluating the model
+
+y_pred = model.predict(val_data)
+
+plt.plot(val_labels, color = 'red', label = 'Real data')
+plt.plot(y_pred, color = 'blue', label = 'Predicted data')
+plt.title('Prediction')
+plt.legend()
+plt.show()
