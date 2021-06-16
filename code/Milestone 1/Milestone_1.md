@@ -7,32 +7,28 @@ ziektes die op corona lijken, 8 gedragsindicatoren, 5 indicatoren voor mentale
 gezondheid en ten slotte het label: tested positive.
 
 Om te beginnen worden alle 94 features gebruikt in het model, behalve de id.
-Later kan aan de hand van model analyse worden beoordeeld of enkele minder
-belangrijke features verwijderd zouden kunnen worden. Wij verwachten dat de
-mentale gezondheidsindicatoren minder sterke voorspellers zijn dan de andere
-features.
+In totaal zijn er dus 93 voorspellende features. Later kan aan de hand van model
+analyse worden beoordeeld of enkele minder belangrijke features verwijderd
+zouden kunnen worden. Wij verwachten dat de mentale gezondheidsindicatoren
+minder sterke voorspellers zijn dan de andere features.
 
 De data is gecontroleerd op NaN values, deze waren niet aanwezig. De labels zijn
 gesplit van de rest van de data en in verschillende variabelen opgeslagen.
-Alle data is numeriek: de 40 staten zijn one-hot encoded. Deze worden omgezet
-naar een one-hot encoding vector, zodat de 40 features van staten 1 feature
-wordt. Alle overige features zijn percentages van groepen mensen in een bepaalde
-regio in een staat.
+Alle data is numeriek: de 40 staten zijn one-hot encoded. Alle overige features
+zijn percentages van groepen mensen in een bepaalde regio in een staat. De data
+hoeft dus niet genormaliseerd te worden.
 
 # Data pipeline
 Om dit regressieprobleem op te lossen, wordt een Neural Network gecreëerd met
-54 input nodes en 2 output nodes. We zijn begonnen met 1 hidden layer van 54
-nodes.  
-
-1 input feature bestaat uit een one-hot encoded vector, de andere 53 input
-features bestaan uit percentages.
-
-De output bestaat uit twee percentages: de ene output node geeft de kans om
-positief te testen op Covid, de andere output node geeft de kans om negatief
-te testen op Covid. Deze worden verkregen door een softmax activation function.
+93 input nodes en 1 output nodes. We zijn begonnen met 1 hidden layer van 93
+nodes. De output node geeft hier een voorspeld percentage.
 
 # Model training  
 Het Neural Network wordt getraind doormiddel van forward en backward propagation.
 Doormiddel van gradient descent wordt het model geoptimaliseerd.
 
 # Model Evaluation
+Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage
+met het daadwerkelijke percentage. Hoe lager dit verschil, hoe beter het model
+het percentage kan voorspellen. Een plot is gemaakt om per sample dit verschil
+te visualiseren. 
