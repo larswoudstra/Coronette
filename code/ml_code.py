@@ -51,7 +51,7 @@ def build_neural_net():
     model.add(layers.Dense(units=93, activation='relu', input_shape=(93,)))
 
     # end with two output units
-    model.add(layers.Dense(units=1, activation='linear'))
+    model.add(layers.Dense(units=1))
 
     # calculate the accuracy of the model ##### mean_squared_error als loss?
     model.compile(loss='mean_squared_error', optimizer='adam')
