@@ -1,0 +1,25 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+import numpy as np
+
+# load the data
+covid_df = pd.read_csv("data_covid/covid.train.csv")
+# print(covid_df.head())
+
+# remove id-column from dataframe
+covid_df = covid_df.drop(['id'], axis=1)
+
+# check for missing values ### if-statement weghalen?
+if covid_df.isnull().values.any():
+    covid_df = covid_df.dropna()
+
+# split the dataframe into data and labels
+data = covid_df.iloc[:, :-1]
+labels = covid_df.iloc[:, -1:]
+
+data = data.to_numpy()
+labels = labels.to_numpy()
+
+# split the data into training and validation data
+train_data, val_data, train_labels, val_labels = train_test_split(data, labels,
+                                                    train_size=0.7, random_state=14)
