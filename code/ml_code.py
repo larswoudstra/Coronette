@@ -28,7 +28,7 @@ train_data, val_data, train_labels, val_labels = train_test_split(data, labels,
                                                     train_size=0.7, random_state=14)
 
 
-# NOTE: use MinMax scaler to 
+# NOTE: use MinMax scaler to normalize data?
 
 # Part 2: creating the model
 
@@ -48,10 +48,10 @@ def build_neural_net():
     model.add(layers.Dense(units=93, activation='relu', input_shape=(93,)))
 
     # end with two output units
-    model.add(layers.Dense(units=1))
+    model.add(layers.Dense(units=1, activation='linear'))
 
     # calculate the accuracy of the model ##### mean_squared_error als loss?
-    model.compile(loss='mean_squared_error', optimizer='rmsprop', metrics=['mse'])
+    model.compile(loss='mse', optimizer='adam', metrics=['mse'])
 
     return model
 
