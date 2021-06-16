@@ -30,4 +30,5 @@ Doormiddel van gradient descent wordt het model geoptimaliseerd.
 # Model Evaluation
 Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage
 met het daadwerkelijke percentage. Hoe lager dit verschil, hoe beter het model
-het percentage kan voorspellen. 
+het percentage kan voorspellen. Een plot is gemaakt om per sample dit verschil
+te visualiseren. 

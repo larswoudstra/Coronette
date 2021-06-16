@@ -8,14 +8,12 @@ import matplotlib.pyplot as plt
 
 # load the data
 covid_df = pd.read_csv("data_covid/covid.train.csv")
-# print(covid_df.head())
 
 # remove id-column from dataframe (not a feature)
 covid_df = covid_df.drop(['id'], axis=1)
 
-# check for missing values ### if-statement weghalen?
-if covid_df.isnull().values.any():
-    covid_df = covid_df.dropna()
+# remove missing values
+covid_df = covid_df.dropna()
 
 # split the dataframe into data and labels
 data = covid_df.iloc[:, :-1]
@@ -29,9 +27,6 @@ labels = labels.to_numpy()
 train_data, val_data, train_labels, val_labels = train_test_split(data, labels,
                                                     train_size=0.7, random_state=14)
 
-# NOTE: use MinMax scaler to normalize data?
-
-
 ########################################
 # Part 2: creating the model
 
@@ -40,9 +35,9 @@ from tensorflow import keras
 from tensorflow.keras import layers, models
 
 # function that creates a neural network with:
-# - 54 input nodes
-# - 1 hidden layer (54 nodes, reLU activation)
-# - 2 output nodes (softmax activation)
+# - 93 input nodes
+# - 1 hidden layer (93 nodes, reLU activation)
+# - 1 output node
 def build_neural_net():
     # initialize the model
     model = models.Sequential()
@@ -58,7 +53,6 @@ def build_neural_net():
 
     return model
 
-
 ########################################
 # Part 3: training the model
 
@@ -67,13 +61,6 @@ model = build_neural_net()
 
 # train model
 history = model.fit(train_data, train_labels, epochs=500)
-
-# # retrieve loss and accuracy of the model
-# loss, accuracy = model.evaluate(val_data, val_labels)
-#
-# # Print to 3 decimals
-# print(f'Test loss: {loss:.3}')
-
 
 ########################################
 # Part 4: evaluating the model
