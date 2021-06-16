@@ -20,19 +20,21 @@ if covid_df.isnull().values.any():
 data = covid_df.iloc[:, :-1]
 labels = covid_df.iloc[:, -1:]
 
-# select a subset of the state columns
-state_columns = data.iloc[:, :40]
-# create a new column with the one-hot encoded vectors
-data["state"] = state_columns.apply(lambda r: tuple(r), axis=1).apply(np.array)
-# remove the state columns
-data = data.drop(data.iloc[:, :40], axis=1)
+data = data.to_numpy()
+labels = labels.to_numpy()
+
+# # select a subset of the state columns
+# state_columns = data.iloc[:, :40]
+# # create a new column with the one-hot encoded vectors
+# data["state"] = state_columns.apply(lambda r: tuple(r), axis=1).apply(np.array)
+# # remove the state columns
+# data = data.drop(data.iloc[:, :40], axis=1)
 
 # we moeten nog ff die laatste kolom naar voren brengen **************
 
 # split the data into training and validation data
 train_data, val_data, train_labels, val_labels = train_test_split(data, labels,
                                                     train_size=0.7, random_state=14)
-
 
 ###############################################################################
 # Part 2: creating the model
@@ -42,21 +44,21 @@ from tensorflow import keras
 from tensorflow.keras import layers, models
 
 # function that creates a neural network with:
-# - 53 input nodes
-# - 1 hidden layer (53 nodes, reLU activation)
+# - 54 input nodes
+# - 1 hidden layer (54 nodes, reLU activation)
 # - 2 output nodes (softmax activation)
 def build_neural_net():
     # initialize the model
     model = models.Sequential()
 
     # add layers
-    model.add(layers.Dense(units=54, activation='relu', input_shape=(54,)))
+    model.add(layers.Dense(units=93, activation='relu', input_shape=(93,)))
 
     # end with two output units
-    model.add(layers.Dense(units=2, activation='softmax'))
+    model.add(layers.Dense(units=1))
 
     # calculate the accuracy of the model ##### mean_squared_error als loss?
-    model.compile(loss='mean_squared_error', metrics=['accuracy'])
+    model.compile(loss='mean_squared_error', optimizer='rmsprop', metrics=['mse'])
 
     return model
 
@@ -68,7 +70,7 @@ def build_neural_net():
 model = build_neural_net()
 
 # train model ######## grootte batch? hier doen ze validation split?
-history = model.fit(train_data, train_labels, batch_size=128, epochs=10, validation_split=.1)
+history = model.fit(train_data, train_labels, epochs=500)
 
 # retrieve loss and accuracy of the model
 loss, accuracy  = model.evaluate(val_data, val_labels)
