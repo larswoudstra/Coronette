@@ -12,10 +12,9 @@ covid_df = pd.read_csv("data_covid/covid.train.csv")
 # remove id-column from dataframe
 covid_df = covid_df.drop(['id'], axis=1)
 
-# check for missing values
-if not covid_df.isnull().values.any():
-    ### dropna invoegen!!!!!!!!!!!!!!!!!! *************************
-    pass
+# check for missing values ### if-statement weghalen?
+if covid_df.isnull().values.any():
+    covid_df = covid_df.dropna()
 
 # split the dataframe into data and labels
 data = covid_df.iloc[:, :-1]
@@ -42,12 +41,38 @@ train_data, val_data, train_labels, val_labels = train_test_split(data, labels,
 from tensorflow import keras
 from tensorflow.keras import layers, models
 
-# initialize the model
-model = models.Sequential()
+# function that creates a neural network with:
+# - 53 input nodes
+# - 1 hidden layer (53 nodes, reLU activation)
+# - 2 output nodes (softmax activation)
+def build_neural_net():
+    # initialize the model
+    model = models.Sequential()
 
-# add layers
-model.add(layers.Dense(units=94, activation='relu', input_shape=(94,)))
-# end with two output units
-model.add(layers.Dense(units=2, activation='softmax'))
-# calculate the accuracy of the model
-model.compile(loss='categorical_crossentropy', metrics=['accuracy'])
+    # add layers
+    model.add(layers.Dense(units=54, activation='relu', input_shape=(54,)))
+
+    # end with two output units
+    model.add(layers.Dense(units=2, activation='softmax'))
+
+    # calculate the accuracy of the model ##### mean_squared_error als loss?
+    model.compile(loss='mean_squared_error', metrics=['accuracy'])
+
+    return model
+
+
+###############################################################################
+# Part 3: training and evaluating the model
+
+# initialize model
+model = build_neural_net()
+
+# train model ######## grootte batch? hier doen ze validation split?
+history = model.fit(train_data, train_labels, batch_size=128, epochs=10, validation_split=.1)
+
+# retrieve loss and accuracy of the model
+loss, accuracy  = model.evaluate(val_data, val_labels)
+
+# Print to 3 decimals
+print(f'Test loss: {loss:.3}')
+print(f'Test accuracy: {accuracy:.3}')
