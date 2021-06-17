@@ -61,10 +61,17 @@ def build_neural_net():
 model = build_neural_net()
 
 # train model
-history = model.fit(train_data, train_labels, epochs=500)
+history = model.fit(train_data, train_labels, epochs=500, validation_data=(val_data, val_labels))
 
 ########################################
 # Part 4: evaluating the model
+
+loss = history.history['root_mean_squared_error']
+val_loss = history.history['val_root_mean_squared_error']
+plt.plot(loss)
+plt.plot(val_loss)
+plt.legend(['loss', 'val_loss'])
+plt.show()
 
 y_pred = model.predict(val_data)
 
