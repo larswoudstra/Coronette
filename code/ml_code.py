@@ -15,6 +15,13 @@ covid_df = covid_df.drop(['id'], axis=1)
 # remove missing values
 covid_df = covid_df.dropna()
 
+# remove mental health features to prevent overfitting
+covid_df = covid_df.drop(['anxious', 'depressed', 'felt_isolated',
+'worried_become_ill', 'worried_finances', 'anxious.1', 'depressed.1',
+'felt_isolated.1', 'worried_become_ill.1', 'worried_finances.1', 'anxious.2',
+'depressed.2', 'felt_isolated.2', 'worried_become_ill.2', 'worried_finances.2'],
+axis=1)
+
 # split the dataframe into data and labels
 data = covid_df.iloc[:, :-1]
 labels = covid_df.iloc[:, -1:]
@@ -43,7 +50,7 @@ def build_neural_net():
     model = models.Sequential()
 
     # add layers
-    model.add(layers.Dense(units=93, activation='relu', input_shape=(93,)))
+    model.add(layers.Dense(units=78, activation='relu', input_shape=(78,)))
 
     # end with two output units
     model.add(layers.Dense(units=1))
@@ -66,12 +73,14 @@ history = model.fit(train_data, train_labels, epochs=500, validation_data=(val_d
 ########################################
 # Part 4: evaluating the model
 
-loss = history.history['root_mean_squared_error']
+train_loss = history.history['root_mean_squared_error']
 val_loss = history.history['val_root_mean_squared_error']
-plt.plot(loss)
+plt.plot(train_loss)
 plt.plot(val_loss)
-plt.legend(['loss', 'val_loss'])
+plt.legend(['train_loss', 'val_loss'])
 plt.show()
+
+print(f"Validation RMSE: {model.evaluate(val_data, val_labels)[1]}")
 
 y_pred = model.predict(val_data)
 
