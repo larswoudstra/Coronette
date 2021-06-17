@@ -24,14 +24,14 @@ axis=1)
 
 # split the dataframe into data and labels
 data = covid_df.iloc[:, :-1]
-labels = covid_df.iloc[:, -1:]
+targets = covid_df.iloc[:, -1:]
 
 # transform dataframe to numpy arrays
 data = data.to_numpy()
-labels = labels.to_numpy()
+targets = labels.to_numpy()
 
 # split the data into training and validation data
-train_data, val_data, train_labels, val_labels = train_test_split(data, labels,
+train_data, val_data, train_targets, val_targets = train_test_split(data, targets,
                                                     train_size=0.7, random_state=14)
 
 ########################################
@@ -56,7 +56,7 @@ def build_neural_net():
     model.add(layers.Dense(units=1))
 
     # calculate the accuracy of the model ##### mean_squared_error als loss?
-    model.compile(loss='mean_squared_error', optimizer='adam',
+    model.compile(loss='mean_squared_error', optimizer='Adamax',
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     return model
@@ -68,7 +68,7 @@ def build_neural_net():
 model = build_neural_net()
 
 # train model
-history = model.fit(train_data, train_labels, epochs=50, validation_data=(val_data, val_labels))
+history = model.fit(train_data, train_targets, epochs=800, validation_data=(val_data, val_targets))
 
 ########################################
 # Part 4: evaluating the model
@@ -81,13 +81,12 @@ plt.plot(val_loss)
 plt.legend(['train_loss', 'val_loss'])
 plt.show()
 
-print(f"Validation RMSE: {model.evaluate(val_data, val_labels)[1]}")
+print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
 
 # calculate the differences between predicted and real data
 y_pred = model.predict(val_data)
-difference = y_pred - val_labels
+difference = y_pred - val_targets
 
-plt.plot(difference, color='red', label='Real data')
+plt.plot(difference, color='red')
 plt.title('Difference')
-plt.legend()
 plt.show()
