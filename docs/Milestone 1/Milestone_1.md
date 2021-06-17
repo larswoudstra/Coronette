@@ -24,11 +24,10 @@ Om dit regressieprobleem op te lossen, wordt een Neural Network gecreëerd met
 nodes. De output node geeft hier een voorspeld percentage.
 
 # Model training  
-Het Neural Network wordt getraind doormiddel van forward en backward propagation.
-Doormiddel van gradient descent wordt het model geoptimaliseerd.
+Het Neural Network wordt getraind door middel van forward en backward propagation.
+Door middel van full-batch gradient descent wordt het model geoptimaliseerd. De koste waarmee het model daarbij wordt getraind wordt berekend met de mean squared error. De daadwerkelijke kwaliteit van het model wordt gemeten met de root mean squared error. Er is gebruik gemaakt van de ‘adam’ optimizer.
+We hebben verschillende hoeveelheden epochs uitgeprobeerd. Zelfs 500 epochs leek nog wat weinig te zijn, want het model leek toen pas te stoppen met overfitten.
 
 # Model Evaluation
-Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage
-met het daadwerkelijke percentage. Hoe lager dit verschil, hoe beter het model
-het percentage kan voorspellen. Een plot is gemaakt om per sample dit verschil
-te visualiseren. 
+Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage met het daadwerkelijke percentage. Hoe lager dit verschil, hoe beter het model het percentage kan voorspellen. Bij dit initiële model lag dit getal rond 1.13. In het vervolg streven we ernaar om dit getal zo laag mogelijk te krijgen. Er is een plot gemaakt om per sample dit verschil te visualiseren. Zie figuur X in de images. Er zijn in deze grafiek grote pieken te zien, die steeds minder heftig worden. We verwachten dat dit deels veroorzaakt wordt door overfitting en een gebrek aan normalisatie. Dit zullen we in een vervolgstap dus verwerken in het model.
+Er is ook een andere grafiek geplot, zie figuur Y, waarin de output van de validatiedata vergeleken werd met de output van dee trainingdata. Er bleken grote verschillen te zijn. De grafiek was echter nog niet perfect, want de lijnen lagen over elkaar heen, waardoor de verschillen niet goed te zien zijn. In het vervolg gaan we het verschil plotten, en dat proberen te minimaliseren.
