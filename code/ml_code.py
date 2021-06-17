@@ -68,7 +68,7 @@ def build_neural_net():
 model = build_neural_net()
 
 # train model
-history = model.fit(train_data, train_labels, epochs=500, validation_data=(val_data, val_labels))
+history = model.fit(train_data, train_labels, epochs=50, validation_data=(val_data, val_labels))
 
 ########################################
 # Part 4: evaluating the model
@@ -85,9 +85,9 @@ print(f"Validation RMSE: {model.evaluate(val_data, val_labels)[1]}")
 
 # calculate the differences between predicted and real data
 y_pred = model.predict(val_data)
+difference = y_pred - val_labels
 
-plt.plot(val_labels, color='red', label='Real data')
-plt.plot(y_pred, color='blue', label='Predicted data')
-plt.title('Prediction')
+plt.plot(difference, color='red', label='Real data')
+plt.title('Difference')
 plt.legend()
 plt.show()
