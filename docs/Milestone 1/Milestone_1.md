@@ -1,33 +1,21 @@
 # Data analysis
-Er is in eerste instantie gekeken naar de structuur van de data. Er zijn 94
-features en 2700 samples in de training data. De test data heeft 893 samples.
-De training data is opgesplitst in 70% training data en 30% validation data.
-De data bestaat uit een one-hot encoding deel met 40 staten, 4 features over
-ziektes die op corona lijken, 8 gedragsindicatoren, 5 indicatoren voor mentale
-gezondheid en ten slotte het label: tested positive.
+De data die voor dit onderzoek gebruikt wordt, is afkomstig van [Kaggle](https://www.kaggle.com/c/ml2021spring-hw1/data). Met deze data wordt het percentage nieuwe positieve Covid-19 testuitslagen getracht te voorspellen in 40 verschillende staten in de Verenigde Staten. Per staat zijn ongeveer 66 steekproeven gedaan, waarbij iedere steekproef van een groep mensen uit een staat dient als een gemiddelde schatting voor de gehele staat.
 
-Om te beginnen worden alle 94 features gebruikt in het model, behalve de id.
-In totaal zijn er dus 93 voorspellende features. Later kan aan de hand van model
-analyse worden beoordeeld of enkele minder belangrijke features verwijderd
-zouden kunnen worden. Wij verwachten dat de mentale gezondheidsindicatoren
-minder sterke voorspellers zijn dan de andere features.
+Zowel de training als de test data zijn .csv-bestanden, welke individueel van elkaar worden ingeladen als Pandas DataFrames. De training data bestaat uit 2700 samples, de test data uit 893 samples. De 94 features die in deze datasets worden meegenomen betroffen onder andere een ID, de 40 staten (*one-hot encoded*) en 3 sets van 17 variabelen, waarbij de sets 3 opeenvolgende dagen vertegenwoordigen. Ieder van deze 17 variabelen zijn dus over een periode van 3 dagen gemeten. Deze 17 variabelen betreffen 4 features over ziektes die op corona lijken, 8 gedragsindicatoren en 5 indicatoren voor mentale gezondheid. Ten slotte bevatten de datasets 2 variabelen die het percentage positieve testuitslagen op dag 1 en dag 2 vertegenwoordigen. Met behulp van deze 94 features wordt het percentage nieuwe positieve testuitslagen op dag 3 getracht te voorspellen. Dit percentage is dan ook de *target value* van dit onderzoek.
 
-De data is gecontroleerd op NaN values, deze waren niet aanwezig. De labels zijn
-gesplit van de rest van de data en in verschillende variabelen opgeslagen.
-Alle data is numeriek: de 40 staten zijn one-hot encoded. Alle overige features
-zijn percentages van groepen mensen in een bepaalde regio in een staat. De data
-hoeft dus niet genormaliseerd te worden.
+Eventuele *missing values* worden verwijderd uit de training data, evenals de kolom met ID’s, aangezien deze alleen als index dient. De verdere analyses worden vooralsnog uitgevoerd met de resterende 93 features. Later kan er aan de hand van het model worden beoordeeld of enkele minder relevante features verwijderd moeten worden. Zo wordt er bijvoorbeeld op voorhand al verwacht dat de mentale-gezondheids-indicatoren minder sterke voorspellers zullen zijn dan de andere features.
+
+In zowel de training als test data worden de features en de target value van elkaar gesplitst. De training data wordt opgesplitst in 70% training data en 30% validation data. Aangezien alle data numeriek is, hoeft de data niet genormaliseerd te worden en kan er een regressie uitgevoerd worden om de voorspelling voor dag 3 te doen.
 
 # Data pipeline
-Om dit regressieprobleem op te lossen, wordt een Neural Network gecreëerd met
-93 input nodes en 1 output nodes. We zijn begonnen met 1 hidden layer van 93
-nodes. De output node geeft hier een voorspeld percentage.
+Om dit regressieprobleem op te lossen, wordt een *Neural Network* gebruikt. Deze zal bestaan uit 93 input nodes, één voor iedere feature, en 1 output node om de uiteindelijke voorspelling – het percentage nieuwe positieve Covid-19-testuitslagen –  te doen. Voor de eerste versie van het model is gekozen voor een enkele hidden layer met 93 nodes. Voor de hidden layer is een *ReLU*-activatiefunctie gebruikt. **Waarom?** Voor de output layer wordt geen activatiefunctie gebruikt. **Waarom?**
 
-# Model training  
-Het Neural Network wordt getraind door middel van forward en backward propagation.
-Door middel van full-batch gradient descent wordt het model geoptimaliseerd. De koste waarmee het model daarbij wordt getraind wordt berekend met de mean squared error. De daadwerkelijke kwaliteit van het model wordt gemeten met de root mean squared error. Er is gebruik gemaakt van de ‘adam’ optimizer.
-We hebben verschillende hoeveelheden epochs uitgeprobeerd. Zelfs 500 epochs leek nog wat weinig te zijn, want het model leek toen pas te stoppen met overfitten.
+# Model training
+Het Neural Network wordt getraind door middel van forward en backward propagation. Door middel van full-batch gradient descent wordt het model geoptimaliseerd. De koste waarmee het model daarbij wordt getraind wordt berekend met de *Mean Squared Error* (MSE). De daadwerkelijke kwaliteit van het model wordt gemeten met de *Root Mean Squared Error* (RMSE). Er is gebruik gemaakt van de ‘adam’ optimizer. **Waarom? En welke learning rate gebruikt?** We hebben verschillende hoeveelheden epochs uitgeprobeerd. Zelfs 500 epochs leek nog wat weinig te zijn, want het model leek toen pas te stoppen met overfitten.
 
 # Model Evaluation
-Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage met het daadwerkelijke percentage. Hoe lager dit verschil, hoe beter het model het percentage kan voorspellen. Bij dit initiële model lag dit getal rond 1.13. In het vervolg streven we ernaar om dit getal zo laag mogelijk te krijgen. Er is een plot gemaakt om per sample dit verschil te visualiseren. Zie figuur X in de images. Er zijn in deze grafiek grote pieken te zien, die steeds minder heftig worden. We verwachten dat dit deels veroorzaakt wordt door overfitting en een gebrek aan normalisatie. Dit zullen we in een vervolgstap dus verwerken in het model.
-Er is ook een andere grafiek geplot, zie figuur Y, waarin de output van de validatiedata vergeleken werd met de output van dee trainingdata. Er bleken grote verschillen te zijn. De grafiek was echter nog niet perfect, want de lijnen lagen over elkaar heen, waardoor de verschillen niet goed te zien zijn. In het vervolg gaan we het verschil plotten, en dat proberen te minimaliseren.
+Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage met het daadwerkelijke percentage. Hoe lager dit verschil, hoe beter het model het percentage kan voorspellen. Bij dit initiële model lag dit getal rond 1.13. In het vervolg streven we ernaar om dit getal zo laag mogelijk te krijgen. Er is een plot gemaakt om per sample dit verschil te visualiseren. Zie figuur X in de images. Er zijn in deze grafiek grote pieken te zien, die steeds minder heftig worden. We verwachten dat dit deels veroorzaakt wordt door overfitting en een gebrek aan normalisatie. Dit zullen we in een vervolgstap dus verwerken in het model. Er is ook een andere grafiek geplot, zie figuur Y, waarin de output van de validatiedata vergeleken werd met de output van dee trainingdata. Er bleken grote verschillen te zijn. De grafiek was echter nog niet perfect, want de lijnen lagen over elkaar heen, waardoor de verschillen niet goed te zien zijn. In het vervolg gaan we het verschil plotten, en dat proberen te minimaliseren.
+
+**Misschien nog iets zeggen over dat we misschien te weinig validatiedata hebben en dat we dit gaan proberen op te lossen d.m.v. cross validation?**
+
+**We moeten die image nog ff toevoegen**
