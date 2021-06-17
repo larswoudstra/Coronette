@@ -8,6 +8,5 @@
 # MORGEN
 * K-fold cross-validation toepassen
 * Regularization toepassen
-* Milestone 1 veranderingen
 * Milestone 1 aanpassingen maken
 * Milestone 2 schrijven
