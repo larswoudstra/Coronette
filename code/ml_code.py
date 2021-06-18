@@ -28,7 +28,7 @@ targets = covid_df.iloc[:, -1:]
 
 # transform dataframe to numpy arrays
 data = data.to_numpy()
-targets = labels.to_numpy()
+targets = targets.to_numpy()
 
 # split the data into training and validation data
 train_data, val_data, train_targets, val_targets = train_test_split(data, targets,
@@ -68,7 +68,7 @@ def build_neural_net():
 model = build_neural_net()
 
 # train model
-history = model.fit(train_data, train_targets, epochs=800, validation_data=(val_data, val_targets))
+history = model.fit(train_data, train_targets, epochs=50, validation_data=(val_data, val_targets))
 
 ########################################
 # Part 4: evaluating the model
