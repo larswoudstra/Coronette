@@ -22,8 +22,8 @@ In eerste instantie worden de output van de validatiedata en de output van de da
 
 Hier is te zien dat de lijnen erg goed overeenkomen. Desondanks wordt de grafiek als erg onduidelijk ervaren. Vandaar dat er een andere grafiek wordt gemaakt waarin de verschillen tussen de voorspelde data en de daadwerkelijke data geplot worden. **analyse**
 
-![difference_plot](URL)**url**
+![difference_plot](https://github.com/larswoudstra/Coronette/blob/main/docs/images/difference_plot_ml1.png)
 
 Tenslotte wordt er een plot gemaakt waarin de trainingkosten en validatiekosten geplot worden. Er zijn in deze grafiek grote pieken te zien, die steeds minder heftig worden. We verwachten dat dit deels veroorzaakt wordt door overfitting en een gebrek aan normalisatie. Dit zullen we in een vervolgstap dus verwerken in het model. Hierna zal er ook gekeken worden naar de effecten van verschillende aantallen epochs. Ook zouden de pieken in de grafiek veroorzaakt kunnen worden doordat de validatiedata niet representatief is voor de populatie. Dit wordt in een volgende versie geprobeerd op te lossen door middel van k-fold cross validation.
 
-![figuur2](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png)
+![training and validation losses](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png)
