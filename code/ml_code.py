@@ -68,7 +68,11 @@ def build_neural_net():
 model = build_neural_net()
 
 # train model
+<<<<<<< HEAD
 history = model.fit(train_data, train_targets, epochs=500, validation_data=(val_data, val_targets))
+=======
+history = model.fit(train_data, train_targets, epochs=50, validation_data=(val_data, val_targets))
+>>>>>>> 7bc86c114719a3cd2e89ba03ff394da1d781690b
 
 ########################################
 # Part 4: evaluating the model
