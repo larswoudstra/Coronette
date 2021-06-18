@@ -5,8 +5,6 @@ Zowel de training- als de testdata zijn .csv-bestanden, welke individueel van el
 
 De kolom met ID’s wordt verwijderd, aangezien deze alleen als index dient. De verdere analyses worden vooralsnog uitgevoerd met de resterende 93 features. Later kan er aan de hand van het model worden beoordeeld of enkele minder relevante features verwijderd moeten worden.
 
-<!-- Zo wordt er bijvoorbeeld op voorhand al verwacht dat de mentale-gezondheids-indicatoren minder sterke voorspellers zullen zijn dan de andere features.  -->
-
 In zowel de training- als testdata worden de features en de target value van elkaar gesplitst. De trainingdata wordt opgesplitst in 70% trainingdata en 30% validatiedata, wat resulteerde in 1890 trainingsamples en 810 validatiesamples. Aangezien alle data numeriek is, hoeft de data niet genormaliseerd te worden en kan er een regressie uitgevoerd worden om de voorspelling voor dag 3 te doen.
 
 # Data pipeline
@@ -18,6 +16,10 @@ Het NN wordt getraind door middel van forward en backward propagation. Met full-
 # Model Evaluation
 Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage met het daadwerkelijke percentage. Hoe lager dit verschil, hoe beter het model het percentage kan voorspellen. Bij dit initiële model ligt dit getal rond 1.13. In het vervolg streven we ernaar om dit getal zo laag mogelijk onder de 1 te krijgen.
 
-Er wordt een ![grafiek](https://github.com/larswoudstra/Coronette/blob/main/docs/images/figuur1.pdf) geplot waarin de output van de validatiedata vergeleken wordt met de output van de trainingdata. Er lijken grote verschillen te zijn, maar de grafiek is nog niet perfect, omdat de lijnen over elkaar heen liggen, waardoor de verschillen niet goed te zien zijn. In het vervolg gaan we het verschil plotten, en dit proberen te minimaliseren.
+Er wordt een grafiek geplot waarin de output van de validatiedata vergeleken wordt met de output van de trainingdata. Er lijken grote verschillen te zijn, maar de grafiek is nog niet perfect, omdat de lijnen over elkaar heen liggen, waardoor de verschillen niet goed te zien zijn. In het vervolg gaan we het verschil plotten, en dit proberen te minimaliseren.
 
-Er wordt nog een ![plot](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png) gemaakt waarin de trainingkosten en validatiekosten geplot worden. Er zijn in deze grafiek grote pieken te zien, die steeds minder heftig worden. We verwachten dat dit deels veroorzaakt wordt door overfitting en een gebrek aan normalisatie. Dit zullen we in een vervolgstap dus verwerken in het model. Hierna zal er ook gekeken worden naar de effecten van verschillende aantallen epochs. Ook zouden de pieken in de grafiek veroorzaakt kunnen worden doordat de validatiedata niet representatief is voor de populatie. Dit wordt in een volgende versie geprobeerd op te lossen door middel van k-fold cross validation.
+![figuur1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/figuur1.pdf)
+
+Er wordt nog een plot gemaakt waarin de trainingkosten en validatiekosten geplot worden. Er zijn in deze grafiek grote pieken te zien, die steeds minder heftig worden. We verwachten dat dit deels veroorzaakt wordt door overfitting en een gebrek aan normalisatie. Dit zullen we in een vervolgstap dus verwerken in het model. Hierna zal er ook gekeken worden naar de effecten van verschillende aantallen epochs. Ook zouden de pieken in de grafiek veroorzaakt kunnen worden doordat de validatiedata niet representatief is voor de populatie. Dit wordt in een volgende versie geprobeerd op te lossen door middel van k-fold cross validation.
+
+![figuur2](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png)
