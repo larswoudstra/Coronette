@@ -5,7 +5,7 @@ Werd niet geplot
 val_loss 61.03, VRMSE 7.81 -->
 
 
-- RMSprop (0.001): Root Mean Squared, rekent met de wortel, probeert noise
+<!-- - RMSprop (0.001): Root Mean Squared, rekent met de wortel, probeert noise
                    op andere manier te verminderen, parameter-specific learning
                    rates
 *100 epochs*
@@ -16,7 +16,7 @@ val_loss: 1.27, VRMSE: 1.13
 *300 epochs*
 Validation schommelt steeds minder om data heen
 Daling stabiliseert rond 150/200 epochs
-val_loss: 1.87, VRMSE: 1.37
+val_loss: 1.87, VRMSE: 1.37 -->
 
 
 <!-- - Adam (0.001): gebruikt momentum (adaptive learning rate), efficient, RMSprop
@@ -48,7 +48,7 @@ klein beetje pieken
 val_loss: 0.96, VRMSE: 0.98
 
 
-- Nadam (0.001): Adam met Nesterov momentum
+**- Nadam (0.001): Adam met Nesterov momentum**
 *100 epochs*
 Zowel train als val schommelen heel erg
 Geen enorm snelle daling aan begin
