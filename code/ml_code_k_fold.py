@@ -51,15 +51,15 @@ from sklearn.model_selection import KFold
 kf = KFold(5, shuffle = True, random_state = 42)
 
 fold = 0
-for train, val in kf.split(x):
+for train, val in kf.split(data):
     fold += 1
     print(f'Fold #{fold}')
 
-    x_train = data[train]
-    y_train = targets[train]
+    train_data = data[train]
+    train_targets = targets[train]
 
-    x_val = data[val]
-    y_val = targets[val]
+    val_data = data[val]
+    val_targets = targets[val]
 
 
     # initialize the model
@@ -80,7 +80,10 @@ for train, val in kf.split(x):
 
     y_pred = model.predict(val_data)
 
-    
+
+
+
+
 
 ########################################
 # Part 4: evaluating the model
