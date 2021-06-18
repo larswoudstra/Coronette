@@ -51,7 +51,7 @@ from sklearn.model_selection import KFold
 kf = KFold(5, shuffle = True, random_state = 42)
 
 fold = 0
-for train, val in kf.split(data):
+for train, val in kf.split(data, targets):
     fold += 1
     print(f'Fold #{fold}')
 
