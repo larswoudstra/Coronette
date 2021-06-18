@@ -59,6 +59,7 @@ history = model.fit(train_data, train_targets, epochs=500)
 ########################################
 # Part 4: evaluating the model
 
+# calculate the differences between predicted and real data
 y_pred = model.predict(val_data)
 
 plt.plot(val_targets, color='red', label='Real data')
@@ -66,3 +67,13 @@ plt.plot(y_pred, color='blue', label='Predicted data')
 plt.title('Prediction')
 plt.legend()
 plt.savefig('figuur1.pdf')
+
+# plot the training loss and validation loss defined by RMSE
+train_loss = history.history['root_mean_squared_error']
+val_loss = history.history['val_root_mean_squared_error']
+plt.plot(train_loss)
+plt.plot(val_loss)
+plt.legend(['train_loss', 'val_loss'])
+plt.savefig('figuur2.pdf')
+
+print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
