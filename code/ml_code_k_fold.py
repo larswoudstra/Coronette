@@ -100,6 +100,7 @@ for train, val in kf.split(data):
 
 
 
+>>>>>>> 7bc86c114719a3cd2e89ba03ff394da1d781690b
 ########################################
 # Part 4: evaluating the model
 
