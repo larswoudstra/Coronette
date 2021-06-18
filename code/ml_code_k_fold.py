@@ -12,16 +12,6 @@ covid_df = pd.read_csv("data_covid/covid.train.csv")
 # remove id-column from dataframe (not a feature)
 covid_df = covid_df.drop(['id'], axis=1)
 
-# remove missing values
-covid_df = covid_df.dropna()
-
-# remove mental health features to prevent overfitting
-covid_df = covid_df.drop(['anxious', 'depressed', 'felt_isolated',
-'worried_become_ill', 'worried_finances', 'anxious.1', 'depressed.1',
-'felt_isolated.1', 'worried_become_ill.1', 'worried_finances.1', 'anxious.2',
-'depressed.2', 'felt_isolated.2', 'worried_become_ill.2', 'worried_finances.2'],
-axis=1)
-
 # split the dataframe into data and labels
 data = covid_df.iloc[:, :-1]
 targets = covid_df.iloc[:, -1:]
@@ -50,11 +40,8 @@ from sklearn.model_selection import KFold
 # cross validation
 kf = KFold(5, shuffle = True)
 
-losses_val = []
-rmse_val = []
-
-losses_train = []
-rmse_train = []
+rmse_val = 0
+rmse_train = 0
 
 fold = 0
 for train, val in kf.split(data):
@@ -82,42 +69,24 @@ for train, val in kf.split(data):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train model
-    history = model.fit(train_data, train_targets, epochs=50, validation_data=(val_data, val_targets))
+    history = model.fit(train_data, train_targets, epochs=300, validation_data=(val_data, val_targets))
 
     y_pred = model.predict(val_data)
 
-    train_loss = history.history['root_mean_squared_error']
-    val_loss = history.history['val_root_mean_squared_error']
+    # print(history.history['root_mean_squared_error'])
 
+    rmse_train += np.asarray(history.history['root_mean_squared_error'])
+    rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
 
+# calculate average
+rmse_train_avg = rmse_train / fold
+rmse_val_avg = rmse_val / fold
 
-
-    print(f"Training RMSE: {model.evaluate(train_data, train_targets)[1]}")
-    print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
-
-
-
-
-
-
->>>>>>> 7bc86c114719a3cd2e89ba03ff394da1d781690b
-########################################
-# Part 4: evaluating the model
-
-# plot the training loss and validation loss defined by RMSE
-train_loss = history.history['root_mean_squared_error']
-val_loss = history.history['val_root_mean_squared_error']
-plt.plot(train_loss)
-plt.plot(val_loss)
-plt.legend(['train_loss', 'val_loss'])
+plt.plot(rmse_train_avg)
+plt.plot(rmse_val_avg)
+plt.legend(['RMSE train', 'RMSE val'])
 plt.show()
-#
-# print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
-#
-# # calculate the differences between predicted and real data
-# y_pred = model.predict(val_data)
-# difference = y_pred - val_targets
 
-# plt.plot(difference, color='red')
-# plt.title('Difference')
-# plt.show()
+
+print(f"Training RMSE: {model.evaluate(train_data, train_targets)[1]}")
+print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
