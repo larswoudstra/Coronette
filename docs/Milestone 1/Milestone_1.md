@@ -18,7 +18,7 @@ Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage met
 
 Er wordt een grafiek geplot waarin de output van de validatiedata vergeleken wordt met de output van de trainingdata. Er lijken grote verschillen te zijn, maar de grafiek is nog niet perfect, omdat de lijnen over elkaar heen liggen, waardoor de verschillen niet goed te zien zijn. In het vervolg gaan we het verschil plotten, en dit proberen te minimaliseren.
 
-![figuur1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/figuur1.pdf)
+![figuur1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/figuur1.png)
 
 Er wordt nog een plot gemaakt waarin de trainingkosten en validatiekosten geplot worden. Er zijn in deze grafiek grote pieken te zien, die steeds minder heftig worden. We verwachten dat dit deels veroorzaakt wordt door overfitting en een gebrek aan normalisatie. Dit zullen we in een vervolgstap dus verwerken in het model. Hierna zal er ook gekeken worden naar de effecten van verschillende aantallen epochs. Ook zouden de pieken in de grafiek veroorzaakt kunnen worden doordat de validatiedata niet representatief is voor de populatie. Dit wordt in een volgende versie geprobeerd op te lossen door middel van k-fold cross validation.
 
