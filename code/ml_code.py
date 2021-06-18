@@ -28,7 +28,7 @@ targets = covid_df.iloc[:, -1:]
 
 # transform dataframe to numpy arrays
 data = data.to_numpy()
-targets = labels.to_numpy()
+targets = targets.to_numpy()
 
 # split the data into training and validation data
 train_data, val_data, train_targets, val_targets = train_test_split(data, targets,
