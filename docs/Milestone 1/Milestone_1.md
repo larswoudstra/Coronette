@@ -18,7 +18,7 @@ Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage met
 
 In eerste instantie worden de output van de validatiedata en de output van de daadwerkelijke data in eenzelfde figuur geplot, zodat gekeken kan worden of deze lijnen enigszins overeenkomen. Om de figuur beter interpreteerbaar te maken, wordt de ene lijn transparanter gemaakt dan de ander.
 
-![real_vs_predicted_plot](https://github.com/larswoudstra/Coronette/blob/main/docs/images/figuur1.png)
+![real_vs_predicted_plot](https://github.com/larswoudstra/Coronette/blob/main/docs/images/predicted_vs_real_plot_ml1.png)
 
 Hier is te zien dat de lijnen erg goed overeenkomen. Desondanks wordt de grafiek als erg onduidelijk ervaren. Vandaar dat er een andere grafiek wordt gemaakt waarin de verschillen tussen de voorspelde data en de daadwerkelijke data geplot worden. **analyse**
 
