@@ -78,6 +78,10 @@ for train, val in kf.split(x):
     # train model
     history = model.fit(train_data, train_targets, epochs=800, validation_data=(val_data, val_targets))
 
+    y_pred = model.predict(val_data)
+
+    
+
 ########################################
 # Part 4: evaluating the model
 
