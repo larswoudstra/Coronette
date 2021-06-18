@@ -59,13 +59,13 @@ for train, val in kf.split(data):
     model = models.Sequential()
 
     # add layers
-    model.add(layers.Dense(units=78, activation='relu', input_shape=(78,)))
+    model.add(layers.Dense(units=93, activation='relu', input_shape=(93,)))
 
     # end with two output units
     model.add(layers.Dense(units=1))
 
     # compile the model
-    model.compile(loss='mean_squared_error', optimizer='Adamax',
+    model.compile(loss='mean_squared_error', optimizer='adam',
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train model
