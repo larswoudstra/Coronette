@@ -20,7 +20,7 @@ In eerste instantie worden de output van de validatiedata en de output van de da
 
 ![real_vs_predicted_plot](https://github.com/larswoudstra/Coronette/blob/main/docs/images/predicted_vs_real_plot_ml1.png)
 
-Hier is te zien dat de lijnen erg goed overeenkomen. Desondanks wordt de grafiek als erg onduidelijk ervaren. Vandaar dat er een andere grafiek wordt gemaakt waarin de verschillen tussen de voorspelde data en de daadwerkelijke data geplot worden. **analyse**
+Hier is te zien dat de lijnen erg goed overeenkomen. Desondanks wordt de grafiek als erg onduidelijk ervaren. Vandaar dat er een andere grafiek wordt gemaakt waarin de verschillen tussen de voorspelde data en de daadwerkelijke data geplot worden. Hierin is te zien dat de meeste voorspellingen niet meer dan 2.0% afwijken van de daadwerkelijke data, hoewel er ook een aantal uitschieters te zien die maximaal een verschil van 4.0% laten zien. Deze voorspelling moet en kan beter. Dit hopen we te bewerkstelligen door het model complexer en accurater te maken.
 
 ![difference_plot](https://github.com/larswoudstra/Coronette/blob/main/docs/images/difference_plot_ml1.png)
 
