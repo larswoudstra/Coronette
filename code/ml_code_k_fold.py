@@ -40,12 +40,19 @@ train_data, val_data, train_targets, val_targets = train_test_split(data, target
 # we start by creating a simple neural network
 import tensorflow as tf
 from tensorflow.keras import layers, models, metrics
+from sklearn.model_selection import KFold
 
 # function that creates a neural network with:
 # - 93 input nodes
 # - 1 hidden layer (93 nodes, reLU activation)
 # - 1 output node
 
+# cross validation
+kf = KFold(5, shuffle = True, random_state = 42)
+
+fold = 0
+for train, val in kf.split(x):
+    fold += 1
 
 
 
