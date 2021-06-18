@@ -31,8 +31,8 @@ data = data.to_numpy()
 targets = labels.to_numpy()
 
 # split the data into training and validation data
-train_data, val_data, train_targets, val_targets = train_test_split(data, targets,
-                                                    train_size=0.7, random_state=14)
+# train_data, val_data, train_targets, val_targets = train_test_split(data, targets,
+#                                                     train_size=0.7, random_state=14)
 
 ########################################
 # Part 2: creating the model
@@ -51,16 +51,17 @@ from sklearn.model_selection import KFold
 kf = KFold(5, shuffle = True, random_state = 42)
 
 fold = 0
-for train, val in kf.split(x):
+for train, val in kf.split(data, targets):
     fold += 1
+    print(f'Fold #{fold}')
+
+    train_data = data[train]
+    train_targets = targets[train]
+
+    val_data = data[val]
+    val_targets = targets[val]
 
 
-
-
-
-
-
-def build_neural_net():
     # initialize the model
     model = models.Sequential()
 
@@ -74,16 +75,15 @@ def build_neural_net():
     model.compile(loss='mean_squared_error', optimizer='Adamax',
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
-    return model
+    # train model
+    history = model.fit(train_data, train_targets, epochs=800, validation_data=(val_data, val_targets))
 
-########################################
-# Part 3: training the model
+    y_pred = model.predict(val_data)
 
-# initialize model
-model = build_neural_net()
 
-# train model
-history = model.fit(train_data, train_targets, epochs=800, validation_data=(val_data, val_targets))
+
+
+
 
 ########################################
 # Part 4: evaluating the model
