@@ -28,7 +28,7 @@ targets = covid_df.iloc[:, -1:]
 
 # transform dataframe to numpy arrays
 data = data.to_numpy()
-targets = labels.to_numpy()
+targets = targets.to_numpy()
 
 # split the data into training and validation data
 train_data, val_data, train_targets, val_targets = train_test_split(data, targets,
@@ -42,8 +42,8 @@ import tensorflow as tf
 from tensorflow.keras import layers, models, metrics
 
 # function that creates a neural network with:
-# - 93 input nodes
-# - 1 hidden layer (93 nodes, reLU activation)
+# - 78 input nodes
+# - 1 hidden layer (78 nodes, reLU activation)
 # - 1 output node
 def build_neural_net():
     # initialize the model
@@ -56,7 +56,7 @@ def build_neural_net():
     model.add(layers.Dense(units=1))
 
     # calculate the accuracy of the model ##### mean_squared_error als loss?
-    model.compile(loss='mean_squared_error', optimizer='Adamax',
+    model.compile(loss='mean_squared_error', optimizer='adam',
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     return model
@@ -68,7 +68,7 @@ def build_neural_net():
 model = build_neural_net()
 
 # train model
-history = model.fit(train_data, train_targets, epochs=800, validation_data=(val_data, val_targets))
+history = model.fit(train_data, train_targets, epochs=500, validation_data=(val_data, val_targets))
 
 ########################################
 # Part 4: evaluating the model
@@ -79,6 +79,7 @@ val_loss = history.history['val_root_mean_squared_error']
 plt.plot(train_loss)
 plt.plot(val_loss)
 plt.legend(['train_loss', 'val_loss'])
+plt.title('RMSE losses')
 plt.show()
 
 print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")

@@ -80,8 +80,6 @@ for train, val in kf.split(x):
 
     y_pred = model.predict(val_data)
 
-    
-
 ########################################
 # Part 4: evaluating the model
 
