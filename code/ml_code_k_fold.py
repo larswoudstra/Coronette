@@ -65,7 +65,7 @@ for train, val in kf.split(data):
     model.add(layers.Dense(units=1))
 
     # compile the model
-    model.compile(loss='mean_squared_error', optimizer='Adamax',
+    model.compile(loss='mean_squared_error', optimizer='adam',
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train model
