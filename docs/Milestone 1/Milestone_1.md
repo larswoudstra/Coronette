@@ -16,10 +16,14 @@ Het NN wordt getraind door middel van forward en backward propagation. Met full-
 # Model Evaluation
 Met RMSE wordt het gemiddelde verschil gegeven van het voorspelde percentage met het daadwerkelijke percentage. Hoe lager dit verschil, hoe beter het model het percentage kan voorspellen. Bij dit initiële model ligt dit getal rond 1.13. In het vervolg streven we ernaar om dit getal zo laag mogelijk onder de 1 te krijgen.
 
-Er wordt een grafiek geplot waarin de output van de validatiedata vergeleken wordt met de output van de trainingdata. Er lijken grote verschillen te zijn, maar de grafiek is nog niet perfect, omdat de lijnen over elkaar heen liggen, waardoor de verschillen niet goed te zien zijn. In het vervolg gaan we het verschil plotten, en dit proberen te minimaliseren.
+In eerste instantie worden de output van de validatiedata en de output van de daadwerkelijke data in eenzelfde figuur geplot, zodat gekeken kan worden of deze lijnen enigszins overeenkomen. Om de figuur beter interpreteerbaar te maken, wordt de ene lijn transparanter gemaakt dan de ander.
 
-![figuur1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/figuur1.png)
+![real_vs_predicted_plot](https://github.com/larswoudstra/Coronette/blob/main/docs/images/figuur1.png)
 
-Er wordt nog een plot gemaakt waarin de trainingkosten en validatiekosten geplot worden. Er zijn in deze grafiek grote pieken te zien, die steeds minder heftig worden. We verwachten dat dit deels veroorzaakt wordt door overfitting en een gebrek aan normalisatie. Dit zullen we in een vervolgstap dus verwerken in het model. Hierna zal er ook gekeken worden naar de effecten van verschillende aantallen epochs. Ook zouden de pieken in de grafiek veroorzaakt kunnen worden doordat de validatiedata niet representatief is voor de populatie. Dit wordt in een volgende versie geprobeerd op te lossen door middel van k-fold cross validation.
+Hier is te zien dat de lijnen erg goed overeenkomen. Desondanks wordt de grafiek als erg onduidelijk ervaren. Vandaar dat er een andere grafiek wordt gemaakt waarin de verschillen tussen de voorspelde data en de daadwerkelijke data geplot worden. **analyse**
+
+![difference_plot](URL)**url**
+
+Tenslotte wordt er een plot gemaakt waarin de trainingkosten en validatiekosten geplot worden. Er zijn in deze grafiek grote pieken te zien, die steeds minder heftig worden. We verwachten dat dit deels veroorzaakt wordt door overfitting en een gebrek aan normalisatie. Dit zullen we in een vervolgstap dus verwerken in het model. Hierna zal er ook gekeken worden naar de effecten van verschillende aantallen epochs. Ook zouden de pieken in de grafiek veroorzaakt kunnen worden doordat de validatiedata niet representatief is voor de populatie. Dit wordt in een volgende versie geprobeerd op te lossen door middel van k-fold cross validation.
 
 ![figuur2](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png)

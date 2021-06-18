@@ -54,7 +54,7 @@ def build_neural_net():
 model = build_neural_net()
 
 # train model
-history = model.fit(train_data, train_targets, epochs=500)
+history = model.fit(train_data, train_targets, epochs=500, validation_data=(val_data, val_targets))
 
 ########################################
 # Part 4: evaluating the model
@@ -63,11 +63,17 @@ history = model.fit(train_data, train_targets, epochs=500)
 y_pred = model.predict(val_data)
 
 # plot the predicted data and real data to see differences
-plt.plot(val_targets, color='red', alpha=0.3, label='Real data')
+plt.plot(val_targets, color='red', label='Real data')
 plt.plot(y_pred, color='blue', alpha=0.3, label='Predicted data')
 plt.title('Prediction')
 plt.legend()
-plt.savefig('figuur1.pdf')
+plt.show()
+
+# plot the differences between predicted and real data
+difference = y_pred - val_targets
+plt.plot(difference, color='red')
+plt.title('Difference')
+plt.show()
 
 # plot the training loss and validation loss defined by RMSE
 train_loss = history.history['root_mean_squared_error']
@@ -75,13 +81,6 @@ val_loss = history.history['val_root_mean_squared_error']
 plt.plot(train_loss)
 plt.plot(val_loss)
 plt.legend(['train_loss', 'val_loss'])
-plt.savefig('figuur2.pdf')
+plt.show()
 
 print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
-
-# plot the differences between predicted and real data
-y_pred = model.predict(val_data)
-difference = y_pred - val_targets
-plt.plot(difference, color='red')
-plt.title('Difference')
-plt.show()
