@@ -48,13 +48,16 @@ from sklearn.model_selection import KFold
 # - 1 output node
 
 # cross validation
-kf = KFold(5, shuffle = True, random_state = 42)
+kf = KFold(5, shuffle = True)
 
-validaton_MSE = []
+losses_val = []
+rmse_val = []
 
+losses_train = []
+rmse_train = []
 
 fold = 0
-for train, val in kf.split(data, targets):
+for train, val in kf.split(data):
     fold += 1
     print(f'Fold #{fold}')
 
@@ -83,6 +86,12 @@ for train, val in kf.split(data, targets):
 
     y_pred = model.predict(val_data)
 
+    train_loss = history.history['root_mean_squared_error']
+    val_loss = history.history['val_root_mean_squared_error']
+
+
+
+
     print(f"Training RMSE: {model.evaluate(train_data, train_targets)[1]}")
     print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
 
@@ -95,12 +104,12 @@ for train, val in kf.split(data, targets):
 # Part 4: evaluating the model
 
 # plot the training loss and validation loss defined by RMSE
-# train_loss = history.history['root_mean_squared_error']
-# val_loss = history.history['val_root_mean_squared_error']
-# plt.plot(train_loss)
-# plt.plot(val_loss)
-# plt.legend(['train_loss', 'val_loss'])
-# plt.show()
+train_loss = history.history['root_mean_squared_error']
+val_loss = history.history['val_root_mean_squared_error']
+plt.plot(train_loss)
+plt.plot(val_loss)
+plt.legend(['train_loss', 'val_loss'])
+plt.show()
 #
 # print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
 #
