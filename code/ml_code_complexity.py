@@ -56,8 +56,8 @@ for train, val in kf.split(data):
     # - 1 output node with a linear activation function
     model.add(layers.Dense(units=1))
 
-    # compile the model
-    model.compile(loss='mean_squared_error', optimizer='adam',
+    # compile the model with the ... optimizer
+    model.compile(loss='mean_squared_error', optimizer='Nadam',
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
