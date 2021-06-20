@@ -50,15 +50,6 @@ for index, (column_name, column_data) in enumerate(train_data_df.iteritems()):
 # sort the dictionary by feature score in descending order
 feature_scores_sorted = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)
 
-print(feature_scores_sorted[:14])
-
-
-
-
-# delete/deactivate the irrelevant features
-
-
-
 # create a bar plot for the feature scores to determine what to set k as in SelectKBest
 x = np.arange(len(feature_scores.scores_))
 plt.bar(x, feature_scores.scores_)
@@ -66,4 +57,5 @@ plt.xlabel("Features")
 plt.ylabel("Feature score")
 plt.show()
 
+best_features = feature_scores_sorted[:14]
 train_data_best, test_data_best, feature_scores = select_features(train_data, train_targets, test_data, k=14)
