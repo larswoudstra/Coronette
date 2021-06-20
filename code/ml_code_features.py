@@ -1,10 +1,8 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import layers, models, metrics
-from sklearn.datasets import load_digits
 from sklearn.feature_selection import SelectKBest, f_regression
 
 # load the data
@@ -54,15 +52,18 @@ feature_scores_sorted = sorted(score_dict.items(), key=lambda x: x[1], reverse=T
 
 print(feature_scores_sorted[:14])
 
+
+
+
 # delete/deactivate the irrelevant features
 
 
 
-# # create a bar plot for the feature scores to determine what to set k as in SelectKBest
-# x = np.arange(len(feature_scores.scores_))
-# plt.bar(x, feature_scores.scores_)
-# plt.xlabel("Features")
-# plt.ylabel("Feature score")
-# plt.show()
-#
-# train_data_best, test_data_best, feature_scores = select_features(train_data, train_targets, test_data, k=14)
+# create a bar plot for the feature scores to determine what to set k as in SelectKBest
+x = np.arange(len(feature_scores.scores_))
+plt.bar(x, feature_scores.scores_)
+plt.xlabel("Features")
+plt.ylabel("Feature score")
+plt.show()
+
+train_data_best, test_data_best, feature_scores = select_features(train_data, train_targets, test_data, k=14)
