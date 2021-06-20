@@ -3,6 +3,8 @@ De data die voor dit onderzoek gebruikt wordt, is afkomstig van [Kaggle](https:/
 
 Zowel de training- als de testdata zijn .csv-bestanden, welke individueel van elkaar worden ingeladen als Pandas DataFrames. De trainingdata bestaat uit 2700 samples, de test data uit 893 samples. De 94 features die in deze datasets worden meegenomen betroffen onder andere een ID, de 40 staten (*one-hot encoded*) en 3 sets van 17 variabelen, waarbij de sets 3 opeenvolgende dagen vertegenwoordigen. Ieder van deze 17 variabelen zijn dus over een periode van 3 dagen gemeten. Deze 17 variabelen betreffen 4 features over ziektes die op corona lijken, 8 gedragsindicatoren en 5 indicatoren voor mentale gezondheid. Ten slotte bevatten de datasets 2 variabelen die het percentage positieve testuitslagen op dag 1 en dag 2 vertegenwoordigen. Met behulp van deze 94 features wordt het percentage nieuwe positieve testuitslagen op dag 3 getracht te voorspellen. Dit percentage is dan ook de *target value* van dit onderzoek.
 
+![Data explanation]
+
 De kolom met ID’s wordt verwijderd, aangezien deze alleen als index dient. De verdere analyses worden vooralsnog uitgevoerd met de resterende 93 features. Later kan er aan de hand van het model worden beoordeeld of enkele minder relevante features verwijderd moeten worden.
 
 In zowel de training- als testdata worden de features en de target value van elkaar gesplitst. De trainingdata wordt opgesplitst in 70% trainingdata en 30% validatiedata, wat resulteerde in 1890 trainingsamples en 810 validatiesamples. Aangezien alle data numeriek is, hoeft de data niet genormaliseerd te worden en kan er een regressie uitgevoerd worden om de target value voor dag 3 te voorspellen.
