@@ -21,7 +21,7 @@ data = data.to_numpy()
 targets = targets.to_numpy()
 
 
-# Part 2: creating the model
+# Part 2: creating and testing the model
 
 import tensorflow as tf
 from tensorflow.keras import layers, models, metrics
@@ -67,15 +67,19 @@ for train, val in kf.split(data):
     rmse_train += np.asarray(history.history['root_mean_squared_error'])
     rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
 
-# calculate average
+
+# Part 4: model evaluation
+
+# calculate average RMSE
 rmse_train_avg = rmse_train / fold
 rmse_val_avg = rmse_val / fold
 
+# plot the average RMSE
 plt.plot(rmse_train_avg)
 plt.plot(rmse_val_avg)
 plt.legend(['RMSE train', 'RMSE val'])
 plt.show()
 
-
+# evaluate the model
 print(f"Training RMSE: {model.evaluate(train_data, train_targets)[1]}")
 print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
