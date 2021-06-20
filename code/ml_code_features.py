@@ -16,12 +16,12 @@ covid_df_train = covid_df_train.drop(['id'], axis=1)
 covid_df_test = covid_df_test.drop(['id'], axis=1)
 
 # split the dataframe into data and labels
-train_data = covid_df_train.iloc[:, :-1]
-train_targets = covid_df_train.iloc[:, -1:]
+train_data_df = covid_df_train.iloc[:, :-1]
+train_targets_df = covid_df_train.iloc[:, -1:]
 
 # transform dataframes to numpy arrays
-train_data = train_data.to_numpy()
-train_targets = train_targets.to_numpy()
+train_data = train_data_df.to_numpy()
+train_targets = train_targets_df.to_numpy()
 
 test_data = covid_df_test.to_numpy()
 
@@ -42,12 +42,27 @@ def select_features(X_train, y_train, X_test, k={}):
 
 train_data_all, test_data_all, feature_scores = select_features(train_data, train_targets, test_data, k="all")
 
+# create a dictionary with the feature scores
+score_dict = {}
+for index, (column_name, column_data) in enumerate(train_data_df.iteritems()):
+
+    # add the score for every feature to a dictionary
+    score_dict[column_name] = feature_scores.scores_[index]
+
+# sort the dictionary by feature score in descending order
+feature_scores_sorted = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)
+
+print(feature_scores_sorted[:14])
+
+# delete/deactivate the irrelevant features
+
+
+
 # # create a bar plot for the feature scores to determine what to set k as in SelectKBest
 # x = np.arange(len(feature_scores.scores_))
 # plt.bar(x, feature_scores.scores_)
 # plt.xlabel("Features")
 # plt.ylabel("Feature score")
 # plt.show()
-
-train_data_best, test_data_best, feature_scores = select_features(train_data, train_targets, test_data, k=14)
-print(train_data_best)
+#
+# train_data_best, test_data_best, feature_scores = select_features(train_data, train_targets, test_data, k=14)
