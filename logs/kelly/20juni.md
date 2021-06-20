@@ -11,3 +11,7 @@
   * Loss: MSE; metrics: RMSE
     * K-fold cross validated
 
+# MORGEN
+* Overfitting tegengaan
+* Batch Normalisation
+* Regularisation
