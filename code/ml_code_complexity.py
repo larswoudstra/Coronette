@@ -49,8 +49,9 @@ for train, val in kf.split(data):
 
     # add fully connected layers
     # - 93 input nodes
-    # - 1 hidden layer (93 nodes, reLU activation)
+    # - 2 hidden layers (93 nodes, reLU activation)
     model.add(layers.Dense(units=93, activation='relu', input_shape=(93,)))
+    model.add(layers.Dense(units=93, activation='relu'))
 
     # - 1 output node with a linear activation function
     model.add(layers.Dense(units=1))
