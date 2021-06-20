@@ -51,12 +51,11 @@ for train, val in kf.split(data):
     # - 93 input nodes
     # - 2 hidden layers (93 nodes, reLU activation)
     model.add(layers.Dense(units=93, activation='relu', input_shape=(93,)))
-    model.add(layers.Dense(units=93, activation='relu'))
 
     # - 1 output node with a linear activation function
     model.add(layers.Dense(units=1))
 
-    # compile the model with the ... optimizer
+    # compile the model with the Nadam optimizer
     model.compile(loss='mean_squared_error', optimizer='Nadam',
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
