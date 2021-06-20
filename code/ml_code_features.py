@@ -38,7 +38,7 @@ def select_features(X_train, y_train, X_test, k={}):
 
     return X_train_best, X_test_best, feature_scores
 
-train_data_all, test_data_all, feature_scores = select_features(train_data, train_targets, test_data, k="all")
+train_data_all, test_data_all, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k="all")
 
 # create a dictionary with the feature scores
 score_dict = {}
@@ -58,4 +58,4 @@ plt.ylabel("Feature score")
 plt.show()
 
 best_features = feature_scores_sorted[:14]
-train_data_best, test_data_best, feature_scores = select_features(train_data, train_targets, test_data, k=14)
+train_data_best, test_data_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
