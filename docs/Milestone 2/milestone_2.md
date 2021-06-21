@@ -73,7 +73,7 @@ Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd wor
 ## RMSE Metric
 Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt van een RootMeanSquaredError learning curve. Deze plot geeft het gemiddelde verschil aan tussen de daadwerkelijke waarden en de voorspelde waarden; bij een hoge RMSE is het verschil groot, bij een kleine RMSE is het verschil klein.
 
-![Training en validation losses van 14x5x1](URL) **moet nog**
+![Training en validation losses van 14x5x1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/14x5x1.png)
 
 ## Conclusie
 Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie, een ReLU-activatiefunctie voor de hidden layer, een lineaire activatiefunctie voor de outputlayer, de 'Nadam' optimizer en 300 epochs de beste resultaten gebaseerd op de RMSE-metric (Validatie RMSE = 0.94)
