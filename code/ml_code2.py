@@ -59,11 +59,11 @@ for train, val in kf.split(train_k_best):
     fold += 1
     print(f'Fold #{fold}')
 
-    train_data = train_k_best[train]
-    train_targets = train_targets[train]
+    train_data_fold = train_k_best[train]
+    train_targets_fold = train_targets[train]
 
-    val_data = train_k_best[val]
-    val_targets = train_targets[val]
+    val_data_fold = train_k_best[val]
+    val_targets_fold = train_targets[val]
 
     # for each fold, initialize a neural network
     model = models.Sequential()
@@ -83,9 +83,9 @@ for train, val in kf.split(train_k_best):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
-    history = model.fit(train_data, train_targets, epochs=300, validation_data=(val_data, val_targets))
+    history = model.fit(train_data_fold, train_targets_fold, epochs=300, validation_data=(val_data_fold, val_targets_fold))
 
-    y_pred = model.predict(val_data)
+    y_pred = model.predict(val_data_fold)
 
     rmse_train += np.asarray(history.history['root_mean_squared_error'])
     rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
@@ -104,5 +104,5 @@ plt.legend(['RMSE train', 'RMSE val'])
 plt.show()
 
 # evaluate the model
-print(f"Training RMSE: {model.evaluate(train_data, train_targets)[1]}")
-print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
+print(f"Training RMSE: {model.evaluate(train_data_fold, train_targets_fold)[1]}")
+print(f"Validation RMSE: {model.evaluate(val_data_fold, val_targets_fold)[1]}")
