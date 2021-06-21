@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import layers, models, metrics
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.feature_selection import SelectKBest, f_regression
 
 # Part 1: loading and cleaning the data
@@ -42,10 +42,9 @@ def select_features(X_train, y_train, X_test, k={}):
     return X_train_best, X_test_best, feature_scores
 
 # select 'k' best features based on barplot, see images: 'best_features_barplot'
-k = 93
+k = 14
 
 train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
-
 
 # Part 2: creating and testing the model
 
@@ -56,7 +55,7 @@ rmse_val = 0
 rmse_train = 0
 
 fold = 0
-for train, val in kf.split(train_k_best):
+for train, val in kf.split(train_k_best, train_targets):
     fold += 1
     print(f'Fold #{fold}')
 
