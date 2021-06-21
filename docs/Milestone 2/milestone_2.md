@@ -4,11 +4,11 @@ Zie voor voorgaande data-analyse [Milestone1](https://github.com/larswoudstra/Co
 ## Feature selection
 Aan de hand van de RMSE learning curve van het eerste model leek het in de eerste instantie er op dat het model aan het overfitten was. Dit werd geconcludeerd uit de spikes die de gemaakte loss functie had:
 
-< afbeelding 'losses_plus_mental_health'>
+![Train-test-split Milestone 1 alle features](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png)
 
-In veel van de gevallen heeft de validation data een hoge loss. Dit betekent dat het model de percentages van de validation data niet goed kan voorspellen. Om dit probleem te verhelpen is er geprobeerd om met minder features te gaan werken. De mentale-gezondheids-features leken hiervoor het best geschikt om weg te laten, omdat deze het minste de daadwerkelijke percentages zouden kunnen voorspellen **Beter onderbouwen**. De features die zijn weggelaten zijn: anxious, depressed, felt_isolated, worried_become_ill en worried_finances. Dit had het volgende resultaat:
+In veel van de gevallen heeft de validation data een hoge loss. Dit betekent dat het model de percentages van de validation data niet goed kan voorspellen. Om dit probleem te verhelpen is er geprobeerd om met minder features te gaan werken. De mentale-gezondheids-features leken hiervoor het best geschikt om weg te laten, omdat deze eerder de gevolgen van de positieve testuitslagen lijken aan te geven, in plaats van de oorzaak. De features die zijn weggelaten zijn: anxious, depressed, felt_isolated, worried_become_ill en worried_finances. Dit had het volgende resultaat:
 
-< afbeelding 'losses_min_mental_health'>
+![Train-test-split Milestone 1 zonder mentale features](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_min_mental_health.png)
 
 In de plot is te zien dat de amplitude van de spikes iets is afgenomen, maar de spikes zijn nog steeds aanwezig. Aangezien dit betekent dat het model in sommige epochs nog altijd overfit en in andere niet, is ervoor gekozen de selectie van features beter te onderbouwen, namelijk middels een SelectKBest-analyse. Hierbij is de scorefunctie 'f_regression' gebruikt, omdat deze voorkomt dat er noise wordt toegevoegd.
 
@@ -31,7 +31,7 @@ Gezien de 14 pieken wordt SelectKBest nogmaals uitgevoerd, maar nu met k=14 waar
 ## K-fold cross validation
 In Milestone 1 is er gebruikgemaakt van de train_test_split-functie van sklearn om de data te verdelen in 70% trainingdata en 30% validatiedata.
 
-<losses_plus_mental_health.png>
+![Train-test-split Milestone 1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png)
 
 Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.  
 
