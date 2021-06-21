@@ -8,3 +8,4 @@ Al met al lijkt de Nadam optimizer de beste keuzen, maar Adamax en Ftrl moeten i
 
 
 **Learning rate nog aanpassen? En moeten we dat dan ook doen bij de andere optimizers?**
+**Nog documenteren wat precies de kosten waren etc.?**
