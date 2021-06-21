@@ -44,10 +44,14 @@ def select_features(X_train, y_train, X_test, k={}):
     return X_train_best, X_test_best, feature_scores
 
 # select 'k' best features based on barplot, see images: 'best_features_barplot'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3a2e0b6a7bd2b1fcecca2fbe13041fa0db6a4251
 k = 93
 
 train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
+
 
 # Part 2: creating and testing the model
 
@@ -78,10 +82,14 @@ for train, val in kf.split(train_k_best):
     # add fully connected layers
     # - 93 input nodes
     # - 3 hidden layers (93, 60, and nodes, reLU activation)
+<<<<<<< HEAD
     model.add(layers.Dense(units=(k*(2/3)), activation='relu', input_shape=(k,)))
     model.add(layers.BatchNormalization())
     model.add(layers.Dense(units=round(k*(1/3)), activation='relu'))
     model.add(layers.BatchNormalization())
+=======
+    model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
+>>>>>>> 3a2e0b6a7bd2b1fcecca2fbe13041fa0db6a4251
 
     # - 1 output node with a linear activation function
     model.add(layers.Dense(units=1))

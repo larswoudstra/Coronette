@@ -16,7 +16,7 @@ Het baseline model (i.e., het model met de Nadam optimizer met 1 hidden layer wa
 
 1 extra hidden layer met 60 nodes: het model lijkt lichtelijk te overfitten, zie < afbeelding complexity_1_hidden_layer_60_nodes >. BESCHRIJF VERSCHIL IN TRAINING COST TUSSEN DIT MODEL EN NADAM OPTIMIZER MET BASELINE NETWERK.
 - Training RMSE: 0.9012
-- Validation RMSE: 0.9806
+- Validation RMSE: 0.9806 ***
 
 1 extra hidden layer met 40 nodes: het model lijkt lichtelijk te overfitten, zie < afbeelding complexity_1_hidden_layer_40_nodes >. BESCHRIJF VERSCHIL IN TRAINING COST TUSSEN DIT MODEL EN NADAM OPTIMIZER MET BASELINE NETWERK.
 - Training RMSE: 0.89
