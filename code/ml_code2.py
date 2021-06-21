@@ -5,6 +5,8 @@ import tensorflow as tf
 from tensorflow.keras import layers, models, metrics
 from sklearn.model_selection import KFold
 from sklearn.feature_selection import SelectKBest, f_regression
+from tensorflow.keras import layers
+from tensorflow.keras.layers.experimental import preprocessing
 
 # Part 1: loading and cleaning the data
 
@@ -42,7 +44,8 @@ def select_features(X_train, y_train, X_test, k={}):
     return X_train_best, X_test_best, feature_scores
 
 # select 'k' best features based on barplot, see images: 'best_features_barplot'
-k = 14
+
+k = 93
 
 train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
 
@@ -65,13 +68,19 @@ for train, val in kf.split(train_k_best):
     val_data_fold = train_k_best[val]
     val_targets_fold = train_targets[val]
 
+    normalizer = preprocessing.Normalization()
+    normalizer.adapt(train_data_fold)
+    normalizer.adapt(val_data_fold)
+
     # for each fold, initialize a neural network
     model = models.Sequential()
 
     # add fully connected layers
     # - 93 input nodes
     # - 3 hidden layers (93, 60, and nodes, reLU activation)
-    model.add(layers.Dense(units=(k/2), activation='relu', input_shape=(k,)))
+    model.add(layers.Dense(units=(k*(2/3)), activation='relu', input_shape=(k,)))
+    model.add(layers.BatchNormalization())
+    model.add(layers.Dense(units=round(k*(1/3)), activation='relu'))
     model.add(layers.BatchNormalization())
 
     # - 1 output node with a linear activation function
