@@ -68,5 +68,7 @@ plt.xlabel("Features")
 plt.ylabel("Feature score")
 plt.show()
 
-best_features = feature_scores_sorted[:14]
-train_data_best, test_data_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
+print(feature_scores_sorted[:14])
+
+# best_features = feature_scores_sorted[:14]
+# train_data_best, test_data_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)

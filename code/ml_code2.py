@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import layers, models, metrics
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.feature_selection import SelectKBest, f_regression
 
 # Part 1: loading and cleaning the data
@@ -42,7 +42,11 @@ def select_features(X_train, y_train, X_test, k={}):
     return X_train_best, X_test_best, feature_scores
 
 # select 'k' best features based on barplot, see images: 'best_features_barplot'
+<<<<<<< HEAD
 k = 93
+=======
+k = 14
+>>>>>>> 070fea0506dc8ac31389f559053a3985127ae46b
 
 train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
 
@@ -55,7 +59,7 @@ rmse_val = 0
 rmse_train = 0
 
 fold = 0
-for train, val in kf.split(train_k_best):
+for train, val in kf.split(train_k_best, train_targets):
     fold += 1
     print(f'Fold #{fold}')
 
@@ -71,7 +75,11 @@ for train, val in kf.split(train_k_best):
     # add fully connected layers
     # - 93 input nodes
     # - 3 hidden layers (93, 60, and nodes, reLU activation)
+<<<<<<< HEAD
     model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
+=======
+    model.add(layers.Dense(units=5, activation='relu', input_shape=(k,)))
+>>>>>>> 070fea0506dc8ac31389f559053a3985127ae46b
 
     # - 1 output node with a linear activation function
     model.add(layers.Dense(units=1))
