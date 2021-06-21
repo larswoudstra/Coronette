@@ -1,11 +1,10 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
 import numpy as np
 import matplotlib.pyplot as plt
-import tensorflow as tf
-from tensorflow.keras import layers, models, metrics
-from sklearn.model_selection import KFold
 from sklearn.feature_selection import SelectKBest, f_regression
 
+########################################
 # Part 1: loading and cleaning the data
 
 # load the data
@@ -46,60 +45,64 @@ k = 93
 
 train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
 
-# Part 2: creating and testing the model
+# split the data into training and validation data
+train_data, val_data, train_targets, val_targets = train_test_split(train_k_best, train_targets,
+                                                    train_size=0.7, random_state=14)
 
-# implement k-fold cross validation
-kf = KFold(5, shuffle = True)
+########################################
+# Part 2: creating the model
 
-rmse_val = 0
-rmse_train = 0
+# we start by creating a simple neural network
+import tensorflow as tf
+from tensorflow.keras import layers, models, metrics
 
-fold = 0
-for train, val in kf.split(train_k_best):
-    fold += 1
-    print(f'Fold #{fold}')
-
-    train_data_fold = train_k_best[train]
-    train_targets_fold = train_targets[train]
-
-    val_data_fold = train_k_best[val]
-    val_targets_fold = train_targets[val]
-
-    # for each fold, initialize a neural network
+# function that creates a neural network with:
+# - 78 input nodes
+# - 1 hidden layer (78 nodes, reLU activation)
+# - 1 output node
+def build_neural_net():
+    # initialize the model
     model = models.Sequential()
 
-    # add fully connected layers
-    # - 93 input nodes
-    # - 3 hidden layers (93, 60, and nodes, reLU activation)
+    # add layers
     model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
 
-    # - 1 output node with a linear activation function
+    # end with two output units
     model.add(layers.Dense(units=1))
 
-    # compile the model with the Nadam optimizer
+    # calculate the accuracy of the model ##### mean_squared_error als loss?
     model.compile(loss='mean_squared_error', optimizer='Nadam',
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
-    # train the model
-    history = model.fit(train_data_fold, train_targets_fold, epochs=300, validation_data=(val_data_fold, val_targets_fold))
+    return model
 
-    y_pred = model.predict(val_data_fold)
+########################################
+# Part 3: training the model
 
-    rmse_train += np.asarray(history.history['root_mean_squared_error'])
-    rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
+# initialize model
+model = build_neural_net()
 
-# Part 4: model evaluation
+# train model
+history = model.fit(train_data, train_targets, epochs=300, validation_data=(val_data, val_targets))
 
-# calculate average RMSE
-rmse_train_avg = rmse_train / fold
-rmse_val_avg = rmse_val / fold
+########################################
+# Part 4: evaluating the model
 
-# plot the average RMSE
-plt.plot(rmse_train_avg)
-plt.plot(rmse_val_avg)
-plt.legend(['RMSE train', 'RMSE val'])
+# plot the training loss and validation loss defined by RMSE
+train_loss = history.history['root_mean_squared_error']
+val_loss = history.history['val_root_mean_squared_error']
+plt.plot(train_loss)
+plt.plot(val_loss)
+plt.legend(['train_loss', 'val_loss'])
+plt.title('RMSE losses')
 plt.show()
 
-# evaluate the model
-print(f"Training RMSE: {model.evaluate(train_data_fold, train_targets_fold)[1]}")
-print(f"Validation RMSE: {model.evaluate(val_data_fold, val_targets_fold)[1]}")
+print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
+
+# calculate the differences between predicted and real data
+y_pred = model.predict(val_data)
+difference = y_pred - val_targets
+
+plt.plot(difference, color='red')
+plt.title('Difference')
+plt.show()
