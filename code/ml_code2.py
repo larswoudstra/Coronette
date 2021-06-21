@@ -41,16 +41,10 @@ def select_features(X_train, y_train, X_test, k={}):
 
     return X_train_best, X_test_best, feature_scores
 
-train_data_all, test_data_all, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k="all")
+# select 'k' best features based on barplot, see images: 'best_features_barplot'
+k = 14
 
-# create a bar plot for the feature scores to determine what to set k as in SelectKBest
-x = np.arange(len(feature_scores.scores_))
-plt.bar(x, feature_scores.scores_)
-plt.xlabel("Features")
-plt.ylabel("Feature score")
-plt.show()
-
-train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
+train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
 
 # Part 2: creating and testing the model
 
@@ -61,23 +55,25 @@ rmse_val = 0
 rmse_train = 0
 
 fold = 0
-for train, val in kf.split(data):
+for train, val in kf.split(train_k_best):
     fold += 1
     print(f'Fold #{fold}')
 
-    train_data = data[train]
-    train_targets = targets[train]
+    train_data = train_k_best[train]
+    train_targets = train_targets[train]
 
-    val_data = data[val]
-    val_targets = targets[val]
+    val_data = train_k_best[val]
+    val_targets = train_targets[val]
 
     # for each fold, initialize a neural network
     model = models.Sequential()
 
     # add fully connected layers
     # - 93 input nodes
-    # - 2 hidden layers (93 nodes, reLU activation)
-    model.add(layers.Dense(units=93, activation='relu', input_shape=(93,)))
+    # - 3 hidden layers (93, 60, and nodes, reLU activation)
+    model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
+    model.add(layers.Dense(units=round(k*(2/3)), activation='relu'))
+    model.add(layers.Dense(units=round(k*(1/3)), activation='relu'))
 
     # - 1 output node with a linear activation function
     model.add(layers.Dense(units=1))
