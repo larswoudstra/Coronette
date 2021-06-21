@@ -33,12 +33,12 @@ In Milestone 1 is er gebruikgemaakt van de train_test_split-functie van sklearn 
 
 <losses_plus_mental_health.png>
 
-Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.   
+Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.  **gestratificeerd**  
 
 ## Complexiteit verhogen
 Er zijn verschillende combinaties en groottes van hidden layers getraind. Bij een model van 93 features blijkt een architectuur van 93x93x60x1 tot de laagste validatiekoste te komen (RMSE = 0.98). Bij een model van 14 features ligt de optimale opzet van het netwerk bij 14x7x1 (RMSE = 0.95). Om deze kosten nog verder terug te dringen, wordt er gekeken naar andere hoeveelheden features, Dropout en BatchNormalization.
 
-**!!!!!**
+**!!!! Hoe gaat de Complexiteit er uiteindelijk uitzien?**
 
 # Model training
 
@@ -65,12 +65,16 @@ Om het model te kunnen evalueren is de RMSE van alle 5 folds gemiddeld genomen. 
 
 < afbeelding 'Learning_curve_K_fold_all_features' >
 
-Hieruit is te concluderen dat de spikes vooral te maken hebben gehad met niet representatieve validatie data, in plaats van met overfitting wat in de eerste instantie werd gedacht. De RMSE van dit model is nog steeds niet optimaal, dus wordt er verder gekeken naar het opimaliseren van het model doormiddel van het toevoegen van complexiteit. Zie *complexiteit verhogen*
+Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. Gestratificeerde k-fold cross validation blijkt dus een goede oplossing te zijn voor dit probleem.
 
 ## RMSE Metric
-Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt van een RootMeanSquaredError learning curve. Deze plot geeft het gemiddelde verschil tussen de daadwerkelijke waarden en de voorspelde waarden; bij een hoge RMSE is het verschil groot, bij een kleine RMSE is het verschil klein.
+Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt van een RootMeanSquaredError learning curve. Deze plot geeft het gemiddelde verschil aan tussen de daadwerkelijke waarden en de voorspelde waarden; bij een hoge RMSE is het verschil groot, bij een kleine RMSE is het verschil klein.
 
-## Difference plot
+<Losses plot>
+
+**Conclusie: hoe goed is ons model? RMSE & complexiteit geven.**
+
+<!-- ## Difference plot
 Wanneer een voorspeld percentage lager is dan het daadwerkelijke percentage positieve Covid tests, kan dit grotere gevolgen hebben dan wanneer het percentage hoger is voorspeld. Om dit in kaart te brengen is er een difference plot aan het model toegevoegd. Deze plot laat zien wat de verschillen zijn tussen de voorspelde percentages en de daadwerkelijke percentages van de validation data:
 
-< afbeelding 'difference_plot'
+< afbeelding 'difference_plot' -->
