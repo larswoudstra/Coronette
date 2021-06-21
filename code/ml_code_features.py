@@ -50,6 +50,17 @@ for index, (column_name, column_data) in enumerate(train_data_df.iteritems()):
 # sort the dictionary by feature score in descending order
 feature_scores_sorted = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)
 
+best_features = []
+
+# select features with score above 200
+for tuple in feature_scores_sorted:
+    feature = tuple[0]
+    score = tuple[1]
+    if score > 200:
+        best_features.append(feature)
+
+print(train_data_all[best_features].head())
+
 # create a bar plot for the feature scores to determine what to set k as in SelectKBest
 x = np.arange(len(feature_scores.scores_))
 plt.bar(x, feature_scores.scores_)

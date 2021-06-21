@@ -4,11 +4,11 @@ Zie voor voorgaande data-analyse [Milestone1](https://github.com/larswoudstra/Co
 ## Feature selection
 Aan de hand van de RMSE learning curve van het eerste model leek het in de eerste instantie er op dat het model aan het overfitten was. Dit werd geconcludeerd uit de spikes die de gemaakte loss functie had:
 
-< afbeelding 'losses_plus_mental_health'>
+![Train-test-split Milestone 1 alle features](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png)
 
-In veel van de gevallen heeft de validation data een hoge loss. Dit betekent dat het model de percentages van de validation data niet goed kan voorspellen. Om dit probleem te verhelpen is er geprobeerd om met minder features te gaan werken. De mentale-gezondheids-features leken hiervoor het best geschikt om weg te laten, omdat deze het minste de daadwerkelijke percentages zouden kunnen voorspellen **Beter onderbouwen**. De features die zijn weggelaten zijn: anxious, depressed, felt_isolated, worried_become_ill en worried_finances. Dit had het volgende resultaat:
+In veel van de gevallen heeft de validation data een hoge loss. Dit betekent dat het model de percentages van de validation data niet goed kan voorspellen. Om dit probleem te verhelpen is er geprobeerd om met minder features te gaan werken. De mentale-gezondheids-features leken hiervoor het best geschikt om weg te laten, omdat deze eerder de gevolgen van de positieve testuitslagen lijken aan te geven, in plaats van de oorzaak. De features die zijn weggelaten zijn: anxious, depressed, felt_isolated, worried_become_ill en worried_finances. Dit had het volgende resultaat:
 
-< afbeelding 'losses_min_mental_health'>
+![Train-test-split Milestone 1 zonder mentale features](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_min_mental_health.png)
 
 In de plot is te zien dat de amplitude van de spikes iets is afgenomen, maar de spikes zijn nog steeds aanwezig. Aangezien dit betekent dat het model in sommige epochs nog altijd overfit en in andere niet, is ervoor gekozen de selectie van features beter te onderbouwen, namelijk middels een SelectKBest-analyse. Hierbij is de scorefunctie 'f_regression' gebruikt, omdat deze voorkomt dat er noise wordt toegevoegd.
 
@@ -31,7 +31,7 @@ Gezien de 14 pieken wordt SelectKBest nogmaals uitgevoerd, maar nu met k=14 waar
 ## K-fold cross validation
 In Milestone 1 is er gebruikgemaakt van de train_test_split-functie van sklearn om de data te verdelen in 70% trainingdata en 30% validatiedata.
 
-<losses_plus_mental_health.png>
+![Train-test-split Milestone 1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png)
 
 Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.  
 
@@ -40,7 +40,7 @@ Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kle
 ## Complexiteit verhogen
 Er zijn verschillende combinaties en groottes van hidden layers getraind. Bij een model van 93 features blijkt een architectuur van 93x93x60x1 tot de laagste validatiekoste te komen (Validatie RMSE = 0.98). Bij een model van 14 features ligt de optimale opzet van het netwerk bij 14x5x1 (Validatie RMSE = 0.94). Vooralsnog wordt er verdergegaan met de architectuur met 14 features, aangezien deze in de laagste kosten resulteert, hoewel hiermee natuurlijk wel veel informatie verloren gaat. In de toekomst kan deze opzet aangepast worden, als blijkt dat daarmee de kosten nog verder teruggedrongen worden.
 
-**Batch size, BatchNormalization en Dropout**
+**Batch size**
 
 # Model training
 
@@ -65,19 +65,19 @@ Er wordt dus nog steeds full batch gradient descent gebruikt, maar dan nu met de
 ## K-fold cross validation
 Om het model te kunnen evalueren is de RMSE van alle 5 folds gemiddeld genomen. Dit is vervolgens geplot zoals eerder is gedaan in Milestone 1. Voor alle 5 folds zijn 300 epochs gebruikt. Het verschil in learning curves is te zien in de volgende plots. De eerste plot is de learning curve van het baseline model, de tweede plot is de learning curve van het model met K-fold cross validation.
 
-![Baseline model met 14 features en Nadam](URL)
-![Model na k-fold met 14 features en Nadam](URL)
+![Baseline model met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/baselinemodel_nadam_k93.png)
+![Model na k-fold met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/k_fold_k93_1hidden.png)
 
 Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. Gestratificeerde k-fold cross validation blijkt dus een goede oplossing te zijn voor dit probleem.
 
 ## RMSE Metric
 Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt van een RootMeanSquaredError learning curve. Deze plot geeft het gemiddelde verschil aan tussen de daadwerkelijke waarden en de voorspelde waarden; bij een hoge RMSE is het verschil groot, bij een kleine RMSE is het verschil klein.
 
-![Training en validation losses van 14x5x1](URL)
+![Training en validation losses van 14x5x1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/14x5x1.png)
 
-**Conclusie: hoe goed is ons model? RMSE & complexiteit geven.**
+## Conclusie
+Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie, een ReLU-activatiefunctie voor de hidden layer, een lineaire activatiefunctie voor de outputlayer, de 'Nadam' optimizer en 300 epochs de beste resultaten gebaseerd op de RMSE-metric (Validatie RMSE = 0.94)
 
-<!-- ## Difference plot
-Wanneer een voorspeld percentage lager is dan het daadwerkelijke percentage positieve Covid tests, kan dit grotere gevolgen hebben dan wanneer het percentage hoger is voorspeld. Om dit in kaart te brengen is er een difference plot aan het model toegevoegd. Deze plot laat zien wat de verschillen zijn tussen de voorspelde percentages en de daadwerkelijke percentages van de validation data:
+In de toekomst zal er geprobeerd worden de kosten verder te minimaliseren, bijvoorbeeld door middel van aanpassingen van de batch size, het aantal epochs of verdere verbeteringen van de architectuur van het netwerk. Ook zal de trainingdata gesplitst worden op testdata, zodat de prestaties van het model getoetst kan worden op nieuwe data.
 
-< afbeelding 'difference_plot' -->
+Learning rates...

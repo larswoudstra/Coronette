@@ -87,6 +87,7 @@ for train, val in kf.split(train_k_best, train_targets):
     # - 3 hidden layers (93, 60, and nodes, reLU activation)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     model.add(layers.Dense(units=(k*(2/3)), activation='relu', input_shape=(k,)))
     model.add(layers.BatchNormalization())
     model.add(layers.Dense(units=round(k*(1/3)), activation='relu'))
@@ -95,6 +96,9 @@ for train, val in kf.split(train_k_best, train_targets):
     model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
 >>>>>>> 3a2e0b6a7bd2b1fcecca2fbe13041fa0db6a4251
 =======
+=======
+    model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
+>>>>>>> c422bf231096aa361cf626dc3cd5609bc0f43f2e
     model.add(layers.Dense(units=5, activation='relu', input_shape=(k,)))
 >>>>>>> 5751b6e7d4adcd8f2a3deeed1f55106243878268
 
@@ -112,7 +116,6 @@ for train, val in kf.split(train_k_best, train_targets):
 
     rmse_train += np.asarray(history.history['root_mean_squared_error'])
     rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
-
 
 # Part 4: model evaluation
 
