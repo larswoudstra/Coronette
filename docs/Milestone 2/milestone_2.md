@@ -35,12 +35,16 @@ In Milestone 1 is er gebruikgemaakt van de train_test_split-functie van sklearn 
 
 Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.  
 
-**Iets zeggen over t feit dat t dus niet gestratificeerd is en de validatiedata dus misschien uit balans is? (Bijv. validatiedata = alleen maar uit 2 staten)**
+Er is tevens nagedacht om de K-folds te stratificeren met StratifiedKfold zodat er een goede ratio is van samples tussen de staten. Dit zou kunnen zorgen voor validatiedata met nog een hogere representativiteit. Echter bleek na het uitproberen van de StratifiedKfold en het lezen van de documentatie dat de targets (‘tested_positive’ in dit geval) categorische waarden moeten aannemen, wat hier dus niet het geval is. Om deze reden is er besloten om toch te werken met een klassieke K-fold cross validation. Het risico blijft dat de validatiedata niet representatief zou kunnen zijn door bijvoorbeeld samples die enkel uit twee staten komen, echter hebben wij tot dusver in de praktijk hier geen last van gehad.
 
 ## Complexiteit verhogen
 Er zijn verschillende combinaties en groottes van hidden layers getraind. Bij een model van 93 features blijkt een architectuur van 93x93x60x1 tot de laagste validatiekoste te komen (Validatie RMSE = 0.98). Bij een model van 14 features ligt de optimale opzet van het netwerk bij 14x5x1 (Validatie RMSE = 0.94). Vooralsnog wordt er verdergegaan met de architectuur met 14 features, aangezien deze in de laagste kosten resulteert, hoewel hiermee natuurlijk wel veel informatie verloren gaat. In de toekomst kan deze opzet aangepast worden, als blijkt dat daarmee de kosten nog verder teruggedrongen worden.
 
-**Batch size**
+Met batch size is geprobeerd het model sneller te laten leren. Met deze batch size worden de gewichten van het Neural Network per batch aangepast in plaats van per epoch, wat eerder het geval was. Door het toepassen van deze batch size en het aantal epochs verder op te schroeven, kan er een nog lagere validation RMSE bereikt worden. Met een batch size van 70 en een aantal epochs van 700 is er een validation RMSE van 0.939 bereikt, tegenover een RMSE van 0.966 zonder het gebruik van batch size. Deze learning curve is hieronder te zien:
+
+![Learning curve (14x5x1) batch_size = 70, epochs = 700](https://github.com/larswoudstra/Coronette/blob/main/docs/images/14x5x1_70batch_700epoch.png)
+
+Omdat de loss in deze curve nog verder lijkt te dalen, is ook een configuratie met een batch size van 70 en een aantal epochs van 1000 geprobeerd. Hierbij kwam de validation loss niet lager uit: RMSE = 0.977.
 
 # Model training
 
@@ -76,11 +80,8 @@ Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt v
 ![Training en validation losses van 14x5x1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/14x5x1_70batch_700epoch.png)
 
 ## Conclusie
-Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie, een ReLU-activatiefunctie voor de hidden layer, een lineaire activatiefunctie voor de outputlayer, de 'Nadam' optimizer en 300 epochs de beste resultaten gebaseerd op de RMSE-metric (Validatie RMSE = 0.94)
-
-**is dus nu batch size 70, epochs 700 (RMSE = 0.9389)**
-**We zien dat ie nog aan t dalen is, maar 1000 epochs is slechter**
+Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie, een ReLU-activatiefunctie voor de hidden layer, een lineaire activatiefunctie voor de outputlayer, de 'Nadam' optimizer, een batchsize van 70 en 700 epochs de beste resultaten gebaseerd op de RMSE-metric (Validatie RMSE = 0.94)
 
 In de toekomst zal er geprobeerd worden de kosten verder te minimaliseren, bijvoorbeeld door middel van aanpassingen van de batch size, het aantal epochs of verdere verbeteringen van de architectuur van het netwerk. Ook zal de trainingdata gesplitst worden op testdata, zodat de prestaties van het model getoetst kan worden op nieuwe data.
 
-**Learning rates...**
+Daarnaast wordt er nog gekeken naar het aanpassen van de learning rate voor optimizer Nadam om te voorkomen dat het model vast blijft zitten op een zadelpunt. 
