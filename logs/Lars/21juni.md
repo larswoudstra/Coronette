@@ -8,4 +8,5 @@
 
 Morgen
 - Milestone 2 evalueren
-- Eventuele aanpassingen aan het model bespreken en daarna toepassen 
+- Eventuele aanpassingen aan het model bespreken en daarna toepassen
+- Learning rate van optimizer aanpassen om locale minima te vermijden
