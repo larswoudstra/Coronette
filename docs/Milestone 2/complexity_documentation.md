@@ -24,4 +24,4 @@ Het baseline model (i.e., het model met de Nadam optimizer met 1 hidden layer wa
 
 Nu willen we kijken of het toevoegen van nóg een extra hidden layer effect heeft op de RMSE. Omdat we bij een extra hidden layer met 60 nodes (lager dan in de vorige hidden layer) al een verlaging zagen in de RMSE, hebben we besloten om een configuratie te handhaven waarbij we in het aantal nodes willen afbouwen. Dus: 93 input nodes, een hidden layer met 93 nodes, daarna een hidden layer met 60 nodes, de laatste hidden layer met 30 nodes en een output layer met 1 node. Dit gaf de volgende resultaten:
 - Training RMSE: 0.8764
-- Validation RMSE: 0.87
+- Validation RMSE: 1.0191
