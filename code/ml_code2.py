@@ -72,7 +72,7 @@ for train, val in kf.split(train_k_best):
     # add fully connected layers
     # - 93 input nodes
     # - 3 hidden layers (93, 60, and nodes, reLU activation)
-    model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
+    model.add(layers.Dense(units=5, activation='relu', input_shape=(k,)))
 
     # - 1 output node with a linear activation function
     model.add(layers.Dense(units=1))

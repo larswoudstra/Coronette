@@ -6,7 +6,7 @@ Aan de hand van de RMSE learning curve van het eerste model leek het in de eerst
 
 < afbeelding 'losses_plus_mental_health'>
 
-In veel van de gevallen heeft de validation data een hoge loss. Dit betekent dat het model de percentages van de validation data niet goed kan voorspellen. Om dit probleem te verhelpen is er geprobeerd om met minder features te gaan werken. De mental health features leken hiervoor het best geschikt om weg te laten, omdat deze het minste de daadwerkelijke percentages zouden kunnen voorspellen **Beter onderbouwen**. De features die zijn weggelaten zijn: anxious, depressed, felt_isolated, worried_become_ill en worried_finances. Dit had het volgende resultaat:
+In veel van de gevallen heeft de validation data een hoge loss. Dit betekent dat het model de percentages van de validation data niet goed kan voorspellen. Om dit probleem te verhelpen is er geprobeerd om met minder features te gaan werken. De mentale-gezondheids-features leken hiervoor het best geschikt om weg te laten, omdat deze het minste de daadwerkelijke percentages zouden kunnen voorspellen **Beter onderbouwen**. De features die zijn weggelaten zijn: anxious, depressed, felt_isolated, worried_become_ill en worried_finances. Dit had het volgende resultaat:
 
 < afbeelding 'losses_min_mental_health'>
 
@@ -33,12 +33,14 @@ In Milestone 1 is er gebruikgemaakt van de train_test_split-functie van sklearn 
 
 <losses_plus_mental_health.png>
 
-Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.  **gestratificeerd**  
+Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.  
+
+**Iets zeggen over t feit dat t dus niet gestratificeerd is en de validatiedata dus misschien uit balans is? (Bijv. validatiedata = alleen maar uit 2 staten)**
 
 ## Complexiteit verhogen
-Er zijn verschillende combinaties en groottes van hidden layers getraind. Bij een model van 93 features blijkt een architectuur van 93x93x60x1 tot de laagste validatiekoste te komen (RMSE = 0.98). Bij een model van 14 features ligt de optimale opzet van het netwerk bij 14x7x1 (RMSE = 0.95). Om deze kosten nog verder terug te dringen, wordt er gekeken naar andere hoeveelheden features, Dropout en BatchNormalization.
+Er zijn verschillende combinaties en groottes van hidden layers getraind. Bij een model van 93 features blijkt een architectuur van 93x93x60x1 tot de laagste validatiekoste te komen (Validatie RMSE = 0.98). Bij een model van 14 features ligt de optimale opzet van het netwerk bij 14x5x1 (Validatie RMSE = 0.94). Vooralsnog wordt er verdergegaan met de architectuur met 14 features, aangezien deze in de laagste kosten resulteert, hoewel hiermee natuurlijk wel veel informatie verloren gaat. In de toekomst kan deze opzet aangepast worden, als blijkt dat daarmee de kosten nog verder teruggedrongen worden.
 
-**!!!! Hoe gaat de Complexiteit er uiteindelijk uitzien?**
+**Batch size, BatchNormalization en Dropout**
 
 # Model training
 
@@ -48,11 +50,11 @@ Voor iedere fold is een model getraind met alle features en optimizer adam om he
 ## Optimizer
 De validatiedata heeft in veel van de gevallen een hoge loss. Daarom wordt er gezocht naar een betere optimizer voor het Neural Network. De eerste optimizer die in Milestone 1 is gebruikt is de 'adam' optimizer. Om te bepalen welke optimizer het beste past bij de data, zijn alle optimizers van Keras geprobeerd met verschillende learning rates. Om te bepalen welke optimizer met welke learning rate het beste bij het model past, wordt de RMSE loss opnieuw geplot.
 
-Om een eerste indruk te krijgen van de verschillende optimizers en deze goed te kunnen vergelijken wordt er in eerste instantie gewerkt met 100 epochs. Een analyse van iedere mogelijke optimizer met 100 epochs en ieders default learning rate - 0.01 voor SGD en  0.001 voor de overige optimizers - wijst een aantal interessante dingen uit. Zo blijken SGD (RMSE = 7.81), Adam (RMSE = 1.27), Adadelta (RMSE = 3.26) en Adagrad (RMSE = 2.20) niet de beste keuzes te zijn, omdat deze modellen al vrij snel in het trainingproces (bijvoorbeeld na 20 epochs) al niet verder lijken te leren met nog relatief hoge kosten.
+Om een eerste indruk te krijgen van de verschillende optimizers en deze goed te kunnen vergelijken wordt er in eerste instantie gewerkt met 100 epochs. Een analyse van iedere mogelijke optimizer met 100 epochs en ieders default learning rate - 0.01 voor SGD en  0.001 voor de overige optimizers - wijst een aantal interessante dingen uit. Zo blijken SGD (Validatie RMSE = 7.81), Adam (Validatie RMSE = 1.27), Adadelta (Validatie RMSE = 3.26) en Adagrad (Validatie RMSE = 2.20) niet de beste keuzes te zijn, omdat deze modellen al vrij snel in het trainingproces (bijvoorbeeld na 20 epochs) al niet verder lijken te leren met nog relatief hoge kosten.
 
-Adamax (RMSE = 1.08), Nadam (RMSE = 1.07), RMSProp (RMSE = 1.13) en Ftrl (RMSE = 1.24) blijken na de analyse met 100 epochs daarentegen nog wel optimizers die mogelijk het overwegen waard zijn, omdat deze de laagste validatiekosten opleveren en/of nog duidelijk aan het leren zijn tegen het einde van het trainen.
+Adamax (Validatie RMSE = 1.08), Nadam (Validatie RMSE = 1.07), RMSProp (Validatie RMSE = 1.13) en Ftrl (Validatie RMSE = 1.24) blijken na de analyse met 100 epochs daarentegen nog wel optimizers die mogelijk het overwegen waard zijn, omdat deze de laagste validatiekosten opleveren en/of nog duidelijk aan het leren zijn tegen het einde van het trainen.
 
-Na een analyse met 300 epochs en nog altijd ieders default learning rate lijkt Nadam (RMSE = 0.94) de beste keuze te zijn voor het regressieprobleem. Bij RMSProp stegen de validatiekosten namelijk naarmate het aantal epochs toenam (RMSE = 1.37). Ftrl (RMSE = 1.23) leek niet veel meer te leren met 200 extra epochs, maar de kostenplot was wel erg glad. Hoewel Adamax het ook zeker niet slecht doet (RMSE = 0.98), lijkt dit model al gestopt te zijn met leren waar Nadams validatiekosten nog dalen. Bovendien resulteerde het model met de Nadam optimizer in de laagste kosten, en deze lijken zelfs nog een beetje te dalen na 300 epochs.
+Na een analyse met 300 epochs en nog altijd ieders default learning rate lijkt Nadam (Validatie RMSE = 0.94) de beste keuze te zijn voor het regressieprobleem. Bij RMSProp stegen de validatiekosten namelijk naarmate het aantal epochs toenam (Validatie RMSE = 1.37). Ftrl (Validatie RMSE = 1.23) leek niet veel meer te leren met 200 extra epochs, maar de kostenplot was wel erg glad. Hoewel Adamax het ook zeker niet slecht doet (Validatie RMSE = 0.98), lijkt dit model al gestopt te zijn met leren waar Nadams validatiekosten nog dalen. Bovendien resulteerde het model met de Nadam optimizer in de laagste kosten, en deze lijken zelfs nog een beetje te dalen na 300 epochs.
 
 Al met al lijkt de Nadam optimizer de beste keuze, maar Adamax en Ftrl moeten in het achterhoofd gehouden worden, aangezien deze mogelijk betere resultaten geven met andere learning rates, extra hidden layers of extra hidden nodes.
 
@@ -63,14 +65,15 @@ Er wordt dus nog steeds full batch gradient descent gebruikt, maar dan nu met de
 ## K-fold cross validation
 Om het model te kunnen evalueren is de RMSE van alle 5 folds gemiddeld genomen. Dit is vervolgens geplot zoals eerder is gedaan in Milestone 1. Voor alle 5 folds zijn 300 epochs gebruikt. Het verschil in learning curves is te zien in de volgende plots. De eerste plot is de learning curve van het baseline model, de tweede plot is de learning curve van het model met K-fold cross validation.
 
-< afbeelding 'Learning_curve_K_fold_all_features' >
+![Baseline model met 14 features en Nadam](URL)
+![Model na k-fold met 14 features en Nadam](URL)
 
 Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. Gestratificeerde k-fold cross validation blijkt dus een goede oplossing te zijn voor dit probleem.
 
 ## RMSE Metric
 Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt van een RootMeanSquaredError learning curve. Deze plot geeft het gemiddelde verschil aan tussen de daadwerkelijke waarden en de voorspelde waarden; bij een hoge RMSE is het verschil groot, bij een kleine RMSE is het verschil klein.
 
-<Losses plot>
+![Training en validation losses van 14x5x1](URL)
 
 **Conclusie: hoe goed is ons model? RMSE & complexiteit geven.**
 
