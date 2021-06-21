@@ -42,7 +42,7 @@ def select_features(X_train, y_train, X_test, k={}):
     return X_train_best, X_test_best, feature_scores
 
 # select 'k' best features based on barplot, see images: 'best_features_barplot'
-k = 73
+k = 93
 
 train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
 
