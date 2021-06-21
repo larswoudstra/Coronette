@@ -84,4 +84,4 @@ Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie,
 
 In de toekomst zal er geprobeerd worden de kosten verder te minimaliseren, bijvoorbeeld door middel van aanpassingen van de batch size, het aantal epochs of verdere verbeteringen van de architectuur van het netwerk. Ook zal de trainingdata gesplitst worden op testdata, zodat de prestaties van het model getoetst kan worden op nieuwe data.
 
-Daarnaast wordt er nog gekeken naar het aanpassen van de learning rate voor optimizer Nadam om te voorkomen dat het model vast blijft zitten op een zadelpunt. 
+Daarnaast wordt er nog gekeken naar het aanpassen van de learning rate voor optimizer Nadam om te voorkomen dat het model eventueel vast blijft zitten op een zadelpunt. De validation RMSE blijft namelijk na veel verschillende configuraties hangen op een waarde tussen 0.94 en 1.  
