@@ -43,12 +43,17 @@ def select_features(X_train, y_train, X_test, k={}):
 
 # select 'k' best features based on barplot, see images: 'best_features_barplot'
 <<<<<<< HEAD
+k = 14
+=======
+<<<<<<< HEAD
 k = 53
 =======
 k = 93
 >>>>>>> 6758ef499aa3244f4a4b46faeea793bdf98e46b9
+>>>>>>> 24a480d9829d29a4d62e846db06a9c183ad284f4
 
 train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
+
 
 # Part 2: creating and testing the model
 
@@ -75,6 +80,10 @@ for train, val in kf.split(train_k_best):
     # add fully connected layers
     # - 93 input nodes
     # - 3 hidden layers (93, 60, and nodes, reLU activation)
+<<<<<<< HEAD
+    model.add(layers.Dense(units=40, activation='relu', input_shape=(k,)))
+    model.add(layers.Dense(units=20, activation='relu'))
+=======
     model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
 <<<<<<< HEAD
 
@@ -100,7 +109,6 @@ for train, val in kf.split(train_k_best):
 >>>>>>> 24a480d9829d29a4d62e846db06a9c183ad284f4
 
     # - 1 output node with a linear activation function
-    model.add(layers.Dropout(0.3))
     model.add(layers.Dense(units=1))
 
     # compile the model with the Nadam optimizer
