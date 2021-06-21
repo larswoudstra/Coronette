@@ -24,3 +24,12 @@ Alle variabelen (behalve de staten) zijn percentages, en dus op dezelfde schaal.
 Correlation is a measure of how two variables change together. Perhaps the most common correlation measure is Pearson’s correlation that assumes a Gaussian distribution to each variable and reports on their linear relationship.
 
 The scikit-learn machine library provides an implementation of the correlation statistic in the f_regression() function. -->
+
+
+# verbeteringen?
+  # test data maken en dan kijken of we 300 epochs zonder batch size, of 700 epochs met batch size = 50/70 willen.
+
+## Difference plot
+Wanneer een voorspeld percentage lager is dan het daadwerkelijke percentage positieve Covid tests, kan dit grotere gevolgen hebben dan wanneer het percentage hoger is voorspeld. Om dit in kaart te brengen is er een difference plot aan het model toegevoegd. Deze plot laat zien wat de verschillen zijn tussen de voorspelde percentages en de daadwerkelijke percentages van de validation data:
+
+< afbeelding 'difference_plot'

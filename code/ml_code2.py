@@ -42,11 +42,7 @@ def select_features(X_train, y_train, X_test, k={}):
     return X_train_best, X_test_best, feature_scores
 
 # select 'k' best features based on barplot, see images: 'best_features_barplot'
-<<<<<<< HEAD
-k = 93
-=======
 k = 14
->>>>>>> 070fea0506dc8ac31389f559053a3985127ae46b
 
 train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
 
@@ -75,11 +71,8 @@ for train, val in kf.split(train_k_best, train_targets):
     # add fully connected layers
     # - 93 input nodes
     # - 3 hidden layers (93, 60, and nodes, reLU activation)
-<<<<<<< HEAD
     model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
-=======
     model.add(layers.Dense(units=5, activation='relu', input_shape=(k,)))
->>>>>>> 070fea0506dc8ac31389f559053a3985127ae46b
 
     # - 1 output node with a linear activation function
     model.add(layers.Dense(units=1))
@@ -89,7 +82,7 @@ for train, val in kf.split(train_k_best, train_targets):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
-    history = model.fit(train_data_fold, train_targets_fold, epochs=300, validation_data=(val_data_fold, val_targets_fold))
+    history = model.fit(train_data_fold, train_targets_fold, batch_size=70, epochs=1000, validation_data=(val_data_fold, val_targets_fold))
 
     y_pred = model.predict(val_data_fold)
 
