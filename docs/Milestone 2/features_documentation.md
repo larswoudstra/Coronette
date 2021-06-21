@@ -12,7 +12,8 @@ Het gaat hier dus eigenlijk slechts om een viertal features (hh_cmnty_cli, nohh_
 
 Gezien de 14 pieken wordt SelectKBest nogmaals uitgevoerd, maar nu met k=14 waarna er een nieuwe training- en testdataset gevormd wordt met de 14 features met de hoogste correlatiescores.
 
-
+# Wat is 140.000?
+# Mutual info proberen
 
 <!-- f_regression : F-value between label/feature for regression tasks.
 
