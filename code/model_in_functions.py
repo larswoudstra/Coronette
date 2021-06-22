@@ -55,7 +55,7 @@ def select_features(X_train, y_train, X_test, k={}):
 
 # Part 2: creating and testing the model
 
-def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold):
+def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold, batch_size={}, epochs={}, layer_sizes=[]):
         """Creates and trains a neural network. Returns the history."""
 
         # set the 'He' weight initializer
