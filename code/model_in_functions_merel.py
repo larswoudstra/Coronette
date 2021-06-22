@@ -54,7 +54,8 @@ def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val
         model = models.Sequential()
 
         # add fully connected layers
-        model.add(layers.Dense(units=1, input_shape=(93,)))
+        model.add(layers.Dense(units=5, activation='relu', input_shape=(14,)))
+        model.add(layers.Dense(units=1))
 
         # compile the model with the Nadam optimizer
         model.compile(loss='mean_squared_error', optimizer='Nadam',
@@ -132,7 +133,7 @@ def test_NN(train_data, n, k):
     train_data, train_targets = transform_data(train_df)
 
     #select features
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=93)
+    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # train the model
     history = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
@@ -157,10 +158,10 @@ if __name__ == "__main__":
     test_data = covid_df_test.to_numpy()
 
     # select 'k' best features based on barplot (see 'best_features_barplot')
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=93)
+    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # # train neural network using k-fold cross validation
     # kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(covid_df_train, 5, 93)
+    test_NN(covid_df_train, 5, 14)
