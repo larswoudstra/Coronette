@@ -12,6 +12,7 @@ from sklearn.feature_selection import SelectKBest, f_regression
 def load_data(set, n):
     """Loads csv-file into a dataframe and removes the first column (ID).
     Creates a test dataframe out of every nth row of the complete dataset"""
+
     # load the data
     covid_df = pd.read_csv(f"data_covid/covid.{set}.csv")
     # remove id-column
@@ -28,6 +29,7 @@ def load_data(set, n):
 def transform_data(training_data):
     """Splits dataset into data and target values. Transforms data from dataframe
     to array."""
+
     # get data and target values
     data_df = training_data.iloc[:, :-1]
     targets_df = training_data.iloc[:, -1:]
@@ -40,6 +42,7 @@ def transform_data(training_data):
 
 def select_features(X_train, y_train, X_test, k={}):
     """Determines the features with the highest importance, based on correlation with the output."""
+
     # select all features
     feature_scores = SelectKBest(f_regression, k=k)
 
@@ -51,7 +54,6 @@ def select_features(X_train, y_train, X_test, k={}):
     X_test_best = feature_scores.transform(X_test)
 
     return X_train_best, X_test_best, feature_scores
-
 
 # Part 2: creating and testing the model
 
@@ -92,12 +94,14 @@ def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val
 
 def get_data_and_targets(train, val, training_data, training_targets):
     """Splits training data and targets into training and validation data."""
+
     return training_data[train], training_targets[train], training_data[val], training_targets[val]
 
 
 def kfold_NN(train_k_best, train_targets):
     """Runs neural network and applies k-fold cross validation. Returns the
     RMSE values for the training and validation data."""
+
     # init variables that contain the calculated RMSE
     rmse_val = 0
     rmse_train = 0
@@ -129,7 +133,7 @@ def kfold_NN(train_k_best, train_targets):
 
 def plot_RMSE(rmse_train, rmse_val, fold=5):
     """Plots the average RMSE for the training and validation data."""
-    
+
     # calculate average RMSE
     rmse_train_avg = rmse_train / fold
     rmse_val_avg = rmse_val / fold
