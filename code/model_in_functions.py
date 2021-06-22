@@ -49,6 +49,7 @@ def select_features(X_train, y_train, X_test, k={}):
 # Part 2: creating and testing the model
 
 def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold):
+        """Creates and trains a neural network. Returns the history."""
         # initialize a neural network
         model = models.Sequential()
 
@@ -71,10 +72,13 @@ def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val
         return history
 
 def get_data_and_targets(train, val, training_data, training_targets):
+    """Splits training data and targets into training and validation data."""
     return training_data[train], training_targets[train], training_data[val], training_targets[val]
 
 
 def kfold_NN(train_k_best, train_targets):
+    """Runs neural network and applies k-fold cross validation. Returns the
+    RMSE values for the training and validation data."""
     # init variables that contain the calculated RMSE
     rmse_val = 0
     rmse_train = 0
@@ -106,7 +110,7 @@ def kfold_NN(train_k_best, train_targets):
 # Part 4: model evaluation
 
 def plot_RMSE(rmse_train, rmse_val):
-
+    """Plots the average RMSE for the training and validation data."""
     # calculate average RMSE
     rmse_train_avg = rmse_train / fold
     rmse_val_avg = rmse_val / fold
@@ -118,10 +122,9 @@ def plot_RMSE(rmse_train, rmse_val):
     plt.show()
 
 
-# run program
+# Run program
 
 if __name__ == "__main__":
-
     # load training and testing datasets
     covid_df_train = load_data("train")
     covid_df_test = load_data("test")
