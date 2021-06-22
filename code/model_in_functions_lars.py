@@ -119,6 +119,7 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.plot(rmse_train_avg)
     plt.plot(rmse_val_avg)
     plt.legend(['RMSE train', 'RMSE val'])
+    plt.title(f'The RMSE validation value is: {rmse_val[-1]}')
     plt.show()
 
 def test_NN(train_data, n, k):
