@@ -5,6 +5,8 @@ import tensorflow as tf
 from tensorflow.keras import layers, models, metrics
 from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.feature_selection import SelectKBest, f_regression
+from tensorflow.keras import layers
+from tensorflow.keras.layers.experimental import preprocessing
 
 # Part 1: loading and cleaning the data
 
@@ -42,7 +44,15 @@ def select_features(X_train, y_train, X_test, k={}):
     return X_train_best, X_test_best, feature_scores
 
 # select 'k' best features based on barplot, see images: 'best_features_barplot'
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3a2e0b6a7bd2b1fcecca2fbe13041fa0db6a4251
+k = 93
+=======
 k = 14
+>>>>>>> 5751b6e7d4adcd8f2a3deeed1f55106243878268
 
 train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k)
 
@@ -65,14 +75,36 @@ for train, val in kf.split(train_k_best, train_targets):
     val_data_fold = train_k_best[val]
     val_targets_fold = train_targets[val]
 
+    normalizer = preprocessing.Normalization()
+    normalizer.adapt(train_data_fold)
+    normalizer.adapt(val_data_fold)
+
     # for each fold, initialize a neural network
     model = models.Sequential()
 
     # add fully connected layers
     # - 93 input nodes
     # - 3 hidden layers (93, 60, and nodes, reLU activation)
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    model.add(layers.Dense(units=(k*(2/3)), activation='relu', input_shape=(k,)))
+    model.add(layers.BatchNormalization())
+    model.add(layers.Dense(units=round(k*(1/3)), activation='relu'))
+    model.add(layers.BatchNormalization())
+=======
     model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
+>>>>>>> 3a2e0b6a7bd2b1fcecca2fbe13041fa0db6a4251
+=======
+=======
+    model.add(layers.Dense(units=k, activation='relu', input_shape=(k,)))
+<<<<<<< HEAD
+>>>>>>> c422bf231096aa361cf626dc3cd5609bc0f43f2e
+    model.add(layers.Dense(units=5, activation='relu', input_shape=(k,)))
+>>>>>>> 5751b6e7d4adcd8f2a3deeed1f55106243878268
+=======
     model.add(layers.Dense(units=5, activation='relu'))
+>>>>>>> c006d0bd033a530a39e8f29070e95972ce1838c2
 
     # - 1 output node with a linear activation function
     model.add(layers.Dense(units=1))
