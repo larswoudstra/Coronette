@@ -129,6 +129,7 @@ def kfold_NN(train_k_best, train_targets):
 
 def plot_RMSE(rmse_train, rmse_val, fold=5):
     """Plots the average RMSE for the training and validation data."""
+    
     # calculate average RMSE
     rmse_train_avg = rmse_train / fold
     rmse_val_avg = rmse_val / fold
@@ -141,8 +142,7 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.show()
 
 def test_NN(train_data, train_targets, test_data, test_targets, k):
-    """Creates a test data set out of the full training dataframe and tests the
-    trained model"""
+    """Tests the trained model on test data and plots the Test RMSE"""
 
     # select features
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
@@ -152,9 +152,9 @@ def test_NN(train_data, train_targets, test_data, test_targets, k):
 
     # compute RMSE-values for training and validation data
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
-    rmse_val = np.asarray(history.history['val_root_mean_squared_error'])
+    rmse_test = np.asarray(history.history['val_root_mean_squared_error'])
 
-    plot_RMSE(rmse_train, rmse_val, fold=1)
+    plot_RMSE(rmse_train, rmse_test, fold=1)
 
 # Run program
 
