@@ -72,7 +72,7 @@ Om het model te kunnen evalueren is de RMSE van alle 5 folds gemiddeld genomen. 
 ![Baseline model met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/baselinemodel_nadam_k93.png)
 ![Model na k-fold met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/k_fold_k93_1hidden.png)
 
-Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. Gestratificeerde k-fold cross validation blijkt dus een goede oplossing te zijn voor dit probleem.
+Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. 
 
 ## RMSE Metric
 Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt van een RootMeanSquaredError learning curve. Deze plot geeft het gemiddelde verschil aan tussen de daadwerkelijke waarden en de voorspelde waarden; bij een hoge RMSE is het verschil groot, bij een kleine RMSE is het verschil klein.

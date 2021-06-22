@@ -104,12 +104,12 @@ def kfold_NN(train_k_best, train_targets):
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
         rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
 
-    return rmse_train, rmse_val
+    plot_RMSE(rmse_train, rmse_val)
 
 
 # Part 4: model evaluation
 
-def plot_RMSE(rmse_train, rmse_val):
+def plot_RMSE(rmse_train, rmse_val, fold=5):
     """Plots the average RMSE for the training and validation data."""
     # calculate average RMSE
     rmse_train_avg = rmse_train / fold
@@ -119,8 +119,31 @@ def plot_RMSE(rmse_train, rmse_val):
     plt.plot(rmse_train_avg)
     plt.plot(rmse_val_avg)
     plt.legend(['RMSE train', 'RMSE val'])
+    plt.title(f'The RMSE validation value is: {rmse_val[-1]}')
     plt.show()
 
+def test_NN(train_data, n, k):
+    """Creates a test data set out of the full training dataframe and tests the
+    trained model"""
+    # select every nth row out of full train data set to create test data
+    test_df = train_data.iloc[::n]
+    test_data, test_targets = transform_data(test_df)
+
+    # remove test data from training data
+    train_df = train_data.drop(train_data.index[::n])
+    train_data, train_targets = transform_data(train_df)
+
+    #select features
+    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
+
+    # train the model
+    history = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
+
+    # compute RMSE-values for training and validation data
+    rmse_train = np.asarray(history.history['root_mean_squared_error'])
+    rmse_val = np.asarray(history.history['val_root_mean_squared_error'])
+
+    plot_RMSE(rmse_train, rmse_val, fold=1)
 
 # Run program
 
@@ -139,7 +162,7 @@ if __name__ == "__main__":
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # train neural network using k-fold cross validation
-    rmse_train, rmse_val = kfold_NN(train_k_best, train_targets)
+    #kfold_NN(train_k_best, train_targets)
 
-    # plot the model
-    plot_RMSE(rmse_train, rmse_val)
+    # test the neural network creating train and test data
+    test_NN(covid_df_train, 5, 14)
