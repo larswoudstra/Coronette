@@ -57,20 +57,32 @@ def select_features(X_train, y_train, X_test, k={}):
 
 def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold):
         """Creates and trains a neural network. Returns the history."""
+
+        # set the 'He' weight initializer
+        initializer = tf.keras.initializers.he_normal(seed=None)
+
         # initialize a neural network
         model = models.Sequential()
 
-        # add fully connected layers
-        model.add(layers.Dense(units=14, activation='relu', input_shape=(14,)))
-        model.add(layers.Dense(units=5, activation='relu'))
-        model.add(layers.Dense(units=1))
+        # define the input size
+        input_size = train_data_fold.shape[1]
+
+        # add first fully connected layer with a ReLU-activation function and an input size
+        model.add(layers.Dense(units=layer_sizes[0], activation='relu', input_shape=(input_size,), kernel_initializer=initializer))
+
+        # add hidden layers with ReLU-activation function(s)
+        for layer in layer_sizes[1:-1]:
+            model.add(layers.Dense(units=layer, activation='relu'))
+
+        # add output layer without activation function
+        model.add(layers.Dense(units=layer_sizes[-1]))
 
         # compile the model with the Nadam optimizer
         model.compile(loss='mean_squared_error', optimizer='Nadam',
                     metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
         # train the model
-        history = model.fit(train_data_fold, train_targets_fold, batch_size=70, epochs=700, validation_data=(val_data_fold, val_targets_fold))
+        history = model.fit(train_data_fold, train_targets_fold, batch_size=batch_size, epochs=epochs, validation_data=(val_data_fold, val_targets_fold))
 
         # evaluate the model
         print(f"Training RMSE: {model.evaluate(train_data_fold, train_targets_fold)[1]}")
@@ -105,7 +117,7 @@ def kfold_NN(train_k_best, train_targets):
         # get training data and targets from data
         train_data_fold, train_targets_fold, val_data_fold, val_targets_fold = get_data_and_targets(train, val, train_k_best, train_targets)
 
-        history = train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold)
+        history = train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold, 70, 700, [14, 5, 1])
 
         # compute RMSE-values for training and validation data
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
@@ -128,7 +140,7 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.title(f'The RMSE validation value is: {rmse_val[-1]:.2f}')
     plt.show()
 
-def test_NN(train_data, train_targets, test_data, test_targets, n, k):
+def test_NN(train_data, train_targets, test_data, test_targets, k):
     """Creates a test data set out of the full training dataframe and tests the
     trained model"""
 
@@ -136,7 +148,7 @@ def test_NN(train_data, train_targets, test_data, test_targets, n, k):
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # train the model
-    history = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
+    history = train_neural_network(train_k_best, train_targets, test_k_best, test_targets, 70, 700, [14, 5, 1])
 
     # compute RMSE-values for training and validation data
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
@@ -156,11 +168,14 @@ if __name__ == "__main__":
     # transform testing data into numpy
     test_data, test_targets = transform_data(covid_df_test)
 
+    # define the amount of most relevant features selected for training
+    selected_features = 14
+
     # select 'k' best features based on barplot (see 'best_features_barplot')
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
+    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=selected_features)
 
     # train neural network using k-fold cross validation
     #kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(train_data, train_targets, test_data, test_targets, 5, 14)
+    test_NN(train_data, train_targets, test_data, test_targets, selected_features)
