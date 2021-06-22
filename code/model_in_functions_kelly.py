@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from tensorflow.keras import layers, models, metrics
+from tensorflow.keras import layers, models, metrics, initializers
 from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.feature_selection import SelectKBest, f_regression
 
@@ -57,11 +57,16 @@ def select_features(X_train, y_train, X_test, k={}):
 
 def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold):
         """Creates and trains a neural network. Returns the history."""
+
+        # set the 'He' weight initializer
+        initializer = tf.keras.initializers.he_normal(seed=None)
+
         # initialize a neural network
         model = models.Sequential()
 
         # add fully connected layers
-        model.add(layers.Dense(units=14, activation='relu', input_shape=(14,)))
+        model.add(layers.Dense(units=14, activation='relu', input_shape=(14,),
+                                kernel_initializer=initializer))
         model.add(layers.Dense(units=5, activation='relu'))
         model.add(layers.Dense(units=1))
 
