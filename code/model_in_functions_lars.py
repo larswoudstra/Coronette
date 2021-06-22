@@ -119,18 +119,18 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.plot(rmse_train_avg)
     plt.plot(rmse_val_avg)
     plt.legend(['RMSE train', 'RMSE val'])
-    plt.title(f'The RMSE validation value is: {rmse_val[-1]}')
+    plt.title(f'The RMSE validation value is: {rmse_val[-1]:.2f}')
     plt.show()
 
 def test_NN(train_data, n, k):
     """Creates a test data set out of the full training dataframe and tests the
     trained model"""
     # select every nth row out of full train data set to create test data
-    test_df = train_data.iloc[::n]
+    test_df = train_data.iloc[1::n]
     test_data, test_targets = transform_data(test_df)
 
     # remove test data from training data
-    train_df = train_data.drop(train_data.index[::n])
+    train_df = train_data.drop(train_data.index[1::n])
     train_data, train_targets = transform_data(train_df)
 
     #select features
