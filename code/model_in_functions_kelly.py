@@ -9,14 +9,21 @@ from sklearn.feature_selection import SelectKBest, f_regression
 
 # Part 1: loading and cleaning the data
 
-def load_data(set):
-    """Loads csv-file into a dataframe and removes the first column (ID)."""
+def load_data(set, n):
+    """Loads csv-file into a dataframe and removes the first column (ID).
+    Creates a test dataframe out of every nth row of the complete dataset"""
     # load the data
     covid_df = pd.read_csv(f"data_covid/covid.{set}.csv")
     # remove id-column
     covid_df = covid_df.drop(['id'], axis=1)
 
-    return covid_df
+    # select every nth row out of full train data set to create test data
+    test_df = covid_df.iloc[::n]
+
+    # remove test data from training data
+    train_df = covid_df.drop(covid_df.index[::n])
+
+    return train_df, test_df
 
 def transform_data(training_data):
     """Splits dataset into data and target values. Transforms data from dataframe
@@ -106,7 +113,6 @@ def kfold_NN(train_k_best, train_targets):
 
     plot_RMSE(rmse_train, rmse_val)
 
-
 # Part 4: model evaluation
 
 def plot_RMSE(rmse_train, rmse_val, fold=5):
@@ -122,16 +128,9 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.title(f'The RMSE validation value is: {rmse_val[-1]:.2f}')
     plt.show()
 
-def test_NN(train_data, n, k):
+def test_NN(train_data, train_targets, test_data, test_targets, n, k):
     """Creates a test data set out of the full training dataframe and tests the
     trained model"""
-    # select every nth row out of full train data set to create test data
-    test_df = train_data.iloc[1::n]
-    test_data, test_targets = transform_data(test_df)
-
-    # remove test data from training data
-    train_df = train_data.drop(train_data.index[1::n])
-    train_data, train_targets = transform_data(train_df)
 
     #select features
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
@@ -149,14 +148,13 @@ def test_NN(train_data, n, k):
 
 if __name__ == "__main__":
     # load training and testing datasets
-    covid_df_train = load_data("train")
-    covid_df_test = load_data("test")
+    covid_df_train, covid_df_test = load_data("train", 5)
 
     # get training data and training targets
     train_data, train_targets = transform_data(covid_df_train)
 
     # transform testing data into numpy
-    test_data = covid_df_test.to_numpy()
+    test_data, test_targets = transform_data(covid_df_test)
 
     # select 'k' best features based on barplot (see 'best_features_barplot')
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
@@ -165,4 +163,4 @@ if __name__ == "__main__":
     #kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(covid_df_train, 5, 14)
+    test_NN(train_data, train_targets, test_data, test_targets, 5, 14)
