@@ -6,7 +6,7 @@ Aan de hand van de RMSE learning curve van het eerste model leek het in de eerst
 
 ![Train-test-split Milestone 1 alle features](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_plus_mental_health.png)
 
-In veel van de gevallen heeft de validation data een hoge loss. Dit betekent dat het model de percentages van de validation data niet goed kan voorspellen. Om dit probleem te verhelpen is er geprobeerd om met minder features te gaan werken. De mentale-gezondheids-features leken hiervoor het best geschikt om weg te laten, omdat deze eerder de gevolgen van de positieve testuitslagen lijken aan te geven, in plaats van de oorzaak. De features die zijn weggelaten zijn: anxious, depressed, felt_isolated, worried_become_ill en worried_finances. Dit had het volgende resultaat:
+In veel van de gevallen heeft de validation data een hoge loss. Dit betekent dat het model de percentages van de validation data niet goed kan voorspellen. Om dit probleem te verhelpen is er geprobeerd om met minder features te gaan werken. De mentale-gezondheids-features leken hiervoor het best geschikt om weg te laten, omdat deze intuïtief eerder de gevolgen van de positieve testuitslagen lijken aan te geven, in plaats van de oorzaak. De features die zijn weggelaten zijn: anxious, depressed, felt_isolated, worried_become_ill en worried_finances. Dit had het volgende resultaat:
 
 ![Train-test-split Milestone 1 zonder mentale features](https://github.com/larswoudstra/Coronette/blob/main/docs/images/losses_min_mental_health.png)
 
@@ -72,14 +72,14 @@ Om het model te kunnen evalueren is de RMSE van alle 5 folds gemiddeld genomen. 
 ![Baseline model met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/baselinemodel_nadam_k93.png)
 ![Model na k-fold met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/k_fold_k93_1hidden.png)
 
-Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. 
+Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata.
 
 ## RMSE Metric
 Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt van een RootMeanSquaredError learning curve. Deze plot geeft het gemiddelde verschil aan tussen de daadwerkelijke waarden en de voorspelde waarden; bij een hoge RMSE is het verschil groot, bij een kleine RMSE is het verschil klein.
 
 ![Training en validation losses van 14x5x1](https://github.com/larswoudstra/Coronette/blob/main/docs/images/14x5x1_70batch_700epoch.png)
 
-## Conclusie
+## Conclusie Milestone 2
 Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie, een ReLU-activatiefunctie voor de hidden layer, een lineaire activatiefunctie voor de outputlayer, de 'Nadam' optimizer, een batchsize van 70 en 700 epochs de beste resultaten gebaseerd op de RMSE-metric (Validatie RMSE = 0.94)
 
 In de toekomst zal er geprobeerd worden de kosten verder te minimaliseren, bijvoorbeeld door middel van aanpassingen van de batch size, het aantal epochs of verdere verbeteringen van de architectuur van het netwerk. Ook zal de trainingdata gesplitst worden op testdata, zodat de prestaties van het model getoetst kan worden op nieuwe data.
