@@ -82,7 +82,7 @@ for train, val in kf.split(train_k_best, train_targets):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
-    history = model.fit(train_data_fold, train_targets_fold, batch_size=70, epochs=1000, validation_data=(val_data_fold, val_targets_fold))
+    history = model.fit(train_data_fold, train_targets_fold, batch_size=70, epochs=1500, validation_data=(val_data_fold, val_targets_fold))
 
     y_pred = model.predict(val_data_fold)
 
