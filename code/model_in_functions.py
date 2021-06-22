@@ -144,7 +144,7 @@ def test_NN(train_data, train_targets, test_data, test_targets, k):
     """Creates a test data set out of the full training dataframe and tests the
     trained model"""
 
-    #select features
+    # select features
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # train the model
@@ -168,10 +168,10 @@ if __name__ == "__main__":
     # transform testing data into numpy
     test_data, test_targets = transform_data(covid_df_test)
 
-    # define the amount of most relevant features selected for training
+    # define the number of features selected for training based on barplot (see 'best_features_barplot')
     selected_features = 14
 
-    # select 'k' best features based on barplot (see 'best_features_barplot')
+    # select 'k' best features
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=selected_features)
 
     # train neural network using k-fold cross validation
