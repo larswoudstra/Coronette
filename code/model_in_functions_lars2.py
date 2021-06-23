@@ -55,7 +55,7 @@ def select_features(X_train, y_train, X_test, k={}):
 
 # Part 2: creating and testing the model
 
-def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold, batch_size, epochs, layer_sizes):
+def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold, batch_size, epochs, hidden_layer_sizes):
     """Creates and trains a neural network. Returns the history."""
 
     # set the 'He' weight initializer
@@ -68,14 +68,14 @@ def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val
     input_size = train_data_fold.shape[1]
 
     # add first fully connected layer with a ReLU-activation function and an input size
-    model.add(layers.Dense(units=layer_sizes[0], activation='relu', input_shape=(input_size,), kernel_initializer=initializer))
+    model.add(layers.Dense(units=hidden_layer_sizes[0], activation='relu', input_shape=(input_size,), kernel_initializer=initializer))
 
     # add hidden layers with ReLU-activation function(s)
-    for layer in layer_sizes[1:-1]:
+    for layer in hidden_layer_sizes[1:-1]:
         model.add(layers.Dense(units=layer, activation='relu'))
 
-        # add output layer without activation function
-        model.add(layers.Dense(units=layer_sizes[-1]))
+    # add output layer without activation function
+    model.add(layers.Dense(units=1))
 
     # compile the model with the Nadam optimizer
     model.compile(loss='mean_squared_error', optimizer='Nadam',
@@ -98,7 +98,7 @@ def get_data_and_targets(train, val, training_data, training_targets):
     return training_data[train], training_targets[train], training_data[val], training_targets[val]
 
 
-def kfold_NN(train_k_best, train_targets, batch_size, epochs, layer_sizes):
+def kfold_NN(train_k_best, train_targets, batch_size, epochs, hidden_layer_sizes, folds):
     """Runs neural network and applies k-fold cross validation. Returns the
     RMSE values for the training and validation data."""
     # init variables that contain the calculated RMSE
@@ -120,7 +120,7 @@ def kfold_NN(train_k_best, train_targets, batch_size, epochs, layer_sizes):
         # get training data and targets from data
         train_data_fold, train_targets_fold, val_data_fold, val_targets_fold = get_data_and_targets(train, val, train_k_best, train_targets)
 
-        history, preds = train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold, 70, 700, [14, 5, 1])
+        history, preds = train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold, batch_size=batch_size, epochs=epochs, hidden_layer_sizes=hidden_layer_sizes)
 
         # compute RMSE-values for training and validation data
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
@@ -151,19 +151,19 @@ def plot_differences(y_preds, y_targets):
     plt.title('Histogram of differences between prediction values and target values')
     plt.show()
 
-def test_NN(train_data, train_targets, test_data, test_targets, selected_features=14, batch_size=70, epochs=700, layer_sizes=[14, 5, 1], kfold=False, fold=5):
+def NN(train_data, train_targets, test_data, test_targets, k_features=14, batch_size=70, epochs=700, hidden_layer_sizes=[5], kfold=False, folds=5):
     """Creates a test data set out of the full training dataframe and tests the
     trained model"""
 
     # select features
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=selected_features)
+    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=k_features)
 
     if kfold == True:
-        kfold_NN(train_k_best, train_targets, batch_size=batch_size, epochs=epochs, layer_sizes=layer_sizes)
+        kfold_NN(train_k_best, train_targets, batch_size=batch_size, epochs=epochs, hidden_layer_sizes=hidden_layer_sizes, folds=folds)
 
     else:
         # train the model
-        history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets, batch_size=batch_size, epochs=epochs, layer_sizes=layer_sizes)
+        history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets, batch_size=batch_size, epochs=epochs, hidden_layer_sizes=hidden_layer_sizes)
 
         # compute RMSE-values for training and validation data
         rmse_train = np.asarray(history.history['root_mean_squared_error'])
@@ -186,4 +186,4 @@ if __name__ == "__main__":
     test_data, test_targets = transform_data(covid_df_test)
 
     # test the neural network creating train and test data
-    test_NN(train_data, train_targets, test_data, test_targets, kfold=True)
+    NN(train_data, train_targets, test_data, test_targets, batch_size=70, epochs=700, hidden_layer_sizes=[5], k_features=14, kfold=False, folds=5)

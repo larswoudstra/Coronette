@@ -9,14 +9,21 @@ from sklearn.feature_selection import SelectKBest, f_regression
 
 # Part 1: loading and cleaning the data
 
-def load_data(set):
-    """Loads csv-file into a dataframe and removes the first column (ID)."""
+def load_data(set, n):
+    """Loads csv-file into a dataframe and removes the first column (ID).
+    Creates a test dataframe out of every nth row of the complete dataset"""
     # load the data
     covid_df = pd.read_csv(f"data_covid/covid.{set}.csv")
     # remove id-column
     covid_df = covid_df.drop(['id'], axis=1)
 
-    return covid_df
+    # select every nth row out of full train data set to create test data
+    test_df = covid_df.iloc[::n]
+
+    # remove test data from training data
+    train_df = covid_df.drop(covid_df.index[::n])
+
+    return train_df, test_df
 
 def transform_data(training_data):
     """Splits dataset into data and target values. Transforms data from dataframe
@@ -67,11 +74,14 @@ def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val
     # train the model
     history = model.fit(train_data_fold, train_targets_fold, batch_size=70, epochs=700, validation_data=(val_data_fold, val_targets_fold))
 
+    # get predictions
+    preds = model.predict(val_data_fold)
+
     # evaluate the model
     print(f"Training RMSE: {model.evaluate(train_data_fold, train_targets_fold)[1]}")
     print(f"Validation RMSE: {model.evaluate(val_data_fold, val_targets_fold)[1]}")
 
-    return history
+    return history, preds
 
 def get_data_and_targets(train, val, training_data, training_targets):
     """Splits training data and targets into training and validation data."""
@@ -100,7 +110,7 @@ def kfold_NN(train_k_best, train_targets):
         # get training data and targets from data
         train_data_fold, train_targets_fold, val_data_fold, val_targets_fold = get_data_and_targets(train, val, train_k_best, train_targets)
 
-        history = train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold)
+        history, preds = train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold)
 
         # compute RMSE-values for training and validation data
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
@@ -121,7 +131,14 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.plot(rmse_train_avg)
     plt.plot(rmse_val_avg)
     plt.legend(['RMSE train', 'RMSE val'])
-    plt.title(f'The RMSE validation value is: {rmse_val[-1]:.2f}')
+    plt.title(f'The RMSE validation value is: {rmse_val_avg[-1]:.2f}')
+    plt.show()
+
+def plot_differences(y_preds, y_targets):
+    differences = y_preds - y_targets
+
+    plt.hist(differences, bins = 100)
+    plt.title('Histogram of differences between prediction values and target values')
     plt.show()
 
 def test_NN(train_data, n, k):
@@ -139,7 +156,7 @@ def test_NN(train_data, n, k):
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # train the model
-    history = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
+    history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
 
     # compute RMSE-values for training and validation data
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
@@ -147,18 +164,19 @@ def test_NN(train_data, n, k):
 
     plot_RMSE(rmse_train, rmse_val, fold=1)
 
+    plot_differences(predictions, test_targets)
+
 # Run program
 
 if __name__ == "__main__":
     # load training and testing datasets
-    covid_df_train = load_data("train")
-    covid_df_test = load_data("test")
+    covid_df_train, covid_df_test = load_data("train", 5)
 
     # get training data and training targets
     train_data, train_targets = transform_data(covid_df_train)
 
     # transform testing data into numpy
-    test_data = covid_df_test.to_numpy()
+    test_data, test_targets = transform_data(covid_df_test)
 
     # select 'k' best features based on barplot (see 'best_features_barplot')
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
