@@ -89,7 +89,7 @@ Er zijn verschillende combinaties en groottes van hidden layers getraind. Bij ee
 ## Model evaluation
 In de onderstaande tabel staan de verschillende uitgeprobeerde configuraties en de bijbehorende RMSE's op volgorde van laag naar hoog. Er is geëxperimenteerd met allerlei combinaties van netwerkarchitecturen, batch sizes en aantallen epochs geprobeerd in een poging de validatiekosten te minimaliseren. In deze tabel is duidelijk te zien dat een netwerkopzet van 14 features in de input layer, 1 hidden layer met 5 units en 1 output layer met 1 unit tot de laagste validatiekosten leidt. Het model met de laagste validatie RMSE, ofwel het netwerk met een batch size van 70 en 700 epochs, wordt bestempeld als het beste model.
 
-![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_configuraties.png)
+![Tabel met full-batch configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_configuraties_full_batch.png)
 
 # Model 2.5: Batch size
 

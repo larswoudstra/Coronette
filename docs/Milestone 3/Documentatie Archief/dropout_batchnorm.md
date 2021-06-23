@@ -15,14 +15,24 @@ getraind en getest.
 
 ## Data pipeline
 Er zijn veel verschillende data pipelines gebruikt; elke variant had immers een andere
+<<<<<<< HEAD
+combinatie van dropout- en BatchNormalization layers.
+Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een
+ReLU-activatie. Onder het kopje model evaluation is een tabel te zien met alle
+=======
 combinatie van Dropout- en BatchNormalization layers.
 Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een
 ReLU-activation. Onder het kopje model evaluation is een tabel te zien met alle
+>>>>>>> 304ba36b9f84335eeae1b2e05f90e2fcd1d024fd
 verschillende configuraties en bijbehorende resultaten. Er is ook gebruik gemaakt van
 een zogenaamde He-initializer: deze zorgt ervoor dat de gewichten van het model
 beter geïnitialiseerd worden, zodat het model minder vaak op een lokaal minimum
 vast zou komen te zitten.
+<<<<<<< HEAD
+Vervolgens is voor elke hidden layer een dropout-layer toegevoegd en na elke
+=======
 Vervolgens is voor elke hidden layer een Dropout-layer toegevoegd en na elke
+>>>>>>> 304ba36b9f84335eeae1b2e05f90e2fcd1d024fd
 hidden layer een BatchNormalization layer.
 
 ## Model Training
