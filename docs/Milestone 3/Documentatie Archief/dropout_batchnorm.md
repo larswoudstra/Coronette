@@ -38,7 +38,7 @@ de RMSE, hoe beter. Er is gekeken naar de validatie-RMSE. Er is ook gekeken of h
 model overfit door de training- en validatie-RMSE tegen elkaar te plotten. In
 onderstaande tabel staan de geprobeerde configuraties met de bijbehorende RMSE.
 
-![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/dropout_batchnorm_tabel.png)
+![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_batch%26drop.png)
 
 In deze tabel is dus te zien dat er in alle verschillende vormen en mogelijkheden
 geen verbetering is te zien, totdat er een erg kleine Dropout (0.1) wordt toegevoegd
