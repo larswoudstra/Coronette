@@ -38,4 +38,4 @@ de RMSE, hoe beter. Er is gekeken naar de validatie-RMSE. Er is ook gekeken of h
 model overfit door de training- en validatie-RMSE tegen elkaar te plotten. In
 onderstaande tabel staan de geprobeerde configuraties met de bijbehorende RMSE.
 
-![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_configuraties.png)
+![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/dropout_batchnorm_tabel.png)
