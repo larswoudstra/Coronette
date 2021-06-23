@@ -141,12 +141,9 @@ def plot_differences(y_preds, y_targets):
     plt.title('Histogram of differences between prediction values and target values')
     plt.show()
 
-def test_NN(train_data, k):
+def test_NN(train_k_best, train_targets, test_k_best, test_targets):
     """Creates a test data set out of the full training dataframe and tests the
     trained model"""
-
-    #select features
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # train the model
     history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
@@ -174,8 +171,8 @@ if __name__ == "__main__":
     # select 'k' best features based on barplot (see 'best_features_barplot')
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
-    # # train neural network using k-fold cross validation
-    # kfold_NN(train_k_best, train_targets)
+    # train neural network using k-fold cross validation
+    #kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(train_k_best, 14)
+    test_NN(train_k_best, train_targets, test_k_best, test_targets)
