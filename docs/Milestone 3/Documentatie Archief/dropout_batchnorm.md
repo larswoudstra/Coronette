@@ -1,8 +1,8 @@
 # Model 3.2: Dropout en Batch Normalization
 In een poging ons model nog verder te verbeteren, is er gekozen om te kijken naar
-de effecten van een zeer complex netwerk, in combinatie met Dropout en Batchnormalization.
+de effecten van een zeer complex netwerk, in combinatie met Dropout en BatchNormalization.
 Uiteindelijk is uit de analyses gebleken dat het model overduidelijk beter werkt zonder
-Dropout en Batchnormalization
+Dropout en BatchNormalization
 
 ## Data analysis
 De relevante data analysis voor dit subhoofdstuk is terug te vinden aan het begin
@@ -14,16 +14,16 @@ de resultaten goed vergelijkbaar, want alle modellen zijn met exact dezelfde dat
 getraind en getest.
 
 ## Data pipeline
-Er zijn veel verschillende data pipelines gebruikt: elke variant had immers een andere
-combinatie van dropout- en batchnormalization layers.
+Er zijn veel verschillende data pipelines gebruikt; elke variant had immers een andere
+combinatie van dropout- en BatchNormalization layers.
 Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een
-relu-activation. Onder het kopje model evaluation is een tabel te zien met alle
+ReLU-activatie. Onder het kopje model evaluation is een tabel te zien met alle
 verschillende configuraties en bijbehorende resultaten. Er is ook gebruik gemaakt van
 een zogenaamde He-initializer: deze zorgt ervoor dat de gewichten van het model
 beter geïnitialiseerd worden, zodat het model minder vaak op een lokaal minimum
 vast zou komen te zitten.
 Vervolgens is voor elke hidden layer een dropout-layer toegevoegd en na elke
-hidden layer een batchnormalization layer.
+hidden layer een BatchNormalization layer.
 
 ## Model Training
 Het netwerk is getraind met 700 epochs en een batch size van 70, omdat uit eerdere
