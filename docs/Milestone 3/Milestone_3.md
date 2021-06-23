@@ -1,5 +1,5 @@
 # Model 3.1: Keras weight initializers
-Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform weight initializer (zie ook Keras Dense Layer documentatie: https://keras.io/api/layers/core_layers/dense/).
+Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform weight initializer (zie ook Keras Dense Layer documentatie: https://keras.io/api/layers/core_layers/dense/). Tijdens het valideren van ons huidge model die deze initializer gebruikt is het opgevallen dat de RMSE soms op een erg hoge value start (>35). 
 
 
 ## Data analysis
