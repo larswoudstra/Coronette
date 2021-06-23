@@ -75,7 +75,7 @@ def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val
                     metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
         # train the model
-        history = model.fit(train_data_fold, train_targets_fold, batch_size=70, epochs=700, validation_data=(val_data_fold, val_targets_fold))
+        history = model.fit(train_data_fold, train_targets_fold, batch_size=40, epochs=400, validation_data=(val_data_fold, val_targets_fold))
 
         # evaluate the model
         print(f"Training RMSE: {model.evaluate(train_data_fold, train_targets_fold)[1]}")
