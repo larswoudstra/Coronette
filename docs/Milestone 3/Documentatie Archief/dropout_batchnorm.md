@@ -15,14 +15,24 @@ getraind en getest.
 
 ## Data pipeline
 Er zijn veel verschillende data pipelines gebruikt; elke variant had immers een andere
+<<<<<<< HEAD
 combinatie van dropout- en BatchNormalization layers.
 Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een
 ReLU-activatie. Onder het kopje model evaluation is een tabel te zien met alle
+=======
+combinatie van Dropout- en BatchNormalization layers.
+Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een
+ReLU-activation. Onder het kopje model evaluation is een tabel te zien met alle
+>>>>>>> 304ba36b9f84335eeae1b2e05f90e2fcd1d024fd
 verschillende configuraties en bijbehorende resultaten. Er is ook gebruik gemaakt van
 een zogenaamde He-initializer: deze zorgt ervoor dat de gewichten van het model
 beter geïnitialiseerd worden, zodat het model minder vaak op een lokaal minimum
 vast zou komen te zitten.
+<<<<<<< HEAD
 Vervolgens is voor elke hidden layer een dropout-layer toegevoegd en na elke
+=======
+Vervolgens is voor elke hidden layer een Dropout-layer toegevoegd en na elke
+>>>>>>> 304ba36b9f84335eeae1b2e05f90e2fcd1d024fd
 hidden layer een BatchNormalization layer.
 
 ## Model Training
@@ -38,4 +48,12 @@ de RMSE, hoe beter. Er is gekeken naar de validatie-RMSE. Er is ook gekeken of h
 model overfit door de training- en validatie-RMSE tegen elkaar te plotten. In
 onderstaande tabel staan de geprobeerde configuraties met de bijbehorende RMSE.
 
-![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/dropout_batchnorm_tabel.png)
+![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_batch%26drop.png)
+
+In deze tabel is dus te zien dat er in alle verschillende vormen en mogelijkheden
+geen verbetering is te zien, totdat er een erg kleine Dropout (0.1) wordt toegevoegd
+op een simpel model met twee hidden layers (zie rij 7). De keren dat het model onder
+de 1 komt is echter als de Dropout helemaal is weggehaald (zie rij 8 en 10).
+BatchNormalization op zichzelf werkt ook niet goed, want dan wordt de RMSE 2.05.
+In het vervolg is het dus aan te raden om het te houden op een simpeler model, want een
+complexer model met Dropout en BatchNormalization leidt niet tot betere resultaten.
