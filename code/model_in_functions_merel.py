@@ -64,7 +64,16 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
     model = models.Sequential()
 
     # add fully connected layers
-    model.add(layers.Dense(units=5, activation='relu', input_shape=(14,), kernel_initializer=initializer))
+    model.add(layers.Dense(units=40, activation='relu', input_shape=(14,), kernel_initializer=initializer))
+
+    model.add(layers.Dropout(.3))
+    model.add(layers.Dense(units=80, activation='relu'))
+    model.add(layers.BatchNormalization())
+
+    model.add(layers.Dropout(.5))
+    model.add(layers.Dense(units=40, activation='relu'))
+    model.add(layers.BatchNormalization())
+
     model.add(layers.Dense(units=1))
 
     # compile the model with the Nadam optimizer
@@ -72,7 +81,7 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
-    history = model.fit(train_data, train_targets, batch_size=70, epochs=1000, validation_data=(val_data, val_targets))
+    history = model.fit(train_data, train_targets, batch_size=70, epochs=700, validation_data=(val_data, val_targets))
 
     # get predictions
     preds = model.predict(val_data)

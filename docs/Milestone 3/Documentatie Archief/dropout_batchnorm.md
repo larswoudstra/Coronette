@@ -39,3 +39,11 @@ model overfit door de training- en validatie-RMSE tegen elkaar te plotten. In
 onderstaande tabel staan de geprobeerde configuraties met de bijbehorende RMSE.
 
 ![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/dropout_batchnorm_tabel.png)
+
+In deze tabel is dus te zien dat er in alle verschillende vormen en mogelijkheden
+geen verbetering is te zien, totdat er een erg kleine dropout (0.1) wordt toegevoegd
+op een simpel model met twee hidden layers (zie rij 7). De keren dat het model onder
+de 1 komt is echter als de dropout helemaal is weggehaald (zie rij 8 en 10). Batch
+normalization op zichzelf werkt ook niet goed, want dan wordt de RMSE 2.05.
+In het vervolg is het dus aan te raden om het te houden op een simpeler model, want een
+complexer model met dropout en batchnormalization leidt niet tot betere resultaten.
