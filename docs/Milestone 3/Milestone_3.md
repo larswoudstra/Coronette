@@ -39,7 +39,7 @@ In de histogram die uit het bovenstaande model is voortgekomen is te zien dat de
 
 ![Histogram verschillen](https://github.com/larswoudstra/Coronette/blob/main/docs/images/differences_hist.png)
 
-# Model 3.4: Complexiteit verder verhogen
+# Model 3.4: Experimenteren met batch size en aantal epochs
 
 ## Data analysis
 
@@ -48,3 +48,6 @@ In de histogram die uit het bovenstaande model is voortgekomen is te zien dat de
 ## Model Training
 
 ## Model evaluation
+Na enkele experimentele combinaties van batch sizes en aantallen epochs lijkt een opzet van **...** epochs met een batch size van **...** in de laagste validatiekosten te resulteren. Deze opzet wordt daarmee bestempeld als het optimale model.
+
+![Experimenteren tabellen](URL)

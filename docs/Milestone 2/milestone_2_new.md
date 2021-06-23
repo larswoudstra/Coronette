@@ -87,7 +87,7 @@ Gezien de 14 pieken wordt SelectKBest nogmaals uitgevoerd, maar nu met k=14 waar
 Er zijn verschillende combinaties en groottes van hidden layers getraind. Bij een model van 93 features blijkt een architectuur van 93x93x60x1 tot de laagste validatiekoste te komen (Validatie RMSE = 0.98). Bij een model van 14 features ligt de optimale opzet van het netwerk bij 14x5x1 (Validatie RMSE = 0.94). Vooralsnog wordt er verdergegaan met de architectuur met 14 features, aangezien deze in de laagste kosten resulteert, hoewel hiermee natuurlijk wel veel informatie verloren gaat. In de toekomst kan deze opzet aangepast worden, als blijkt dat daarmee de kosten nog verder teruggedrongen worden.
 
 ## Model evaluation
-In de onderstaande tabel staan de verschillende uitgeprobeerde configuraties en de bijbehorende RMSE's op volgorde van laag naar hoog. Er is geëxperimenteerd met allerlei combinaties van netwerkarchitecturen, batch sizes en aantallen epochs geprobeerd in een poging de validatiekosten te minimaliseren. In deze tabel is duidelijk te zien dat een netwerkopzet van 14 features in de input layer, 1 hidden layer met 5 units en 1 output layer met 1 unit tot de laagste validatiekosten leidt. Het model met de laagste validatie RMSE, ofwel het netwerk met een batch size van 70 en 700 epochs, wordt bestempeld als het beste model.
+In de onderstaande tabel staan de verschillende uitgeprobeerde configuraties en de bijbehorende RMSE's op volgorde van laag naar hoog. Er is geëxperimenteerd met allerlei combinaties van netwerkarchitecturen in een poging de validatiekosten te minimaliseren. In deze tabel is duidelijk te zien dat een netwerkopzet van 14 features in de input layer, 1 hidden layer met 5 units, en 1 output layer met 1 unit tot de laagste validatiekosten leidt. Dit is dan ook het model waarmee vanaf nu verdergegaan wordt.
 
 ![Tabel met full-batch configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_configuraties_full_batch.png)
 
@@ -101,8 +101,9 @@ In de onderstaande tabel staan de verschillende uitgeprobeerde configuraties en 
 Met batch size is geprobeerd het model sneller te laten leren. Met deze batch size worden de gewichten van het Neural Network per batch aangepast in plaats van per epoch, wat eerder het geval was. Door het toepassen van deze batch size en het aantal epochs verder op te schroeven, kan er mogelijk een nog lagere validation RMSE bereikt worden.
 
 ## Model evaluation
-Er zijn verschillende configuraties van de batch size en het aantal epochs geprobeerd. In de tabel hieronder zijn de verschillende configuraties met de bijbehorende Validation RMSE waarden te zien.
-*** Tabel met verschillende configuraties ***
+Er zijn verschillende configuraties van de batch size en het aantal epochs geprobeerd. In de tabel hieronder zijn de verschillende configuraties met de bijbehorende Validation RMSE-waarden van laag naar hoog te zien.
+
+![Tabel met batch size configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_configuraties_batch_sizes.png)
 
 Met een batch size van 70 en een aantal epochs van 700 is er een validation RMSE van 0.939 bereikt. Dit lijkt voor alsnog de beste configuratie van de batch size en het aantal epochs. Deze learning curve is hieronder te zien: *** Waarschijnlijk is het niet nodig om deze learning curve ook nog te laten zien als we alle waarden al in de tabel hebben. Dan kan het stukje over die 1000 epochs ook weg ***
 
