@@ -1,8 +1,12 @@
 # Model 3.1: Keras weight initializers
-Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform weight initializer (zie ook Keras Dense Layer documentatie: https://keras.io/api/layers/core_layers/dense/). Tijdens het valideren van ons huidige model die deze initializer gebruikt is het opgevallen dat de RMSE soms op een erg hoge value start (>35). In de meeste gevallen wordt de error alsnog geminimaliseerd tot een waarde rond de 1, maar in andere gevallen kan het voorkomen dat de weights zodanig zijn geinitialiseerd dat er meer kans is dat het algoritme vast komt te zitten op een zogenaamde 'saddle point'. Dit leidt vervolgens weer tot hoge RMSE waarden. 
-
+Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform (ook wel 'Xavier') weight initializer (zie ook Keras Dense Layer documentatie: https://keras.io/api/layers/core_layers/dense/).
 
 ## Data analysis
+Tijdens het valideren van ons huidige model die deze initializer gebruikt is het opgevallen dat de RMSE soms op een erg hoge value start (>35). In de meeste gevallen wordt de error alsnog geminimaliseerd tot een waarde rond de 1, maar in andere gevallen kan het voorkomen dat de weights zodanig zijn geinitialiseerd dat er meer kans is dat het algoritme vast komt te zitten op een zogenaamde 'saddle point'. Dit leidt vervolgens weer tot hoge RMSE waarden.
+
+***Hier nog een plaatje van het probleem?***
+
+
 
 ## Data pipeline
 
