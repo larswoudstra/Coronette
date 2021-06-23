@@ -49,26 +49,29 @@ def select_features(X_train, y_train, X_test, k={}):
 # Part 2: creating and testing the model
 
 def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold):
-        """Creates and trains a neural network. Returns the history."""
-        # initialize a neural network
-        model = models.Sequential()
+    """Creates and trains a neural network. Returns the history."""
+    # set the 'He' weight initializer
+    initializer = tf.keras.initializers.he_normal(seed=None)
 
-        # add fully connected layers
-        model.add(layers.Dense(units=5, activation='relu', input_shape=(14,)))
-        model.add(layers.Dense(units=1))
+    # initialize a neural network
+    model = models.Sequential()
 
-        # compile the model with the Nadam optimizer
-        model.compile(loss='mean_squared_error', optimizer='Nadam',
-                    metrics=[tf.keras.metrics.RootMeanSquaredError()])
+    # add fully connected layers
+    model.add(layers.Dense(units=5, activation='relu', input_shape=(14,), kernel_initializer=initializer))
+    model.add(layers.Dense(units=1))
 
-        # train the model
-        history = model.fit(train_data_fold, train_targets_fold, batch_size=70, epochs=700, validation_data=(val_data_fold, val_targets_fold))
+    # compile the model with the Nadam optimizer
+    model.compile(loss='mean_squared_error', optimizer='Nadam',
+                metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
-        # evaluate the model
-        print(f"Training RMSE: {model.evaluate(train_data_fold, train_targets_fold)[1]}")
-        print(f"Validation RMSE: {model.evaluate(val_data_fold, val_targets_fold)[1]}")
+    # train the model
+    history = model.fit(train_data_fold, train_targets_fold, batch_size=70, epochs=700, validation_data=(val_data_fold, val_targets_fold))
 
-        return history
+    # evaluate the model
+    print(f"Training RMSE: {model.evaluate(train_data_fold, train_targets_fold)[1]}")
+    print(f"Validation RMSE: {model.evaluate(val_data_fold, val_targets_fold)[1]}")
+
+    return history
 
 def get_data_and_targets(train, val, training_data, training_targets):
     """Splits training data and targets into training and validation data."""
