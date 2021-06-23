@@ -1,0 +1,3 @@
+- Ochtendmeeting over voortgang
+- Code mergen
+- Milestone 3 documenteren
