@@ -37,7 +37,7 @@ In Milestone 1 is er gebruikgemaakt van de train_test_split-functie van sklearn 
 
 Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.  
 
-Er is tevens nagedacht om de K-folds te stratificeren met StratifiedKfold zodat er een goede ratio is van samples tussen de staten. Dit zou kunnen zorgen voor validatiedata met nog een hogere representativiteit. Echter bleek na het uitproberen van de StratifiedKfold en het lezen van de documentatie dat de targets (‘tested_positive’ in dit geval) categorische waarden moeten aannemen, wat hier dus niet het geval is. Om deze reden is er besloten om toch te werken met een klassieke K-fold cross validation. Het risico blijft dat de validatiedata niet representatief zou kunnen zijn door bijvoorbeeld samples die enkel uit twee staten komen, echter hebben wij tot dusver in de praktijk hier geen last van gehad.
+Er is tevens nagedacht om de K-folds te stratificeren met StratifiedKfold zodat er een goede ratio is van samples tussen de staten. Dit zou kunnen zorgen voor validatiedata met nog een hogere representativiteit. Echter bleek na het uitproberen van de StratifiedKfold en het lezen van de documentatie dat de targets (‘tested_positive’ in dit geval) categorische waarden moeten aannemen, wat hier dus niet het geval is. Om deze reden is er besloten om toch te werken met een klassieke K-fold cross validation. Het risico blijft dat de validatiedata niet representatief zou kunnen zijn door bijvoorbeeld samples die enkel uit twee staten komen, echter is dit in de praktijk tot dusver niet voorgekomen.
 
 ## Model training
 Voor iedere fold is een model getraind met alle features (93) en optimizer Nadam om het effect van de K-fold te laten zien ten opzichte van het baseline model van Milestone 1. Zowel de modellen van de K-fold als het baseline model had de architectuur 93x93x1.
@@ -56,7 +56,7 @@ Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd wor
 Doormiddel van feature selection is er gekeken naar welke features de uiteindelijke target value het beste kunnen voorspellen.
 
 ## Data pipeline
-Voor de feature selection is gebruik gemaakt van SelectKBest-analyse. Hierbij is de scorefunctie 'f_regression' gebruikt, omdat deze voorkomt dat er noise wordt toegevoegd. *** f_regression uitleggen ***
+Voor de feature selection is gebruik gemaakt van SelectKBest-analyse. Deze analyseert de correlatie tussen alle verschillende features en de target feature en gebruikt hiervoor de scorefunctie 'f_regression'. Features met hogere correlatiescores hebben dus een sterker verband met de target feature en zijn daarmee relevanter om mee te nemen in het model.
 
 Dergelijke *feature selection* helpt niet alleen overfitting te verminderen, het zou ook de kosten en trainingstijd moeten terugdringen. Hiervoor moet worden onderzocht welke variabelen de beste voorspellers zijn voor de target feature (het percentage positieve testuitslagen). Bij sklearn's SelectKBest-functie moet een k, ofwel het aantal features met de hoogste scores, gedefinieerd worden.
 
@@ -64,7 +64,7 @@ Dergelijke *feature selection* helpt niet alleen overfitting te verminderen, het
 De SelectKBest-functie wordt uitgevoerd voor alle 93 features in de data. Vervolgens wordt aan de hand van de score die elke feature heeft gekregen, bepaald welke features het beste de target value kunnen voorspellen. Aan de hand van deze score wordt dan gekeken welke features belangrijk zijn om te behouden en welke eventueel verwijderd zouden kunnen worden.
 
 ## Model evaluation
-De correlatiescore van alle 93 features (k-all) is weergeven in onderstaande barplot.
+De correlatiescore van alle 93 features (k="all") is weergeven in onderstaande barplot.
 
 ![bar plot](https://github.com/larswoudstra/Coronette/blob/main/docs/images/best_features_barplot.png)
 
@@ -87,7 +87,9 @@ Gezien de 14 pieken wordt SelectKBest nogmaals uitgevoerd, maar nu met k=14 waar
 Er zijn verschillende combinaties en groottes van hidden layers getraind. Bij een model van 93 features blijkt een architectuur van 93x93x60x1 tot de laagste validatiekoste te komen (Validatie RMSE = 0.98). Bij een model van 14 features ligt de optimale opzet van het netwerk bij 14x5x1 (Validatie RMSE = 0.94). Vooralsnog wordt er verdergegaan met de architectuur met 14 features, aangezien deze in de laagste kosten resulteert, hoewel hiermee natuurlijk wel veel informatie verloren gaat. In de toekomst kan deze opzet aangepast worden, als blijkt dat daarmee de kosten nog verder teruggedrongen worden.
 
 ## Model evaluation
-*** Tabel met verschillende configuraties ***
+In de onderstaande tabel staan de verschillende uitgeprobeerde configuraties en de bijbehorende RMSE's op volgorde van laag naar hoog. Er is geëxperimenteerd met allerlei combinaties van netwerkarchitecturen, batch sizes en aantallen epochs geprobeerd in een poging de validatiekosten te minimaliseren. In deze tabel is duidelijk te zien dat een netwerkopzet van 14 features in de input layer, 1 hidden layer met 5 units en 1 output layer met 1 unit tot de laagste validatiekosten leidt. Het model met de laagste validatie RMSE, ofwel het netwerk met een batch size van 70 en 700 epochs, wordt bestempeld als het beste model.
+
+![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_configuraties.png)
 
 # Model 2.5: Batch size
 
