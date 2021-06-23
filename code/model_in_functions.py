@@ -141,16 +141,9 @@ def plot_differences(y_preds, y_targets):
     plt.title('Histogram of differences between prediction values and target values')
     plt.show()
 
-def test_NN(train_data, n, k):
+def test_NN(train_data, k):
     """Creates a test data set out of the full training dataframe and tests the
     trained model"""
-    # select every nth row out of full train data set to create test data
-    test_df = train_data.iloc[1::n]
-    test_data, test_targets = transform_data(test_df)
-
-    # remove test data from training data
-    train_df = train_data.drop(train_data.index[1::n])
-    train_data, train_targets = transform_data(train_df)
 
     #select features
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
@@ -185,4 +178,4 @@ if __name__ == "__main__":
     # kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(covid_df_train, 5, 14)
+    test_NN(train_k_best, 14)
