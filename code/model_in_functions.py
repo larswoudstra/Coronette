@@ -163,8 +163,8 @@ if __name__ == "__main__":
     # select 'k' best features based on barplot (see 'best_features_barplot')
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
-    # # train neural network using k-fold cross validation
-    # kfold_NN(train_k_best, train_targets)
+    # train neural network using k-fold cross validation
+    kfold_NN(train_k_best, train_targets)
 
-    # test the neural network creating train and test data
-    test_NN(covid_df_train, 5, 14)
+    # # test the neural network creating train and test data
+    # test_NN(covid_df_train, 5, 14)

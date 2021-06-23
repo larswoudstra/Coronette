@@ -58,6 +58,19 @@ def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val
 
     # add fully connected layers
     model.add(layers.Dense(units=5, activation='relu', input_shape=(14,), kernel_initializer=initializer))
+
+    # model.add(layers.Dropout(.2))
+    # model.add(layers.Dense(units=40, activation='relu'))
+    # model.add(layers.BatchNormalization())
+    #
+    # model.add(layers.Dropout(.2))
+    # model.add(layers.Dense(units=20, activation='relu'))
+    # model.add(layers.BatchNormalization())
+    #
+    # model.add(layers.Dropout(.4))
+    # model.add(layers.Dense(units=10, activation='relu'))
+    # model.add(layers.BatchNormalization())
+
     model.add(layers.Dense(units=1))
 
     # compile the model with the Nadam optimizer
@@ -121,7 +134,7 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.plot(rmse_train_avg)
     plt.plot(rmse_val_avg)
     plt.legend(['RMSE train', 'RMSE val'])
-    plt.title(f'The RMSE validation value is: {rmse_val[-1]:.2f}')
+    plt.title(f'The RMSE validation value is: {rmse_val_avg[-1]:.2f}')
     plt.show()
 
 def test_NN(train_data, n, k):
@@ -163,8 +176,8 @@ if __name__ == "__main__":
     # select 'k' best features based on barplot (see 'best_features_barplot')
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
-    # # train neural network using k-fold cross validation
-    # kfold_NN(train_k_best, train_targets)
+    # train neural network using k-fold cross validation
+    kfold_NN(train_k_best, train_targets)
 
-    # test the neural network creating train and test data
-    test_NN(covid_df_train, 5, 14)
+    # # test the neural network creating train and test data
+    # test_NN(covid_df_train, 5, 14)
