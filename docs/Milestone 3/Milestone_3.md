@@ -108,3 +108,19 @@ Voor het trainen met de verschillende learning rates zijn er iedere keer 700 epo
 ## Model evaluation
 
 ![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Final_tabel_geenhiddenlayers.png)
+
+# Conclusie
+Na het runnen van het model met alle bovenstaande configuraties met de test data is er een RMSE van 0.92 bereikt. Dit betekent dat de gemiddelde afwijking van het voorspelde percentage positieve covid-19 tests 0.92% is. Al met al kan er geconcludeerd worden dat dit een ontzettend accuraat model is om het aantal positieve covid-19 tests te kunnen voorspellen. Het model gaf de volgende learning curve:
+
+![Learning curve test data](Url)
+
+Daarnaast zijn ook hier de verschillen gecentreerd rondom 0, wat aangeeft dat slechts enkele gevallen een veel grotere afwijking dan het gemiddelde hebben:
+
+![Test data histogram](Url)
+
+## Discussie
+Op de laatste dag van het onderzoek werd geconcludeerd dat sommige aanpassingen in het model niet met de k-fold cross validation functie zijn geëvalueerd, maar met de test data in de test NN functie. Hierdoor zijn enkele RMSE validatie waarden lager uitgevallen dan het eigenlijk hoort te zijn. Het model testen met de test data in de testNN functie viel namelijk in alle gevallen lager uit dan wanneer het model met 5 K-folds werd gebruikt. De verschillen hiertussen zijn gemiddeld 0.08%, maar toch niet verwaarloosbaar. In een volgend onderzoek kan uitgezocht worden wat het effect is van het gebruik van enkel en alleen k-fold cross validation om het model te evalueren.
+
+Daarnaast kan er onderzocht worden waarom de test data gemiddeld een 0.08% lagere afwijking heeft dan de validatie afwijking met k-fold cross validation. In onderstaande tabel zijn de gemiddelde waarden van alle 14 features per k-fold en de gemiddelde waarden van alle 14 features van de test-data te zien. Deze tabel laat zien dat ook de gemiddelde verschillen tussen de validatiedata en testdata erg klein zijn. 
+
+![Tabel verschillen](Url)
