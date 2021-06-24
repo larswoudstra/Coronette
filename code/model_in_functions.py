@@ -116,6 +116,9 @@ def kfold_NN(train_k_best, train_targets):
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
         rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
 
+    rmse_train = rmse_train / fold
+    rmse_val = rmse_val / fold
+
     plot_RMSE(rmse_train, rmse_val)
 
 
@@ -172,7 +175,7 @@ if __name__ == "__main__":
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # # train neural network using k-fold cross validation
-    # kfold_NN(train_k_best, train_targets)
+    kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(train_k_best, train_targets, test_k_best, test_targets)
+    # test_NN(train_k_best, train_targets, test_k_best, test_targets)
