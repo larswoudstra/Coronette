@@ -16,12 +16,12 @@ from sklearn.feature_selection import SelectKBest, f_regression
 
 def load_data(set, n):
     """Loads csv-file into a dataframe and removes the first column (ID).
-    Creates a test dataframe out of every nth row of the complete dataset"""
+    Creates a test dataframe out of every n'th row of the complete dataset"""
 
-    # load the data
+    # load the data from a csv-file to a dataframe
     covid_df = pd.read_csv(f"data_covid/covid.{set}.csv")
 
-    # remove id-column
+    # remove id's (first column)
     covid_df = covid_df.drop(['id'], axis=1)
 
     # select every nth row out of full train data set to create test data set
@@ -36,7 +36,7 @@ def transform_data(training_data):
     """Splits dataset into data and target values. Transforms data from dataframe
     to array."""
 
-    # get data and target values
+    # split last row (target values) from the other rows (data set)
     data_df = training_data.iloc[:, :-1]
     targets_df = training_data.iloc[:, -1:]
 
@@ -84,8 +84,12 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
+<<<<<<< HEAD
+    history = model.fit(train_data, train_targets, batch_size=70, epochs=700, validation_data=(val_data, val_targets))
+=======
     history = model.fit(train_data, train_targets, batch_size=70, epochs=700,
                         validation_data=(val_data, val_targets))
+>>>>>>> 09a2fef06d6d7842b6cf0e71360adc8ef9daf6c3
 
     # get predictions
     preds = model.predict(val_data)
@@ -174,7 +178,8 @@ def test_NN(train_k_best, train_targets, test_k_best, test_targets):
     in a line graph and plots the differences in a histogram."""
 
     # train the model
-    history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
+    history, predictions = train_neural_network(train_k_best, train_targets,
+                                                test_k_best, test_targets)
 
     # compute RMSE-values for training and test data
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
@@ -200,8 +205,15 @@ if __name__ == "__main__":
     # select 'k' best features based on barplot (see 'best_features_barplot')
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
+<<<<<<< HEAD
+    # train neural network using k-fold cross validation
+    kfold_NN(train_k_best, train_targets)
+
+    # # test the neural network creating train and test data
+=======
     # # train neural network using k-fold cross validation
-    # kfold_NN(train_k_best, train_targets)
+    kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(train_k_best, train_targets, test_k_best, test_targets)
+>>>>>>> 09a2fef06d6d7842b6cf0e71360adc8ef9daf6c3
+    # test_NN(train_k_best, train_targets, test_k_best, test_targets)
