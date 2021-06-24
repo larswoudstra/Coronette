@@ -64,16 +64,14 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
     model = models.Sequential()
 
     # add fully connected layers
-    model.add(layers.Dense(units=5, activation='relu', input_shape=(14,), kernel_initializer=initializer))
-
-    model.add(layers.Dense(units=1))
+    model.add(layers.Dense(units=1, input_shape=(93,), kernel_initializer=initializer))
 
     # compile the model with the Nadam optimizer
     model.compile(loss='mean_squared_error', optimizer='Nadam',
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
-    history = model.fit(train_data, train_targets, batch_size=1, epochs=1000, validation_data=(val_data, val_targets))
+    history = model.fit(train_data, train_targets, batch_size=700, epochs=10000, validation_data=(val_data, val_targets))
 
     # get predictions
     preds = model.predict(val_data)
@@ -117,7 +115,7 @@ def kfold_NN(train_k_best, train_targets):
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
         rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
 
-    plot_RMSE(rmse_train, rmse_val)
+    plot_RMSE(rmse_train, rmse_val, fold=5)
 
 
 # Part 4: model evaluation
@@ -170,7 +168,7 @@ if __name__ == "__main__":
     test_data, test_targets = transform_data(covid_df_test)
 
     # select 'k' best features based on barplot (see 'best_features_barplot')
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
+    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=93)
 
     # # train neural network using k-fold cross validation
     # kfold_NN(train_k_best, train_targets)
