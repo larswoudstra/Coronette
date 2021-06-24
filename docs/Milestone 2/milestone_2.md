@@ -8,7 +8,7 @@ Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt v
 
 ![Baseline model met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/baselinemodel_nadam_k93.png)
 
-# Optimizers
+# Model 2.2: Optimizers
 ## Data analysis
 -
 
@@ -27,7 +27,7 @@ Al met al lijkt de Nadam optimizer de beste keuze, maar Adamax en Ftrl moeten in
 
 Er wordt dus nog steeds full batch gradient descent gebruikt, maar dan nu met de 'Nadam'-optimizer. Er worden 300 epochs gebruikt, omdat dit aantal voldoende informatie lijkt te geven over de werking van het model.
 
-# Model 2.2: K-fold cross validation
+# Model 2.3: K-fold cross validation
 
 ## Data analysis
 -
@@ -50,7 +50,7 @@ Om het model te kunnen evalueren is de RMSE van alle 5 folds gemiddeld genomen. 
 
 Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. Dit lijkt dus opgelost te worden met K-fold cross validation. Daarom wordt deze methode in het vervolg ook gebruikt om het model te evalueren.  
 
-# Model 2.3: Feature selection
+# Model 2.4: Feature selection
 
 ## Data analysis
 Doormiddel van feature selection is er gekeken naar welke features de uiteindelijke target value het beste kunnen voorspellen.
@@ -76,7 +76,7 @@ Met deze 14 features gaat het dus vooralsnog eigenlijk slechts om een viertal fe
 
 Gezien de 14 pieken wordt SelectKBest nogmaals uitgevoerd, maar nu met k=14 waarna er een nieuwe training- en testdataset gevormd wordt met de 14 features met de hoogste correlatiescores. Gekeken naar de modelprestaties kan dit aantal nog aangepast worden. Mocht het model met deze 14 features bijvoorbeeld juist underfitten, kan dit probleem opgelost worden door meer features toe te voegen.
 
-# Model 2.4: Complexiteit verhogen
+# Model 2.5: Complexiteit verhogen
 
 ## Data analysis
 -
@@ -91,7 +91,7 @@ In de onderstaande tabel staan de verschillende uitgeprobeerde configuraties en 
 
 ![Tabel met full-batch configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_configuraties_full_batch.png)
 
-# Model 2.5: Batch size
+# Model 2.6: Batch size
 
 ## Data analysis
 
