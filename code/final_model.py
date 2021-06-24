@@ -1,4 +1,4 @@
-# By Lars Woudstra, Kelly Spaans, Merel Haisma en Nina Alblas
+# By Lars Woudstra, Kelly Spaans, Merel Haisma and Nina Alblas
 
 # This program contains a trained Neural network designed to predict the
 # percentage of newly tested positive Covid-19 cases. This program can thus
@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import layers, models, metrics
-from sklearn.model_selection import KFold, StratifiedKFold
+from sklearn.model_selection import KFold
 from sklearn.feature_selection import SelectKBest, f_regression
 
 # Part 1: loading and cleaning the data
