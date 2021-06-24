@@ -163,9 +163,9 @@ def test_NN(train_k_best, train_targets, test_k_best, test_targets):
 
     # compute RMSE-values for training and validation data
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
-    rmse_val = np.asarray(history.history['val_root_mean_squared_error'])
+    rmse_test = np.asarray(history.history['val_root_mean_squared_error'])
 
-    plot_RMSE(rmse_train, rmse_val, fold=1)
+    plot_RMSE(rmse_train, rmse_test, fold=1)
 
     plot_differences(predictions, test_targets)
 
