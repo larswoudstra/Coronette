@@ -84,8 +84,12 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
+<<<<<<< HEAD
+    history = model.fit(train_data, train_targets, batch_size=70, epochs=700, validation_data=(val_data, val_targets))
+=======
     history = model.fit(train_data, train_targets, batch_size=70, epochs=700,
                         validation_data=(val_data, val_targets))
+>>>>>>> 09a2fef06d6d7842b6cf0e71360adc8ef9daf6c3
 
     # get predictions
     preds = model.predict(val_data)
@@ -131,6 +135,12 @@ def kfold_NN(train_k_best, train_targets):
         # compute RMSE-values for training and validation data
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
         rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
+
+    rmse_train = rmse_train / fold
+    rmse_val = rmse_val / fold
+
+    print(f'The average train RMSE is: {rmse_train[-1]:.4f}')
+    print(f'The average validation RMSE is: {rmse_val[-1]:.4f}')
 
     plot_RMSE(rmse_train, rmse_val)
 
@@ -192,8 +202,17 @@ if __name__ == "__main__":
     test_data, test_targets = transform_data(covid_df_test)
 
     # select 'k' best features based on barplot (see 'best_features_barplot')
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(),
-                                                                test_data, k=14)
+    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
-    # test the neural network on new data
-    test_NN(train_k_best, train_targets, test_k_best, test_targets)
+<<<<<<< HEAD
+    # train neural network using k-fold cross validation
+    kfold_NN(train_k_best, train_targets)
+
+    # # test the neural network creating train and test data
+=======
+    # # train neural network using k-fold cross validation
+    kfold_NN(train_k_best, train_targets)
+
+    # test the neural network creating train and test data
+>>>>>>> 09a2fef06d6d7842b6cf0e71360adc8ef9daf6c3
+    # test_NN(train_k_best, train_targets, test_k_best, test_targets)
