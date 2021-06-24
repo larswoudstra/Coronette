@@ -4,6 +4,8 @@ Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform (ook wel 'Xa
 ## Data analysis
 Tijdens het valideren van ons huidige model die deze initializer gebruikt is het opgevallen dat de RMSE soms op een erg hoge value start (>35). In de meeste gevallen wordt de error alsnog geminimaliseerd tot een waarde rond de 1, maar in andere gevallen kan het voorkomen dat de weights zodanig zijn geinitialiseerd dat er meer kans is dat het algoritme vast komt te zitten op zogenaamde 'saddle points'. Dit leidt vervolgens weer tot hoge RMSE waarden bij het convergeren, zoals te zien in de afbeelding hieronder.
 
+![Afbeelding met het probleem van de default initializer](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_batch%26drop.png)
+
 < Default_initializer_problem.png >
 
 ## Data pipeline
