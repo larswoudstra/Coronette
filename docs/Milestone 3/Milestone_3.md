@@ -18,7 +18,9 @@ In de afbeelding hieronder is het verschil te zien tussen de verschillende initi
 
 ![Afbeelding van de verschillende initializers](https://github.com/larswoudstra/Coronette/blob/main/docs/images/initializers2_final.png)
 
-Zoals verwacht start de He initializator op een lagere RMSE waarde dan de andere initializers. Ook is te zien dat de He initializer op een lagere RMSE waarde uitkomt (...) ten opzichte van de Glorot initializer (...). Opvallend is hier wel dat de RandomNormal initializer ongeveer op dezelfde waarde uitkomt als bij het gebruik van de He initializer (...). Dit is waarschijnlijk te danken aan de vergelijkbare manier waarop de twee initializers werken, namelijk door een getal te kiezen uit de normaalverdeling *(vandaar: RandomNormal)*. Omdat de RandomNormal deze getallen niet vermenigvuldigt met een term zoals in de He initializer, kan dit de reden zijn waarom de RMSE waarde in het begin ook hoger is voor de RandomNormal initializer.
+**nog duidelijk maken dat we met een andere waarde voor batch size en epochs werken omdat dat sneller is en dat om deze reden de exacte RMSE die we zouden kunnen krijgen niet klopt, maar je kan hier wel goed het verschil zien tussen de initializers**
+
+Zoals verwacht start de He initializator op een lagere RMSE waarde dan de andere initializers. Ook is te zien dat de He initializer op een lagere RMSE waarde uitkomt ten opzichte van de Glorot initializer. Opvallend is hier wel dat de RandomNormal initializer ongeveer op dezelfde waarde uitkomt als bij het gebruik van de He initializer. Dit is waarschijnlijk te danken aan de vergelijkbare manier waarop de twee initializers werken, namelijk door een getal te kiezen uit de normaalverdeling *(vandaar: RandomNormal)*. Omdat de RandomNormal deze getallen niet vermenigvuldigt met een term zoals in de He initializer, kan dit de reden zijn waarom de RMSE waarde in het begin ook hoger is voor de RandomNormal initializer.
 
 Als de 'He' initializer wordt toegepast op de configuratie zoals deze is gebruikt om de afbeelding in de sectie 'Data pipeline' te maken, dan is in de afbeelding hieronder te zien dat deze initializer een lagere RMSE waarde heeft (0.92). Dit blijft ook het geval wanneer je deze opzet meerdere keren laat runnen.
 
@@ -95,8 +97,9 @@ Er zijn voor de onderzoekers verrassende resultaten uit de tests gekomen. Zo lij
 Ten slotte is er gekeken of het kiezen van verschillende learning rates in optimizer Nadam nog invloed heeft op de RMSE.
 
 ## Data analysis
-Zoals in Milestone 2 is beschreven blijft de validation RMSE vaak hangen op een waarde tussen 0.94 en 1. Dit zou kunnen komen door zogenaamde zadelpunten, ook omdat we niet met honderden features werken is de kans hierop groter **kan iemand dit dubbel confirmen? haha, ik dacht dat dit uit die video van die andrew kwam**. Als dit het geval is, zou middels het aanpassen van de learning rate de RMSE validatie waarde nog lager kunnen komen. Om deze reden is er o
+Zoals in Milestone 2 is beschreven blijft de validation RMSE vaak hangen op een waarde rond de 0.94 en 1. Dit zou kunnen komen door zogenaamde zadelpunten. Als dit het geval is, zou middels het aanpassen van de learning rate de RMSE validatie waarde nog lager kunnen worden.
 
-Om deze reden wordt er gekeken of middels het tunen van de learning rate de validatie RMSE nog kleiner zou kunnen worden
+## Data pipeline
+Om te kijken of er sprake is van eventuele zadelpunten waardoor we niet veel lager komen dan onze huidige RMSE, wordt er getuned met verschillende learning rates voor de Nadam optimizer. Eerst wordt de default learning rate toegepast van 0.001, vervolgens 0.003, daarna 0.01 en als laatste 0.03.
 
-Daarnaast wordt er nog gekeken naar het aanpassen van de learning rate voor optimizer Nadam om te voorkomen dat het model eventueel vast blijft zitten op een zadelpunt. De validation RMSE blijft namelijk na veel verschillende configuraties hangen op een waarde tussen 0.94 en 1.  
+Voor het trainen zijn er 400 epochs en een batch size van 40 gebruikt
