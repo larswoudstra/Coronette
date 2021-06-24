@@ -151,6 +151,7 @@ def plot_differences(y_preds, y_targets):
     """Plots the differences between the predicted values and the groundtruth
     target values in a histogram."""
 
+    # calculate the differences between the predicted values and target values
     differences = y_preds - y_targets
 
     plt.hist(differences, bins = 100)
@@ -164,7 +165,7 @@ def test_NN(train_k_best, train_targets, test_k_best, test_targets):
     # train the model
     history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
 
-    # compute RMSE-values for training and validation data
+    # compute RMSE-values for training and test data
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
     rmse_test = np.asarray(history.history['val_root_mean_squared_error'])
 
