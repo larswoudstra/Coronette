@@ -46,7 +46,7 @@ getraind en getest.
 
 ## Data pipeline
 Er zijn veel verschillende data pipelines gebruikt; elke variant had immers een andere
-combinatie van dropout- en BatchNormalization layers.
+combinatie van Dropout- en BatchNormalization layers.
 Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een
 ReLU-activatie. Onder het kopje model evaluation is een tabel te zien met alle
 combinatie van Dropout- en BatchNormalization layers.
@@ -75,11 +75,18 @@ onderstaande tabel staan de geprobeerde configuraties met de bijbehorende RMSE.
 
 ![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_batch%26drop.png)
 
-In deze tabel is dus te zien dat er in alle verschillende vormen en mogelijkheden
+In de tabel is  te zien dat er met grote hidden layers, Dropout en
+BatchNormalization een aantal keren overfitting optrad. Dit was af te lezen in de bijbehorende plot, want de validatiekosten gingen omhoog, terwijl de trainingkosten verder naar beneden gingen.
+
+![Tabel met overfitting](https://github.com/larswoudstra/Coronette/blob/main/docs/images/2drop%26batch.png)
+
+In de tabel is ook te zien dat er in alle verschillende vormen en mogelijkheden
 geen verbetering is te zien, totdat er een erg kleine Dropout (0.1) wordt toegevoegd
 op een simpel model met twee hidden layers (zie rij 7). De keren dat het model onder
 de 1 komt is echter als de Dropout helemaal is weggehaald (zie rij 8 en 10).
 BatchNormalization op zichzelf werkt ook niet goed, want dan wordt de RMSE 2.05.
+
+
 In het vervolg is het dus aan te raden om het te houden op een simpeler model, want een
 complexer model met Dropout en BatchNormalization leidt niet tot betere resultaten.
 

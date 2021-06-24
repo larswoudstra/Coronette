@@ -73,7 +73,7 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
-    history = model.fit(train_data, train_targets, batch_size=300, epochs=6000, validation_data=(val_data, val_targets))
+    history = model.fit(train_data, train_targets, batch_size=1, epochs=1000, validation_data=(val_data, val_targets))
 
     # get predictions
     preds = model.predict(val_data)
