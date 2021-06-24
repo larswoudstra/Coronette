@@ -123,4 +123,4 @@ Op de laatste dag van het onderzoek werd geconcludeerd dat sommige aanpassingen 
 
 Daarnaast kan er onderzocht worden waarom de test data gemiddeld een 0.08% lagere afwijking heeft dan de validatie afwijking met k-fold cross validation. In onderstaande tabel zijn de gemiddelde waarden van alle 14 features per k-fold en de gemiddelde waarden van alle 14 features van de test-data te zien. Deze tabel laat zien dat ook de gemiddelde verschillen tussen de validatiedata en testdata erg klein zijn.
 
-![Tabel verschillen](Url)
+![Tabel verschillen](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Verschillen_tabel_folds_test.png)
