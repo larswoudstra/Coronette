@@ -87,8 +87,8 @@ De daadwerkelijke prestaties van het model zijn gemeten met de RMSE. De waarden 
 
 ![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_zonderhiddenlayers.png)
 
-Er zijn voor de onderzoekers verrassende resultaten uit de tests gekomen. Zo lijkt 93 input nodes het over het algemeen, op een paar uitschieters na, het beter te doen dan 14 input nodes. Bovendien geven sommige configuraties met 93 input nodes het beste resultaat tot nu toe (zie rij 2 en rij 8). De resultaten van de modellen met 14 input nodes zijn redelijk te vergelijken met de resultaten van modellen met 14 input nodes en 1 hidden layer, deze gaven namelijk meestal een output van ongeveer 0.91. In conclusie kan er in het vervolg beter gewerkt worden met een model met 93 input nodes, geen hidden layers, 3000 of 10000 batch size en 70 of 1000 epochs.
-
+Er zijn geen hele verrassende resultaten uit de analyses gekomen. Geen enkele configuratie deed het beter dan het beste resultaat tot nu toe (0.92). Een interessante waarneming is wel dat de RMSE met 14 input nodes bijna consistent net wat lager is dan de RMSE met 93 input nodes. Het is dus waarschijnlijk een goede keuze geweest van de onderzoekers om verder te gaan met de 14 beste features.
+In het vervolg is het geen slimme keuze om gebruik te maken van geen hidden layers in het neurale netwerk, want dit leidt niet tot betere resultaten.
 
 # Model 3.5: Learning Rates
 
