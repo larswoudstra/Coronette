@@ -199,7 +199,6 @@ if __name__ == "__main__":
     test_data, test_targets = transform_data(covid_df_test)
 
     # select 'k' best features based on barplot (see 'best_features_barplot')
-<<<<<<< HEAD
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # # train neural network using k-fold cross validation
@@ -207,10 +206,3 @@ if __name__ == "__main__":
 
     # test the neural network creating train and test data
     # test_NN(train_k_best, train_targets, test_k_best, test_targets)
-=======
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(),
-                                                                test_data, k=14)
-
-    # test the neural network on new data
-    test_NN(train_k_best, train_targets, test_k_best, test_targets)
->>>>>>> e29797d5728f8727ef327d35db55c6e12c6aec10
