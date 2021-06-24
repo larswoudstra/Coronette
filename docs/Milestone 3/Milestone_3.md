@@ -100,16 +100,3 @@ Het model is getraind volgens alle bovenstaande stappen die tot nog toe het best
 In de histogram die uit het bovenstaande model is voortgekomen is te zien dat de verschillen rondom 0 gecentreerd zijn. Dit betekent dat de meeste verschillen klein zijn. Slechts voor 3 van de 540 samples wijkt het voorspelde percentage met meer dan 3% af van het daadwerkelijke percentage.
 
 ![Histogram verschillen](https://github.com/larswoudstra/Coronette/blob/main/docs/images/differences_hist.png)
-
-# Model 3.4: Experimenteren met batch size en aantal epochs
-
-## Data analysis
-
-## Data pipeline
-
-## Model Training
-
-## Model evaluation
-Na enkele experimentele combinaties van batch sizes en aantallen epochs lijkt een opzet van **...** epochs met een batch size van **...** in de laagste validatiekosten te resulteren. Deze opzet wordt daarmee bestempeld als het optimale model.
-
-![Experimenteren tabellen](URL)
