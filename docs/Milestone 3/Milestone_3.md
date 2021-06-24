@@ -79,7 +79,7 @@ BatchNormalization een aantal keren overfitting optrad. Dit was af te lezen in
 de bijbehorende plot, want de validatiekosten gingen omhoog, terwijl de
 trainingkosten verder naar beneden gingen.
 
-![Tabel met overfitting]
+![Tabel met overfitting](https://github.com/larswoudstra/Coronette/blob/main/docs/images/2drop%26batch.png)
 
 In het vervolg is het dus aan te raden om het te houden op een simpeler model, want een
 complexer model met Dropout en BatchNormalization leidt niet tot betere resultaten.
