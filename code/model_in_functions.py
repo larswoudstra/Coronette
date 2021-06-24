@@ -20,11 +20,11 @@ def load_data(set, n):
 
     # load the data
     covid_df = pd.read_csv(f"data_covid/covid.{set}.csv")
-    
+
     # remove id-column
     covid_df = covid_df.drop(['id'], axis=1)
 
-    # select every nth row out of full train data set to create test data
+    # select every nth row out of full train data set to create test data set
     test_df = covid_df.iloc[::n]
 
     # remove test data from training data
@@ -47,7 +47,8 @@ def transform_data(training_data):
     return data, targets
 
 def select_features(X_train, y_train, X_test, k={}):
-    """Determines the features with the highest importance, based on correlation with the output."""
+    """Determines the features with the highest importance, based on correlation
+    with the output."""
 
     # select all features
     feature_scores = SelectKBest(f_regression, k=k)
@@ -74,7 +75,8 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
     model = models.Sequential()
 
     # add fully connected layers
-    model.add(layers.Dense(units=5, activation='relu', input_shape=(14,), kernel_initializer=initializer))
+    model.add(layers.Dense(units=5, activation='relu', input_shape=(14,),
+                            kernel_initializer=initializer))
     model.add(layers.Dense(units=1))
 
     # compile the model with the Nadam optimizer
@@ -82,7 +84,8 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
-    history = model.fit(train_data, train_targets, batch_size=70, epochs=700, validation_data=(val_data, val_targets))
+    history = model.fit(train_data, train_targets, batch_size=70, epochs=700,
+                        validation_data=(val_data, val_targets))
 
     # get predictions
     preds = model.predict(val_data)
@@ -122,11 +125,18 @@ def kfold_NN(train_k_best, train_targets):
         # get training data and targets from data
         train_data_fold, train_targets_fold, val_data_fold, val_targets_fold = get_data_and_targets(train, val, train_k_best, train_targets)
 
-        history, preds = train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold)
+        history, preds = train_neural_network(train_data_fold, train_targets_fold,
+                                                val_data_fold, val_targets_fold)
 
         # compute RMSE-values for training and validation data
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
         rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
+
+    rmse_train = rmse_train / fold
+    rmse_val = rmse_val / fold
+
+    print(f'The average train RMSE is: {rmse_train[-1]:.4f}')
+    print(f'The average validation RMSE is: {rmse_val[-1]:.4f}')
 
     plot_RMSE(rmse_train, rmse_val)
 
@@ -148,24 +158,30 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.show()
 
 def plot_differences(y_preds, y_targets):
+    """Plots the differences between the predicted values and the groundtruth
+    target values in a histogram."""
+
+    # calculate the differences between the predicted values and target values
     differences = y_preds - y_targets
 
+    # create a histogram with 100 bins
     plt.hist(differences, bins = 100)
     plt.title('Histogram of differences between prediction values and target values')
     plt.show()
 
 def test_NN(train_k_best, train_targets, test_k_best, test_targets):
-    """Creates a test data set out of the full training dataframe and tests the
-    trained model"""
+    """Tests the trained model on new data, plots the Training and Test RMSE
+    in a line graph and plots the differences in a histogram."""
 
     # train the model
-    history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
+    history, predictions = train_neural_network(train_k_best, train_targets,
+                                                test_k_best, test_targets)
 
-    # compute RMSE-values for training and validation data
+    # compute RMSE-values for training and test data
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
-    rmse_val = np.asarray(history.history['val_root_mean_squared_error'])
+    rmse_test = np.asarray(history.history['val_root_mean_squared_error'])
 
-    plot_RMSE(rmse_train, rmse_val, fold=1)
+    plot_RMSE(rmse_train, rmse_test, fold=1)
 
     plot_differences(predictions, test_targets)
 
@@ -186,7 +202,7 @@ if __name__ == "__main__":
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
     # # train neural network using k-fold cross validation
-    # kfold_NN(train_k_best, train_targets)
+    kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(train_k_best, train_targets, test_k_best, test_targets)
+    # test_NN(train_k_best, train_targets, test_k_best, test_targets)

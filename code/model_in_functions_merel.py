@@ -71,7 +71,7 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
-    history = model.fit(train_data, train_targets, batch_size=700, epochs=10000, validation_data=(val_data, val_targets))
+    history = model.fit(train_data, train_targets, batch_size=70, epochs=700, validation_data=(val_data, val_targets))
 
     # get predictions
     preds = model.predict(val_data)
@@ -171,7 +171,7 @@ if __name__ == "__main__":
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=93)
 
     # # train neural network using k-fold cross validation
-    # kfold_NN(train_k_best, train_targets)
+    kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(train_k_best, train_targets, test_k_best, test_targets)
+    # test_NN(train_k_best, train_targets, test_k_best, test_targets)
