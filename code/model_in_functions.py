@@ -154,6 +154,7 @@ def plot_differences(y_preds, y_targets):
     # calculate the differences between the predicted values and target values
     differences = y_preds - y_targets
 
+    # create a histogram with 100 bins
     plt.hist(differences, bins = 100)
     plt.title('Histogram of differences between prediction values and target values')
     plt.show()
