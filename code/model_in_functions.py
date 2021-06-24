@@ -84,12 +84,8 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
                 metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     # train the model
-<<<<<<< HEAD
-    history = model.fit(train_data, train_targets, batch_size=70, epochs=700, validation_data=(val_data, val_targets))
-=======
     history = model.fit(train_data, train_targets, batch_size=70, epochs=700,
                         validation_data=(val_data, val_targets))
->>>>>>> 09a2fef06d6d7842b6cf0e71360adc8ef9daf6c3
 
     # get predictions
     preds = model.predict(val_data)
@@ -205,15 +201,8 @@ if __name__ == "__main__":
     # select 'k' best features based on barplot (see 'best_features_barplot')
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
-<<<<<<< HEAD
-    # train neural network using k-fold cross validation
-    kfold_NN(train_k_best, train_targets)
-
-    # # test the neural network creating train and test data
-=======
     # # train neural network using k-fold cross validation
-    kfold_NN(train_k_best, train_targets)
+    # kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
->>>>>>> 09a2fef06d6d7842b6cf0e71360adc8ef9daf6c3
-    # test_NN(train_k_best, train_targets, test_k_best, test_targets)
+    test_NN(train_k_best, train_targets, test_k_best, test_targets)
