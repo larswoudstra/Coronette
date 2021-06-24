@@ -24,65 +24,31 @@ Als de 'He' initializer wordt toegepast op de configuratie zoals deze is gebruik
 
 
 # Model 3.2: Dropout en Batch Normalization
-In een poging ons model nog verder te verbeteren, is er gekozen om te kijken naar
-de effecten van een zeer complex netwerk, in combinatie met Dropout en BatchNormalization.
-Uiteindelijk is uit de analyses gebleken dat het model overduidelijk beter werkt zonder
-Dropout en BatchNormalization
+In een poging ons model nog verder te verbeteren, is er gekozen om te kijken naar de effecten van een zeer complex netwerk, in combinatie met Dropout en BatchNormalization. Uiteindelijk is uit de analyses gebleken dat het model overduidelijk beter werkt zonder Dropout en BatchNormalization
 
 ## Data analysis
-De relevante data analysis voor dit subhoofdstuk is terug te vinden aan het begin
-van dit hoofdstuk. Er is gekozen om gebruik te maken van de 14 beste features, om
-hiermee verschillende combinaties van layers/nodes te vergelijken. De data is gesplitst
-in 80% trainingdata en 20% testdata. Bij het toetsen van de verschillende combinaties
-is het model getraind met deze trainingdata en getest met de testdata. Hierdoor zijn
-de resultaten goed vergelijkbaar, want alle modellen zijn met exact dezelfde data
-getraind en getest.
+De relevante data analysis voor dit subhoofdstuk is terug te vinden aan het begin van dit hoofdstuk. Er is gekozen om gebruik te maken van de 14 beste features, om hiermee verschillende combinaties van layers/nodes te vergelijken. De data is gesplitst in 80% trainingdata en 20% testdata. Bij het toetsen van de verschillende combinaties is het model getraind met deze trainingdata en getest met de testdata. Hierdoor zijn de resultaten goed vergelijkbaar, want alle modellen zijn met exact dezelfde data getraind en getest.
 
 ## Data pipeline
-Er zijn veel verschillende data pipelines gebruikt; elke variant had immers een andere
-combinatie van Dropout- en BatchNormalization layers.
-Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een
-ReLU-activatie. Onder het kopje model evaluation is een tabel te zien met alle
-combinatie van Dropout- en BatchNormalization layers.
-Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een
-ReLU-activation. Onder het kopje model evaluation is een tabel te zien met alle
-verschillende configuraties en bijbehorende resultaten. Er is ook gebruik gemaakt van
-een zogenaamde He-initializer: deze zorgt ervoor dat de gewichten van het model
-beter geïnitialiseerd worden, zodat het model minder vaak op een lokaal minimum
-vast zou komen te zitten.
+Er zijn veel verschillende data pipelines gebruikt; elke variant had immers een andere combinatie van Dropout- en BatchNormalization layers. Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een ReLU-activatie. Onder het kopje model evaluation is een tabel te zien met alle combinatie van Dropout- en BatchNormalization layers. Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een ReLU-activation. Onder het kopje model evaluation is een tabel te zien met alle verschillende configuraties en bijbehorende resultaten. Er is ook gebruik gemaakt van een zogenaamde He-initializer: deze zorgt ervoor dat de gewichten van het model beter geïnitialiseerd worden, zodat het model minder vaak op een lokaal minimum vast zou komen te zitten.
 
-Vervolgens is voor elke hidden layer een Dropout-layer toegevoegd en na elke
-hidden layer een BatchNormalization layer.
+Vervolgens is voor elke hidden layer een Dropout-layer toegevoegd en na elke hidden layer een BatchNormalization layer.
 
 ## Model Training
-Het netwerk is getraind met 700 epochs en een batch size van 70, omdat uit eerdere
-trainingen is gebleken dat deze combinatie tot de beste resultaten leidde. Het kan
-natuurlijk het geval zijn dat dit anders is voor complexere modellen, maar door deze
-waarden gelijk te houden kunnen de varianten beter vergeleken worden.
-De MSE is gebruikt om het model te trainen.
+Het netwerk is getraind met 700 epochs en een batch size van 70, omdat uit eerdere trainingen is gebleken dat deze combinatie tot de beste resultaten leidde. Het kan natuurlijk het geval zijn dat dit anders is voor complexere modellen, maar door deze waarden gelijk te houden kunnen de varianten beter vergeleken worden. De MSE is gebruikt om het model te trainen.
 
 ## Model evaluation
-RMSE is gebruikt om de uiteindelijke kwaliteit van het model te bepalen. Hoe lager
-de RMSE, hoe beter. Er is gekeken naar de validatie-RMSE. Er is ook gekeken of het
-model overfit door de training- en validatie-RMSE tegen elkaar te plotten. In
-onderstaande tabel staan de geprobeerde configuraties met de bijbehorende RMSE.
+RMSE is gebruikt om de uiteindelijke kwaliteit van het model te bepalen. Hoe lager de RMSE, hoe beter. Er is gekeken naar de validatie-RMSE. Er is ook gekeken of het model overfit door de training- en validatie-RMSE tegen elkaar te plotten. In onderstaande tabel staan de geprobeerde configuraties met de bijbehorende RMSE.
 
 ![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_batch%26drop.png)
 
-In de tabel is  te zien dat er met grote hidden layers, Dropout en
-BatchNormalization een aantal keren overfitting optrad. Dit was af te lezen in de bijbehorende plot, want de validatiekosten gingen omhoog, terwijl de trainingkosten verder naar beneden gingen.
+In de tabel is  te zien dat er met grote hidden layers, Dropout en BatchNormalization een aantal keren overfitting optrad. Dit was af te lezen in de bijbehorende plot, want de validatiekosten gingen omhoog, terwijl de trainingkosten verder naar beneden gingen.
 
 ![Tabel met overfitting](https://github.com/larswoudstra/Coronette/blob/main/docs/images/2drop%26batch.png)
 
-In de tabel is ook te zien dat er in alle verschillende vormen en mogelijkheden
-geen verbetering is te zien, totdat er een erg kleine Dropout (0.1) wordt toegevoegd
-op een simpel model met twee hidden layers (zie rij 7). De keren dat het model onder
-de 1 komt is echter als de Dropout helemaal is weggehaald (zie rij 8 en 10).
-BatchNormalization op zichzelf werkt ook niet goed, want dan wordt de RMSE 2.05.
+In de tabel is ook te zien dat er in alle verschillende vormen en mogelijkheden geen verbetering is te zien, totdat er een erg kleine Dropout (0.1) wordt toegevoegd op een simpel model met twee hidden layers (zie rij 7). De keren dat het model onder de 1 komt is echter als de Dropout helemaal is weggehaald (zie rij 8 en 10). BatchNormalization op zichzelf werkt ook niet goed, want dan wordt de RMSE 2.05.
 
-
-In het vervolg is het dus aan te raden om het te houden op een simpeler model, want een
-complexer model met Dropout en BatchNormalization leidt niet tot betere resultaten.
+In het vervolg is het dus aan te raden om het te houden op een simpeler model, want een complexer model met Dropout en BatchNormalization leidt niet tot betere resultaten.
 
 # Model 3.3: Verschillen analyseren
 Om de verschillen tussen de voorspelde tested-positive waarden en de daadwerkelijke tested-positive waarden in kaart te brengen is er gebruik gemaakt van een histogram. Deze laat zien hoe vaak een bepaalde waarde van een verschil voorkomt. Idealiter zijn alle verschillen natuurlijk 0. Wanneer dit niet het geval is, geeft een normaalverdeling rondom 0 aan dat het model op een juiste manier wordt getraind. Wanneer er een andere verdeling te zien is, kan dit duiden op nog onbekende factoren die het model beïnvloeden.
@@ -101,15 +67,21 @@ In de histogram die uit het bovenstaande model is voortgekomen is te zien dat de
 
 ![Histogram verschillen](https://github.com/larswoudstra/Coronette/blob/main/docs/images/differences_hist.png)
 
-# Model 3.4: Experimenteren met batch size en aantal epochs
+# Model 3.4: Geen hidden layers
+Uit eerdere metingen en modellen is gebleken dat ons netwerk tot betere resultaten leidt als deze simpeler is. Om deze reden wilden de onderzoekers nog analyseren hoe goed een neuraal netwerk zonder hidden layers en activatiefunctie zou presteren.
 
 ## Data analysis
+Voor de data analysis kan gekeken worden naar eerdere hoofdstukken. Er is in dit model getest met 14 (uit de feature selection) en 93 (alle) features. Er is gebruikgemaakt van de 80% trainingdata voor het trainen, deze is opgesplitst in 5 delen met k-fold cross validation. Elk deel is een keer validatie geweest, en het gemiddelde van de output daarvan is het resultaat.
 
 ## Data pipeline
+Er zijn twee verschillende data pipelines geweest bij deze testen: 14 input nodes en 93 input nodes. Bij beide netwerken is er geen gebruik gemaakt van activatiefuncties, Dropout en BatchNormalization. Beide netwerken hadden 1 output node.
 
-## Model Training
+## Model training
+Het model is getraind met de MSE voor gradient descent. Er is daarbij gebruikgemaakt van 700 epochs en een batch size van 70, omdat uit eerdere analyses is gebleken dat deze combinatie tot de beste resultaten leidt. Er is gebruik gemaakt van de He-initializer, omdat deze uit eerdere analyses het best is gebleken voor onze data. Diezelfde argumentatie geldt voor het gebruik van de Nadam optimizer.
 
 ## Model evaluation
-Na enkele experimentele combinaties van batch sizes en aantallen epochs lijkt een opzet van **...** epochs met een batch size van **...** in de laagste validatiekosten te resulteren. Deze opzet wordt daarmee bestempeld als het optimale model.
+De daadwerkelijke prestaties van het model zijn gemeten met de RMSE. De waarden hiervan zijn voor zowel de trainingdata als de testdata tegen elkaar geplot, zodat er gekeken kan worden naar overfitting en underfitting.
 
-![Experimenteren tabellen](URL)
+![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_zonderhiddenlayers.png)
+
+Er zijn voor de onderzoekers verrassende resultaten uit de tests gekomen. Zo lijkt 93 input nodes het over het algemeen, op een paar uitschieters na, het beter te doen dan 14 input nodes. Bovendien geven sommige configuraties met 93 input nodes het beste resultaat tot nu toe (zie rij 2 en rij 8). De resultaten van de modellen met 14 input nodes zijn redelijk te vergelijken met de resultaten van modellen met 14 input nodes en 1 hidden layer, deze gaven namelijk meestal een output van ongeveer 0.91. In conclusie kan er in het vervolg beter gewerkt worden met een model met 93 input nodes, geen hidden layers, 3000 of 10000 batch size en 70 of 1000 epochs.

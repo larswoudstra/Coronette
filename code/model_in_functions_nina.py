@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from tensorflow.keras import layers, models, metrics, initializers
+from tensorflow.keras import layers, models, metrics
 from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.feature_selection import SelectKBest, f_regression
 
@@ -55,40 +55,33 @@ def select_features(X_train, y_train, X_test, k={}):
 
 # Part 2: creating and testing the model
 
-def train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold, batch_size={}, epochs={}, layer_sizes=[]):
-        """Creates and trains a neural network. Returns the history."""
+def train_neural_network(train_data, train_targets, val_data, val_targets):
+    """Creates and trains a neural network. Returns the history."""
+    # set the 'He' weight initializer
+    initializer = tf.keras.initializers.he_normal(seed=None)
 
-        # set the 'He' weight initializer
-        initializer = tf.keras.initializers.he_normal(seed=None)
+    # initialize a neural network
+    model = models.Sequential()
 
-        # initialize a neural network
-        model = models.Sequential()
+    # add fully connected layers
+    model.add(layers.Dense(units=5, activation='relu', input_shape=(14,), kernel_initializer=initializer))
+    model.add(layers.Dense(units=1))
 
-        # define the input size
-        input_size = train_data_fold.shape[1]
+    # compile the model with the Nadam optimizer
+    model.compile(loss='mean_squared_error', optimizer='Nadam',
+                metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
-        # add first fully connected layer with a ReLU-activation function and an input size
-        model.add(layers.Dense(units=layer_sizes[0], activation='relu', input_shape=(input_size,), kernel_initializer=initializer))
+    # train the model
+    history = model.fit(train_data, train_targets, batch_size=1200, epochs=15000, validation_data=(val_data, val_targets))
 
-        # add hidden layers with ReLU-activation function(s)
-        for layer in layer_sizes[1:-1]:
-            model.add(layers.Dense(units=layer, activation='relu'))
+    # get predictions
+    preds = model.predict(val_data)
 
-        # add output layer without activation function
-        model.add(layers.Dense(units=layer_sizes[-1]))
+    # evaluate the model
+    print(f"Training RMSE: {model.evaluate(train_data, train_targets)[1]}")
+    print(f"Validation RMSE: {model.evaluate(val_data, val_targets)[1]}")
 
-        # compile the model with the Nadam optimizer
-        model.compile(loss='mean_squared_error', optimizer='Nadam',
-                    metrics=[tf.keras.metrics.RootMeanSquaredError()])
-
-        # train the model
-        history = model.fit(train_data_fold, train_targets_fold, batch_size=batch_size, epochs=epochs, validation_data=(val_data_fold, val_targets_fold))
-
-        # evaluate the model
-        print(f"Training RMSE: {model.evaluate(train_data_fold, train_targets_fold)[1]}")
-        print(f"Validation RMSE: {model.evaluate(val_data_fold, val_targets_fold)[1]}")
-
-        return history
+    return history, preds
 
 def get_data_and_targets(train, val, training_data, training_targets):
     """Splits training data and targets into training and validation data."""
@@ -117,13 +110,14 @@ def kfold_NN(train_k_best, train_targets):
         # get training data and targets from data
         train_data_fold, train_targets_fold, val_data_fold, val_targets_fold = get_data_and_targets(train, val, train_k_best, train_targets)
 
-        history = train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold, 70, 700, [14, 5, 1])
+        history, preds = train_neural_network(train_data_fold, train_targets_fold, val_data_fold, val_targets_fold)
 
         # compute RMSE-values for training and validation data
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
         rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
 
     plot_RMSE(rmse_train, rmse_val)
+
 
 # Part 4: model evaluation
 
@@ -137,24 +131,30 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.plot(rmse_train_avg)
     plt.plot(rmse_val_avg)
     plt.legend(['RMSE train', 'RMSE val'])
-    plt.title(f'The RMSE validation value is: {rmse_val[-1]:.2f}')
+    plt.title(f'The RMSE validation value is: {rmse_val_avg[-1]:.2f}')
     plt.show()
 
-def test_NN(train_data, train_targets, test_data, test_targets, k):
+def plot_differences(y_preds, y_targets):
+    differences = y_preds - y_targets
+
+    plt.hist(differences, bins = 100)
+    plt.title('Histogram of differences between prediction values and target values')
+    plt.show()
+
+def test_NN(train_k_best, train_targets, test_k_best, test_targets):
     """Creates a test data set out of the full training dataframe and tests the
     trained model"""
 
-    # select features
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
-
     # train the model
-    history = train_neural_network(train_k_best, train_targets, test_k_best, test_targets, 70, 700, [14, 5, 1])
+    history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
 
     # compute RMSE-values for training and validation data
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
     rmse_val = np.asarray(history.history['val_root_mean_squared_error'])
 
     plot_RMSE(rmse_train, rmse_val, fold=1)
+
+    plot_differences(predictions, test_targets)
 
 # Run program
 
@@ -168,14 +168,11 @@ if __name__ == "__main__":
     # transform testing data into numpy
     test_data, test_targets = transform_data(covid_df_test)
 
-    # define the number of features selected for training based on barplot (see 'best_features_barplot')
-    selected_features = 14
+    # select 'k' best features based on barplot (see 'best_features_barplot')
+    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
-    # select 'k' best features
-    train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=selected_features)
-
-    # train neural network using k-fold cross validation
-    #kfold_NN(train_k_best, train_targets)
+    # # train neural network using k-fold cross validation
+    kfold_NN(train_k_best, train_targets)
 
     # test the neural network creating train and test data
-    test_NN(train_data, train_targets, test_data, test_targets, selected_features)
+    # test_NN(train_k_best, train_targets, test_k_best, test_targets)

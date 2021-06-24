@@ -61,7 +61,11 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
     initializer = tf.keras.initializers.he_normal(seed=None)
 
     # set the learning rate for 'Nadam' optimizer
+<<<<<<< HEAD
     optimizer = tf.keras.optimizers.Nadam(learning_rate=0.001)
+=======
+    optimizer = tf.keras.optimizers.Nadam(learning_rate=0.01)
+>>>>>>> af52a75bb32a627ef4c82c5a1c71675149a06caf
 
     # initialize a neural network
     model = models.Sequential()
