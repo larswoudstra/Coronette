@@ -39,7 +39,7 @@ getraind en getest.
 
 ## Data pipeline
 Er zijn veel verschillende data pipelines gebruikt; elke variant had immers een andere
-combinatie van dropout- en BatchNormalization layers.
+combinatie van Dropout- en BatchNormalization layers.
 Over het algemeen had het model 14 input nodes en minimaal één hidden layer met een
 ReLU-activatie. Onder het kopje model evaluation is een tabel te zien met alle
 combinatie van Dropout- en BatchNormalization layers.
@@ -73,6 +73,14 @@ geen verbetering is te zien, totdat er een erg kleine Dropout (0.1) wordt toegev
 op een simpel model met twee hidden layers (zie rij 7). De keren dat het model onder
 de 1 komt is echter als de Dropout helemaal is weggehaald (zie rij 8 en 10).
 BatchNormalization op zichzelf werkt ook niet goed, want dan wordt de RMSE 2.05.
+
+In de tabel is ook te zien dat er met grote hidden layers, Dropout en
+BatchNormalization een aantal keren overfitting optrad. Dit was af te lezen in
+de bijbehorende plot, want de validatiekosten gingen omhoog, terwijl de
+trainingkosten verder naar beneden gingen.
+
+![Tabel met overfitting]
+
 In het vervolg is het dus aan te raden om het te houden op een simpeler model, want een
 complexer model met Dropout en BatchNormalization leidt niet tot betere resultaten.
 
@@ -81,6 +89,9 @@ Om de verschillen tussen de voorspelde tested-positive waarden en de daadwerkeli
 
 ## Data analysis
 De data die wordt gebruikt is de data uit de 'covid.train.csv' file. Deze data is gesplitst in 80% trainingsdata (2160 samples) en 20% testdata (540 samples). Met de trainingsdata wordt het gehele model getraind. Aan de hand van de test data maakt het model voor elke sample een voorspelling van het aantal positieve covid-19 tests. Deze waarde wordt vergeleken met de al bekende waarde van het sample uit de 'covid.train.csv' file.
+
+## Data pipeline
+Om de verschillen te analyseren is gebruik gemaakt van het model met de 14 beste features met een architectuur van 14x5x1.
 
 ## Model Training
 Het model is getraind volgens alle bovenstaande stappen die tot nog toe het beste de target values hebben kunnen voorspellen. Er is gebruik gemaakt van een batchsize van 70 en 700 epochs. De initializer die gebruikt is is de He initializer.  
