@@ -20,6 +20,7 @@ def load_data(set, n):
 
     # load the data
     covid_df = pd.read_csv(f"data_covid/covid.{set}.csv")
+    
     # remove id-column
     covid_df = covid_df.drop(['id'], axis=1)
 
@@ -171,7 +172,7 @@ def test_NN(train_k_best, train_targets, test_k_best, test_targets):
 # Run program
 
 if __name__ == "__main__":
-    
+
     # load training and testing datasets
     covid_df_train, covid_df_test = load_data("train", 5)
 
