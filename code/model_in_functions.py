@@ -168,8 +168,7 @@ def test_NN(train_k_best, train_targets, test_k_best, test_targets):
     in a line graph and plots the differences in a histogram."""
 
     # train the model
-    history, predictions = train_neural_network(train_k_best, train_targets,
-                                                test_k_best, test_targets)
+    history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
 
     # compute RMSE-values for training and test data
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
