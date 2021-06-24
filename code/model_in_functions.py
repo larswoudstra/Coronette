@@ -148,6 +148,9 @@ def plot_RMSE(rmse_train, rmse_val, fold=5):
     plt.show()
 
 def plot_differences(y_preds, y_targets):
+    """Plots the differences between the predicted values and the groundtruth
+    target values in a histogram."""
+
     differences = y_preds - y_targets
 
     plt.hist(differences, bins = 100)
