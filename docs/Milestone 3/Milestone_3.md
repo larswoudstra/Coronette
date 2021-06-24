@@ -100,6 +100,11 @@ Ten slotte is er gekeken of het kiezen van verschillende learning rates in optim
 Zoals in Milestone 2 is beschreven blijft de validation RMSE vaak hangen op een waarde rond de 0.94 en 1. Dit zou kunnen komen door zogenaamde zadelpunten. Als dit het geval is, zou middels het aanpassen van de learning rate de RMSE validatie waarde nog lager kunnen worden.
 
 ## Data pipeline
-Om te kijken of er sprake is van eventuele zadelpunten waardoor we niet veel lager komen dan onze huidige RMSE, wordt er getuned met verschillende learning rates voor de Nadam optimizer. Eerst wordt de default learning rate toegepast van 0.001, vervolgens 0.003, daarna 0.01 en als laatste 0.03.
+Om te kijken of er sprake is van eventuele zadelpunten waardoor we niet veel lager komen dan onze huidige RMSE, wordt er getuned met verschillende learning rates voor de Nadam optimizer. Eerst wordt de default learning rate toegepast van 0.001, vervolgens 0.003, daarna 0.01 en als laatste een learning rate van 0.03.
 
-Voor het trainen zijn er 400 epochs en een batch size van 40 gebruikt
+## Model Training
+Voor het trainen met de verschillende learning rates zijn er iedere keer 700 epochs gebruikt met een batch size van 70. Verder komt het model overeen met het huidig gebruikte model met een architectuur van 14, 5, 1, een Nadam optimizer en de He initializer. Er is gevalideerd over 5 folds en hiervan is de gemiddelde RMSE waarde genomen.
+
+## Model evaluation
+
+![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Final_tabel_geenhiddenlayers.png)
