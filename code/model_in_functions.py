@@ -12,12 +12,12 @@ from tensorflow.keras import layers, models, metrics
 from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.feature_selection import SelectKBest, f_regression
 
-
 # Part 1: loading and cleaning the data
 
 def load_data(set, n):
     """Loads csv-file into a dataframe and removes the first column (ID).
     Creates a test dataframe out of every nth row of the complete dataset"""
+
     # load the data
     covid_df = pd.read_csv(f"data_covid/covid.{set}.csv")
     # remove id-column
@@ -34,6 +34,7 @@ def load_data(set, n):
 def transform_data(training_data):
     """Splits dataset into data and target values. Transforms data from dataframe
     to array."""
+
     # get data and target values
     data_df = training_data.iloc[:, :-1]
     targets_df = training_data.iloc[:, -1:]
@@ -46,6 +47,7 @@ def transform_data(training_data):
 
 def select_features(X_train, y_train, X_test, k={}):
     """Determines the features with the highest importance, based on correlation with the output."""
+
     # select all features
     feature_scores = SelectKBest(f_regression, k=k)
 
@@ -63,6 +65,7 @@ def select_features(X_train, y_train, X_test, k={}):
 
 def train_neural_network(train_data, train_targets, val_data, val_targets):
     """Creates and trains a neural network. Returns the history."""
+
     # set the 'He' weight initializer
     initializer = tf.keras.initializers.he_normal(seed=None)
 
@@ -91,12 +94,14 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
 
 def get_data_and_targets(train, val, training_data, training_targets):
     """Splits training data and targets into training and validation data."""
+
     return training_data[train], training_targets[train], training_data[val], training_targets[val]
 
 
 def kfold_NN(train_k_best, train_targets):
     """Runs neural network and applies k-fold cross validation. Returns the
     RMSE values for the training and validation data."""
+
     # init variables that contain the calculated RMSE
     rmse_val = 0
     rmse_train = 0
@@ -129,6 +134,7 @@ def kfold_NN(train_k_best, train_targets):
 
 def plot_RMSE(rmse_train, rmse_val, fold=5):
     """Plots the average RMSE for the training and validation data."""
+
     # calculate average RMSE
     rmse_train_avg = rmse_train / fold
     rmse_val_avg = rmse_val / fold
@@ -165,6 +171,7 @@ def test_NN(train_k_best, train_targets, test_k_best, test_targets):
 # Run program
 
 if __name__ == "__main__":
+    
     # load training and testing datasets
     covid_df_train, covid_df_test = load_data("train", 5)
 
