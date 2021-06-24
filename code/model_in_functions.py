@@ -135,6 +135,9 @@ def kfold_NN(train_k_best, train_targets):
     rmse_train = rmse_train / fold
     rmse_val = rmse_val / fold
 
+    print(f'The average train RMSE is: {rmse_train[-1]:.4f}')
+    print(f'The average validation RMSE is: {rmse_val[-1]:.4f}')
+
     plot_RMSE(rmse_train, rmse_val)
 
 
