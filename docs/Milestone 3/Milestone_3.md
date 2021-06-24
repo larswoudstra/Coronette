@@ -11,14 +11,12 @@ Tijdens het valideren van ons huidige model die deze initializer gebruikt is het
 Om dit probleem op te lossen zijn er andere initializers voorgesteld in dit project. Keras' default weight initializer werkt het beste op symmetrische activatie functies, zoals tanh en sigmoid (voor referentie, zie: https://towardsdatascience.com/weight-initialization-in-neural-networks-a-journey-from-the-basics-to-kaiming-954fb9b47c79). In het huidige neurale netwerk worden er ReLU activatiefuncties gebruikt, deze zijn in tegenstelling tot de hiervoor genoemde activatiefuncties niet symmetrisch. Om deze reden hebben He et. al (2005) onderzoek gedaan naar een geschikte weight initializator voor dergelijke asymmetrische non-lineaire activatiefuncties. 'He' initialization werkt met getallen die uit een normaalverdeling komen en vermenigvuldigd worden met *sqrt(2)/sqrt(n)*, waarbij *n* het aantal inputs van de vorige layer voorstelt (in ons geval dus de 'output nodes', omdat we werken met een fully connected neuraal netwerk). He initialisatie geeft dan uiteindelijk getallen met een variantie van 1 voor deze type activatiefuncties.
 
 ## Model training
-Het netwerk is getraind met drie verschillende initializers: de default Glorot Uniform (Xavier) initializer, de He initializer en de RandomNormal initializer. De laatste initializer genereert getallen uit een normaalverdeling zoals de He initializer dat doet, maar vermenigvuldigd dit niet met een bepaalde waarde die gerelateerd is aan het aantal inputs van de vorige layer. Voor het trainen zijn er 400 epochs en een batch size van 40 gebruikt omdat we voornamelijk geinteresseerd zijn in de beginwaarde van de RMSE na de initialisering en kan er al na een paar honderd epochs aan de hand van het verloop van de RMSE bepaald worden of de RMSE op een waarde rond de 1 zal zitten. Verder komt het model overeen met het huidig gebruikte model met een architectuur van 14, 5, 1 en een Nadam optimizer. Er is gevalideerd over 5 folds en hiervan is de gemiddelde RMSE waarde genomen.
+Het netwerk is getraind met drie verschillende initializers: de default Glorot Uniform (Xavier) initializer, de He initializer en de RandomNormal initializer. De laatste initializer genereert getallen uit een normaalverdeling zoals de He initializer dat doet, maar vermenigvuldigd dit niet met een bepaalde waarde die gerelateerd is aan het aantal inputs van de vorige layer. Voor het trainen zijn er 400 epochs en een batch size van 40 gebruikt omdat we voornamelijk geinteresseerd zijn in de beginwaarde van de RMSE na de initialisering en kan er al na een paar honderd epochs aan de hand van het verloop van de RMSE bepaald worden of de RMSE op een waarde rond de 1 zal zitten. *Dit betekent wel dat er de exacte RMSE waarde niet overeen zal komen met de eerdere RMSE waarden met batch sizes van 70 en 700 epochs. Dit is echter niet noodzakelijk om de verschillen tussen de verschillende initializers zichtbaar te maken.* Verder komt het model overeen met het huidig gebruikte model met een architectuur van 14, 5, 1 en een Nadam optimizer. Er is gevalideerd over 5 folds en hiervan is de gemiddelde RMSE waarde genomen.
 
 ## Model evaluation
 In de afbeelding hieronder is het verschil te zien tussen de verschillende initializers (He, Glorot Uniform (Xavier) en RandomNormal).
 
 ![Afbeelding van de verschillende initializers](https://github.com/larswoudstra/Coronette/blob/main/docs/images/initializers2_final.png)
-
-**nog duidelijk maken dat we met een andere waarde voor batch size en epochs werken omdat dat sneller is en dat om deze reden de exacte RMSE die we zouden kunnen krijgen niet klopt, maar je kan hier wel goed het verschil zien tussen de initializers**
 
 Zoals verwacht start de He initializator op een lagere RMSE waarde dan de andere initializers. Ook is te zien dat de He initializer op een lagere RMSE waarde uitkomt ten opzichte van de Glorot initializer. Opvallend is hier wel dat de RandomNormal initializer ongeveer op dezelfde waarde uitkomt als bij het gebruik van de He initializer. Dit is waarschijnlijk te danken aan de vergelijkbare manier waarop de twee initializers werken, namelijk door een getal te kiezen uit de normaalverdeling *(vandaar: RandomNormal)*. Omdat de RandomNormal deze getallen niet vermenigvuldigt met een term zoals in de He initializer, kan dit de reden zijn waarom de RMSE waarde in het begin ook hoger is voor de RandomNormal initializer.
 
@@ -100,13 +98,15 @@ Ten slotte is er gekeken of het kiezen van verschillende learning rates in optim
 Zoals in Milestone 2 is beschreven blijft de validation RMSE vaak hangen op een waarde rond de 0.94 en 1. Dit zou kunnen komen door zogenaamde zadelpunten. Als dit het geval is, zou middels het aanpassen van de learning rate de RMSE validatie waarde nog lager kunnen worden.
 
 ## Data pipeline
-Om te kijken of er sprake is van eventuele zadelpunten waardoor we niet veel lager komen dan onze huidige RMSE, wordt er getuned met verschillende learning rates voor de Nadam optimizer. Eerst wordt de default learning rate toegepast van 0.001, vervolgens 0.003, daarna 0.01 en als laatste een learning rate van 0.03.
+Om te kijken of er sprake is van eventuele zadelpunten waardoor we niet veel lager komen dan onze huidige RMSE, wordt er getuned met verschillende learning rates voor de Nadam optimizer. Eerst wordt de default learning rate toegepast van *0.001*, vervolgens *0.003*, daarna *0.01* en als laatste een learning rate van *0.03*.
 
 ## Model Training
 Voor het trainen met de verschillende learning rates zijn er iedere keer 700 epochs gebruikt met een batch size van 70. Verder komt het model overeen met het huidig gebruikte model met een architectuur van 14, 5, 1, een Nadam optimizer en de He initializer. Er is gevalideerd over 5 folds en hiervan is de gemiddelde RMSE waarde genomen.
 
 ## Model evaluation
+Zoals te zien in de tabel hieronder heeft het tunen van de learning rates geen positief effect gehad op de validatie RMSE. De default learning rate voor Nadam blijkt toch de beste te zijn, daarom zal deze ook gehandhaafd worden in het eindmodel.
 
+<<<<<<< HEAD
 ![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Final_tabel_geenhiddenlayers.png)
 
 # Conclusie
@@ -124,3 +124,6 @@ Op de laatste dag van het onderzoek werd geconcludeerd dat sommige aanpassingen 
 Daarnaast kan er onderzocht worden waarom de test data gemiddeld een 0.08% lagere afwijking heeft dan de validatie afwijking met k-fold cross validation. In onderstaande tabel zijn de gemiddelde waarden van alle 14 features per k-fold en de gemiddelde waarden van alle 14 features van de test-data te zien. Deze tabel laat zien dat ook de gemiddelde verschillen tussen de validatiedata en testdata erg klein zijn. 
 
 ![Tabel verschillen](Url)
+=======
+![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_learning_rates.png)
+>>>>>>> 44ee3d756ca2fd827207aabb045f2da9eb2679b8

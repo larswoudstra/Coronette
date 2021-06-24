@@ -8,9 +8,9 @@ Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt v
 
 ![Baseline model met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/baselinemodel_nadam_k93.png)
 
-# Optimizers
+# Model 2.2: Optimizers
 ## Data analysis
--
+--
 
 ## Data pipeline
 De validatiedata heeft in veel van de gevallen een hoge loss. Daarom wordt er gezocht naar een betere optimizer voor het Neural Network. De eerste optimizer die in Milestone 1 is gebruikt is de 'adam' optimizer. Om te bepalen welke optimizer het beste past bij de data, zijn alle optimizers van Keras geprobeerd met verschillende learning rates. Om te bepalen welke optimizer met welke learning rate het beste bij het model past, wordt de RMSE loss opnieuw geplot.
@@ -27,10 +27,10 @@ Al met al lijkt de Nadam optimizer de beste keuze, maar Adamax en Ftrl moeten in
 
 Er wordt dus nog steeds full batch gradient descent gebruikt, maar dan nu met de 'Nadam'-optimizer. Er worden 300 epochs gebruikt, omdat dit aantal voldoende informatie lijkt te geven over de werking van het model.
 
-# Model 2.2: K-fold cross validation
+# Model 2.3: K-fold cross validation
 
 ## Data analysis
--
+--
 
 ## Data Pipeline
 In Milestone 1 is er gebruikgemaakt van de train_test_split-functie van sklearn om de data te verdelen in 70% trainingdata en 30% validatiedata.
@@ -50,10 +50,10 @@ Om het model te kunnen evalueren is de RMSE van alle 5 folds gemiddeld genomen. 
 
 Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. Dit lijkt dus opgelost te worden met K-fold cross validation. Daarom wordt deze methode in het vervolg ook gebruikt om het model te evalueren.  
 
-# Model 2.3: Feature selection
+# Model 2.4: Feature selection
 
 ## Data analysis
-Doormiddel van feature selection is er gekeken naar welke features de uiteindelijke target value het beste kunnen voorspellen.
+Door middel van feature selection is er gekeken naar welke features de uiteindelijke target value het beste kunnen voorspellen.
 
 ## Data pipeline
 Voor de feature selection is gebruik gemaakt van SelectKBest-analyse. Deze analyseert de correlatie tussen alle verschillende features en de target feature en gebruikt hiervoor de scorefunctie 'f_regression'. Features met hogere correlatiescores hebben dus een sterker verband met de target feature en zijn daarmee relevanter om mee te nemen in het model.
@@ -76,10 +76,10 @@ Met deze 14 features gaat het dus vooralsnog eigenlijk slechts om een viertal fe
 
 Gezien de 14 pieken wordt SelectKBest nogmaals uitgevoerd, maar nu met k=14 waarna er een nieuwe training- en testdataset gevormd wordt met de 14 features met de hoogste correlatiescores. Gekeken naar de modelprestaties kan dit aantal nog aangepast worden. Mocht het model met deze 14 features bijvoorbeeld juist underfitten, kan dit probleem opgelost worden door meer features toe te voegen.
 
-# Model 2.4: Complexiteit verhogen
+# Model 2.5: Complexiteit verhogen
 
 ## Data analysis
--
+--
 
 ## Data pipeline
 
@@ -91,11 +91,13 @@ In de onderstaande tabel staan de verschillende uitgeprobeerde configuraties en 
 
 ![Tabel met full-batch configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_configuraties_full_batch.png)
 
-# Model 2.5: Batch size
+# Model 2.6: Batch size
 
 ## Data analysis
+--
 
 ## Data pipeline
+--
 
 ## Model training
 Met batch size is geprobeerd het model sneller te laten leren. Met deze batch size worden de gewichten van het Neural Network per batch aangepast in plaats van per epoch, wat eerder het geval was. Door het toepassen van deze batch size en het aantal epochs verder op te schroeven, kan er mogelijk een nog lagere validation RMSE bereikt worden.
@@ -112,7 +114,7 @@ Met een batch size van 70 en een aantal epochs van 700 is er een validation RMSE
 Omdat de loss in deze curve nog verder lijkt te dalen, is ook een configuratie met een batch size van 70 en een aantal epochs van 1000 geprobeerd. Hierbij kwam de validation loss niet lager uit: RMSE = 0.977.
 
 # Conclusie Milestone 2
-Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie, een ReLU-activatiefunctie voor de hidden layer, een lineaire activatiefunctie voor de outputlayer, de 'Nadam' optimizer, een batchsize van 70 en 700 epochs de beste resultaten gebaseerd op de RMSE-metric (Validatie RMSE = 0.94). Het is dus gelukt om de gemiddelde afwijking van het daadwerkelijke percentage positieve covid-19 tests onder 1% te krijgen.
+Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie, een ReLU-activatiefunctie voor de hidden layer, een lineaire activatiefunctie voor de outputlayer, de 'Nadam' optimizer, een batchsize van 70 en 700 epochs de beste resultaten gebaseerd op de RMSE-metric (Validatie RMSE = 0.94). Het is dus gelukt om de gemiddelde afwijking van het daadwerkelijke percentage positieve Covid-19 tests onder 1% te krijgen.
 
 In de toekomst zal er geprobeerd worden de kosten verder te minimaliseren, bijvoorbeeld door middel van aanpassingen van de batch size, het aantal epochs of verdere verbeteringen van de architectuur van het netwerk. Ook zal de trainingdata gesplitst worden op testdata, zodat de prestaties van het model getoetst kan worden op nieuwe data.
 
