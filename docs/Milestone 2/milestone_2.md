@@ -30,7 +30,7 @@ Er wordt dus nog steeds full batch gradient descent gebruikt, maar dan nu met de
 # Model 2.3: K-fold cross validation
 
 ## Data analysis
--
+--
 
 ## Data Pipeline
 In Milestone 1 is er gebruikgemaakt van de train_test_split-functie van sklearn om de data te verdelen in 70% trainingdata en 30% validatiedata.
