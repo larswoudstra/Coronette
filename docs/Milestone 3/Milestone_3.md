@@ -66,23 +66,8 @@ Het model is getraind volgens alle bovenstaande stappen die tot nog toe het best
 In de histogram die uit het bovenstaande model is voortgekomen is te zien dat de verschillen rondom 0 gecentreerd zijn. Dit betekent dat de meeste verschillen klein zijn. Slechts voor 3 van de 540 samples wijkt het voorspelde percentage met meer dan 3% af van het daadwerkelijke percentage.
 
 ![Histogram verschillen](https://github.com/larswoudstra/Coronette/blob/main/docs/images/differences_hist.png)
-<<<<<<< HEAD
-=======
 
-# Model 3.4: Experimenteren met batch size en aantal epochs
-
-## Data analysis
-
-## Data pipeline
-
-## Model Training
-
-## Model evaluation
-Na enkele experimentele combinaties van batch sizes en aantallen epochs lijkt een opzet van **...** epochs met een batch size van **...** in de laagste validatiekosten te resulteren. Deze opzet wordt daarmee bestempeld als het optimale model.
-
-![Experimenteren tabellen](URL)
-
-# Model 3.5: Geen hidden layers
+# Model 3.4: Geen hidden layers
 Uit eerdere metingen en modellen is gebleken dat ons netwerk tot betere resultaten leidt als deze simpeler is. Om deze reden wilden de onderzoekers nog analyseren hoe goed een neuraal netwerk zonder hidden layers en activatiefunctie zou presteren.
 
 ## Data analysis
@@ -100,4 +85,3 @@ De daadwerkelijke prestaties van het model zijn gemeten met de RMSE. De waarden 
 ![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_zonderhiddenlayers.png)
 
 Er zijn voor de onderzoekers verrassende resultaten uit de tests gekomen. Zo lijkt 93 input nodes het over het algemeen, op een paar uitschieters na, het beter te doen dan 14 input nodes. Bovendien geven sommige configuraties met 93 input nodes het beste resultaat tot nu toe (zie rij 2 en rij 8). De resultaten van de modellen met 14 input nodes zijn redelijk te vergelijken met de resultaten van modellen met 14 input nodes en 1 hidden layer, deze gaven namelijk meestal een output van ongeveer 0.91. In conclusie kan er in het vervolg beter gewerkt worden met een model met 93 input nodes, geen hidden layers, 3000 of 10000 batch size en 70 of 1000 epochs.
->>>>>>> d0be2596b50e8870a6c0dde3f92970fc28503687
