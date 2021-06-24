@@ -1,3 +1,9 @@
+# By Lars Woudstra, Kelly Spaans, Merel Haisma en Nina Alblas
+
+# This program contains a trained Neural network designed to predict the
+# percentage of newly tested positive Covid-19 cases. This program can thus
+# be utilised to make predictions on new data.
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
