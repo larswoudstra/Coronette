@@ -61,7 +61,7 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
     initializer = tf.keras.initializers.he_normal(seed=None)
 
     # set the learning rate for 'Nadam' optimizer
-    optimizer = tf.keras.optimizers.Nadam(learning_rate=0.01)
+    optimizer = tf.keras.optimizers.Nadam(learning_rate=0.003)
 
     # initialize a neural network
     model = models.Sequential()
@@ -119,8 +119,8 @@ def kfold_NN(train_k_best, train_targets):
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
         rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
 
-    print(f'The average train RMSE is: {(rmse_train[-1] / fold):.4f})
-    print(f'The average validation RMSE is: {(rmse_val[-1] / fold):.4f})
+    print(f'The average train RMSE is: {(rmse_train[-1] / fold):.4f}')
+    print(f'The average validation RMSE is: {(rmse_val[-1] / fold):.4f}')
 
     plot_RMSE(rmse_train, rmse_val)
 
