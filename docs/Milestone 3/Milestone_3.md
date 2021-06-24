@@ -107,4 +107,4 @@ Voor het trainen met de verschillende learning rates zijn er iedere keer 700 epo
 
 ## Model evaluation
 
-![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Final_tabel_geenhiddenlayers.png)
+![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_learning_rates.png)
