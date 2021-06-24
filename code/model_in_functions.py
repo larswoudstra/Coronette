@@ -20,7 +20,7 @@ def load_data(set, n):
 
     # load the data
     covid_df = pd.read_csv(f"data_covid/covid.{set}.csv")
-    
+
     # remove id-column
     covid_df = covid_df.drop(['id'], axis=1)
 
@@ -155,8 +155,8 @@ def plot_differences(y_preds, y_targets):
     plt.show()
 
 def test_NN(train_k_best, train_targets, test_k_best, test_targets):
-    """Creates a test data set out of the full training dataframe and tests the
-    trained model"""
+    """Tests the trained model on new data, plots the Training and Test RMSE
+    in a line graph and plots the differences in a histogram."""
 
     # train the model
     history, predictions = train_neural_network(train_k_best, train_targets, test_k_best, test_targets)
@@ -185,8 +185,5 @@ if __name__ == "__main__":
     # select 'k' best features based on barplot (see 'best_features_barplot')
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
-    # # train neural network using k-fold cross validation
-    # kfold_NN(train_k_best, train_targets)
-
-    # test the neural network creating train and test data
+    # test the neural network on new data
     test_NN(train_k_best, train_targets, test_k_best, test_targets)
