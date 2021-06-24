@@ -85,6 +85,7 @@ De data die wordt gebruikt is de data uit de 'covid.train.csv' file. Deze data i
 ## Data pipeline
 Om de verschillen te analyseren is gebruik gemaakt van het model met de 14 beste features met een architectuur van 14x5x1.
 
+
 ## Model Training
 Het model is getraind volgens alle bovenstaande stappen die tot nog toe het beste de target values hebben kunnen voorspellen. Er is gebruik gemaakt van een batchsize van 70 en 700 epochs. De initializer die gebruikt is is de He initializer.  
 
