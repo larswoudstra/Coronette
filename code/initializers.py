@@ -193,7 +193,7 @@ def train_neural_network_initializer(train_data_fold, train_targets_fold, val_da
                     metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
         # train the model
-        history = model.fit(train_data_fold, train_targets_fold, batch_size=100, epochs=1000, validation_data=(val_data_fold, val_targets_fold))
+        history = model.fit(train_data_fold, train_targets_fold, batch_size=40, epochs=400, validation_data=(val_data_fold, val_targets_fold))
         histories.append(history)
 
         # get predictions
