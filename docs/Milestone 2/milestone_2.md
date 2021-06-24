@@ -114,7 +114,7 @@ Met een batch size van 70 en een aantal epochs van 700 is er een validation RMSE
 Omdat de loss in deze curve nog verder lijkt te dalen, is ook een configuratie met een batch size van 70 en een aantal epochs van 1000 geprobeerd. Hierbij kwam de validation loss niet lager uit: RMSE = 0.977.
 
 # Conclusie Milestone 2
-Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie, een ReLU-activatiefunctie voor de hidden layer, een lineaire activatiefunctie voor de outputlayer, de 'Nadam' optimizer, een batchsize van 70 en 700 epochs de beste resultaten gebaseerd op de RMSE-metric (Validatie RMSE = 0.94). Het is dus gelukt om de gemiddelde afwijking van het daadwerkelijke percentage positieve covid-19 tests onder 1% te krijgen.
+Tot nu toe geeft het fully-connected Neural Network met een 14x5x1-configuratie, een ReLU-activatiefunctie voor de hidden layer, een lineaire activatiefunctie voor de outputlayer, de 'Nadam' optimizer, een batchsize van 70 en 700 epochs de beste resultaten gebaseerd op de RMSE-metric (Validatie RMSE = 0.94). Het is dus gelukt om de gemiddelde afwijking van het daadwerkelijke percentage positieve Covid-19 tests onder 1% te krijgen.
 
 In de toekomst zal er geprobeerd worden de kosten verder te minimaliseren, bijvoorbeeld door middel van aanpassingen van de batch size, het aantal epochs of verdere verbeteringen van de architectuur van het netwerk. Ook zal de trainingdata gesplitst worden op testdata, zodat de prestaties van het model getoetst kan worden op nieuwe data.
 
