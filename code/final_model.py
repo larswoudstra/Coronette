@@ -36,7 +36,7 @@ def transform_data(training_data):
     """Splits dataset into data and target values. Transforms data from dataframe
     to array."""
 
-    # split last row (target values) from the other rows (data set)
+    # split last column (target values) from the other columns (data set)
     data_df = training_data.iloc[:, :-1]
     targets_df = training_data.iloc[:, -1:]
 
