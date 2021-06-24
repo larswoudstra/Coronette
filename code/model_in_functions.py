@@ -99,8 +99,7 @@ def train_neural_network(train_data, train_targets, val_data, val_targets):
 def get_data_and_targets(train, val, training_data, training_targets):
     """Splits training data and targets into training and validation data."""
 
-    return training_data[train], training_targets[train],
-            training_data[val], training_targets[val]
+    return training_data[train], training_targets[train], training_data[val], training_targets[val]
 
 
 def kfold_NN(train_k_best, train_targets):
