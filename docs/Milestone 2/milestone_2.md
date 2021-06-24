@@ -10,7 +10,7 @@ Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt v
 
 # Model 2.2: Optimizers
 ## Data analysis
--
+--
 
 ## Data pipeline
 De validatiedata heeft in veel van de gevallen een hoge loss. Daarom wordt er gezocht naar een betere optimizer voor het Neural Network. De eerste optimizer die in Milestone 1 is gebruikt is de 'adam' optimizer. Om te bepalen welke optimizer het beste past bij de data, zijn alle optimizers van Keras geprobeerd met verschillende learning rates. Om te bepalen welke optimizer met welke learning rate het beste bij het model past, wordt de RMSE loss opnieuw geplot.
@@ -53,7 +53,7 @@ Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd wor
 # Model 2.4: Feature selection
 
 ## Data analysis
-Doormiddel van feature selection is er gekeken naar welke features de uiteindelijke target value het beste kunnen voorspellen.
+Door middel van feature selection is er gekeken naar welke features de uiteindelijke target value het beste kunnen voorspellen.
 
 ## Data pipeline
 Voor de feature selection is gebruik gemaakt van SelectKBest-analyse. Deze analyseert de correlatie tussen alle verschillende features en de target feature en gebruikt hiervoor de scorefunctie 'f_regression'. Features met hogere correlatiescores hebben dus een sterker verband met de target feature en zijn daarmee relevanter om mee te nemen in het model.
@@ -79,7 +79,7 @@ Gezien de 14 pieken wordt SelectKBest nogmaals uitgevoerd, maar nu met k=14 waar
 # Model 2.5: Complexiteit verhogen
 
 ## Data analysis
--
+--
 
 ## Data pipeline
 
@@ -94,8 +94,10 @@ In de onderstaande tabel staan de verschillende uitgeprobeerde configuraties en 
 # Model 2.6: Batch size
 
 ## Data analysis
+--
 
 ## Data pipeline
+--
 
 ## Model training
 Met batch size is geprobeerd het model sneller te laten leren. Met deze batch size worden de gewichten van het Neural Network per batch aangepast in plaats van per epoch, wat eerder het geval was. Door het toepassen van deze batch size en het aantal epochs verder op te schroeven, kan er mogelijk een nog lagere validation RMSE bereikt worden.
