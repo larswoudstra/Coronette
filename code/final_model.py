@@ -200,15 +200,8 @@ if __name__ == "__main__":
     # select 'k' best features based on barplot (see 'best_features_barplot')
     train_k_best, test_k_best, feature_scores = select_features(train_data, train_targets.ravel(), test_data, k=14)
 
-<<<<<<< HEAD
     # train neural network using k-fold cross validation
     kfold_NN(train_k_best, train_targets)
 
-    # # test the neural network creating train and test data
-=======
-    # # train neural network using k-fold cross validation
-    kfold_NN(train_k_best, train_targets)
-
     # test the neural network creating train and test data
->>>>>>> 09a2fef06d6d7842b6cf0e71360adc8ef9daf6c3
     # test_NN(train_k_best, train_targets, test_k_best, test_targets)
