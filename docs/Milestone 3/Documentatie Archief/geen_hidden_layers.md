@@ -29,7 +29,7 @@ De daadwerkelijke prestaties van het model zijn gemeten met de RMSE. De waarden
 hiervan zijn voor zowel de trainingdata als de testdata tegen elkaar geplot, zodat
 er gekeken kan worden naar overfitting en underfitting.
 
-![Tabel met resultaten]()
+![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_zonderhiddenlayers.png)
 
 Er zijn voor de onderzoekers verrassende resultaten uit de tests gekomen. Zo lijkt
 93 input nodes het over het algemeen, op een paar uitschieters na, het beter te doen
