@@ -10,7 +10,14 @@ Tijdens het valideren van ons huidige model die deze initializer gebruikt is het
 Om dit probleem op te lossen zijn er andere initializers voorgesteld in dit project. Keras' default weight initializer werkt het beste op symmetrische activatie functies, zoals tanh en sigmoid (voor referentie, zie: https://towardsdatascience.com/weight-initialization-in-neural-networks-a-journey-from-the-basics-to-kaiming-954fb9b47c79). In het huidige neurale netwerk worden er ReLU activatiefuncties gebruikt, deze zijn in tegenstelling tot de hiervoor genoemde activatiefuncties niet symmetrisch. Om deze reden hebben He et. al (2005) onderzoek gedaan naar een geschikte weight initializator voor dergelijke asymmetrische non-lineaire activatiefuncties. 'He' initialization werkt met getallen die uit een normaalverdeling komen en vermenigvuldigd worden met *sqrt(2)/sqrt(n)*, waarbij *n* het aantal inputs van de vorige layer voorstelt (in ons geval dus de 'output nodes', omdat we werken met een fully connected neuraal netwerk).
 
 ## Model Training
-**TODO**
+Het netwerk is getraind met drie verschillende initializers: de default Glorot Uniform (Xavier) initializer, de He initializer en de RandomNormal initializer.
+
+Er zijn 400 epochs en een batch size van 40 gebruikt omdat we geinteresseerd zijn in de beginwaarde van de RMSE na de initialisering en 
+
+trainingen is gebleken dat deze combinatie tot de beste resultaten leidde. Het kan
+natuurlijk het geval zijn dat dit anders is voor complexere modellen, maar door deze
+waarden gelijk te houden kunnen de varianten beter vergeleken worden.
+De MSE is gebruikt om het model te trainen.
 
 ## Model evaluation
 **TODO**
