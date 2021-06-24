@@ -2,26 +2,29 @@
 Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform (ook wel 'Xavier') weight initializer (zie ook Keras Dense Layer documentatie: https://keras.io/api/layers/core_layers/dense/).
 
 ## Data analysis
-Tijdens het valideren van ons huidige model die deze initializer gebruikt is het opgevallen dat de RMSE soms op een erg hoge value start (>35). In de meeste gevallen wordt de error alsnog geminimaliseerd tot een waarde rond de 1, maar in andere gevallen kan het voorkomen dat de weights zodanig zijn geinitialiseerd dat er meer kans is dat het algoritme vast komt te zitten op zogenaamde 'saddle points'. Dit leidt vervolgens weer tot hoge RMSE waarden bij het convergeren, zoals te zien in de afbeelding hieronder.
+Tijdens het valideren van ons huidige model die deze initializer gebruikt is het opgevallen dat de RMSE soms op een erg hoge value start (vaak hoger dan 20). Daarnaast wordt in de meeste gevallen  de error geminimaliseerd tot een waarde rond de 1, maar in andere gevallen kan het voorkomen dat de weights zodanig zijn geinitialiseerd dat er meer kans is dat het algoritme vast komt te zitten op zogenaamde 'saddle points'. Dit leidt vervolgens weer tot hoge RMSE waarden bij het convergeren, zoals te zien in de afbeelding hieronder. De RMSE waarde is 7.66.
 
-< Default_initializer_problem.png >
+![Afbeelding met het probleem van de default initializer](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Default_initializer_problem.png)
+*Let op de schaal van de figuur*
 
 ## Data pipeline
-Om dit probleem op te lossen zijn er andere initializers voorgesteld in dit project. Keras' default weight initializer werkt het beste op symmetrische activatie functies, zoals tanh en sigmoid (voor referentie, zie: https://towardsdatascience.com/weight-initialization-in-neural-networks-a-journey-from-the-basics-to-kaiming-954fb9b47c79). In het huidige neurale netwerk worden er ReLU activatiefuncties gebruikt, deze zijn in tegenstelling tot de hiervoor genoemde activatiefuncties niet symmetrisch. Om deze reden hebben He et. al (2005) onderzoek gedaan naar een geschikte weight initializator voor dergelijke asymmetrische non-lineaire activatiefuncties. 'He' initialization werkt met getallen die uit een normaalverdeling komen en vermenigvuldigd worden met *sqrt(2)/sqrt(n)*, waarbij *n* het aantal inputs van de vorige layer voorstelt (in ons geval dus de 'output nodes', omdat we werken met een fully connected neuraal netwerk).
+Om dit probleem op te lossen zijn er andere initializers voorgesteld in dit project. Keras' default weight initializer werkt het beste op symmetrische activatie functies, zoals tanh en sigmoid (voor referentie, zie: https://towardsdatascience.com/weight-initialization-in-neural-networks-a-journey-from-the-basics-to-kaiming-954fb9b47c79). In het huidige neurale netwerk worden er ReLU activatiefuncties gebruikt, deze zijn in tegenstelling tot de hiervoor genoemde activatiefuncties niet symmetrisch. Om deze reden hebben He et. al (2005) onderzoek gedaan naar een geschikte weight initializator voor dergelijke asymmetrische non-lineaire activatiefuncties. 'He' initialization werkt met getallen die uit een normaalverdeling komen en vermenigvuldigd worden met *sqrt(2)/sqrt(n)*, waarbij *n* het aantal inputs van de vorige layer voorstelt (in ons geval dus de 'output nodes', omdat we werken met een fully connected neuraal netwerk). He initialisatie geeft dan uiteindelijk getallen met een variantie van 1 voor deze type activatiefuncties.
 
-## Model Training
-Het netwerk is getraind met drie verschillende initializers: de default Glorot Uniform (Xavier) initializer, de He initializer en de RandomNormal initializer. De laatste initializer genereert getallen uit een normaalverdeling zoals de He initializer dat doet, maar vermenigvuldigd dit niet met een bepaalde waarde die gerelateerd is aan het aantal inputs van de vorige layer. Voor het trainen zijn er 400 epochs en een batch size van 40 gebruikt omdat we voornamelijk geinteresseerd zijn in de beginwaarde van de RMSE na de initialisering en kan er al na een paar honderd epochs aan de hand van het verloop van de RMSE bepaald worden of de RMSE op een waarde rond de 1 zal zitten.
-
+## Model training
+Het netwerk is getraind met drie verschillende initializers: de default Glorot Uniform (Xavier) initializer, de He initializer en de RandomNormal initializer. De laatste initializer genereert getallen uit een normaalverdeling zoals de He initializer dat doet, maar vermenigvuldigd dit niet met een bepaalde waarde die gerelateerd is aan het aantal inputs van de vorige layer. Voor het trainen zijn er 400 epochs en een batch size van 40 gebruikt omdat we voornamelijk geinteresseerd zijn in de beginwaarde van de RMSE na de initialisering en kan er al na een paar honderd epochs aan de hand van het verloop van de RMSE bepaald worden of de RMSE op een waarde rond de 1 zal zitten. Verder komt het model overeen met het huidig gebruikte model met een architectuur van 14, 5, 1 en een Nadam optimizer. Er is gevalideerd over 5 folds en hiervan is de gemiddelde RMSE waarde genomen.
 
 ## Model evaluation
-**TODO**
+In de afbeelding hieronder is het verschil te zien tussen de verschillende initializers (He, Glorot Uniform (Xavier) en RandomNormal).
 
-...
+![Afbeelding van de verschillende initializers](https://github.com/larswoudstra/Coronette/blob/main/docs/images/initializers2_final.png)
 
-Als de 'He' initializer wordt toegepast op de configuratie zoals deze is gebruikt om de afbeelding in de sectie 'Data pipeline' te maken (baseline model met batch size 40 en 400 epochs), dan is in de afbeelding hieronder duidelijk het verschil te zien tussen de initializers.
+Zoals verwacht start de He initializator op een lagere RMSE waarde dan de andere initializers. Ook is te zien dat de He initializer op een lagere RMSE waarde uitkomt (...) ten opzichte van de Glorot initializer (...). Opvallend is hier wel dat de RandomNormal initializer ongeveer op dezelfde waarde uitkomt als bij het gebruik van de He initializer (...). Dit is waarschijnlijk te danken aan de vergelijkbare manier waarop de twee initializers werken, namelijk door een getal te kiezen uit de normaalverdeling *(vandaar: RandomNormal)*. Omdat de RandomNormal deze getallen niet vermenigvuldigt met een term zoals in de He initializer, kan dit de reden zijn waarom de RMSE waarde in het begin ook hoger is voor de RandomNormal initializer.
 
-< He_initializer_solution.png >
+Als de 'He' initializer wordt toegepast op de configuratie zoals deze is gebruikt om de afbeelding in de sectie 'Data pipeline' te maken, dan is in de afbeelding hieronder te zien dat deze initializer een lagere RMSE waarde heeft (0.92). Dit blijft ook het geval wanneer je deze opzet meerdere keren laat runnen.
 
+![Afbeelding van de oplossing m.b.v. de He initializer](https://github.com/larswoudstra/Coronette/blob/main/docs/images/He_initializer_solution.png)
+
+Vanaf dit punt zullen we dan ook verder werken met de He initializer.
 
 # Model 3.2: Dropout en Batch Normalization
 In een poging ons model nog verder te verbeteren, is er gekozen om te kijken naar de effecten van een zeer complex netwerk, in combinatie met Dropout en BatchNormalization. Uiteindelijk is uit de analyses gebleken dat het model overduidelijk beter werkt zonder Dropout en BatchNormalization
@@ -85,3 +88,15 @@ De daadwerkelijke prestaties van het model zijn gemeten met de RMSE. De waarden 
 ![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/opgemaakte_tabel_zonderhiddenlayers.png)
 
 Er zijn voor de onderzoekers verrassende resultaten uit de tests gekomen. Zo lijkt 93 input nodes het over het algemeen, op een paar uitschieters na, het beter te doen dan 14 input nodes. Bovendien geven sommige configuraties met 93 input nodes het beste resultaat tot nu toe (zie rij 2 en rij 8). De resultaten van de modellen met 14 input nodes zijn redelijk te vergelijken met de resultaten van modellen met 14 input nodes en 1 hidden layer, deze gaven namelijk meestal een output van ongeveer 0.91. In conclusie kan er in het vervolg beter gewerkt worden met een model met 93 input nodes, geen hidden layers, 3000 of 10000 batch size en 70 of 1000 epochs.
+
+
+# Model 3.5: Learning Rates
+
+Ten slotte is er gekeken of het kiezen van verschillende learning rates in optimizer Nadam nog invloed heeft op de RMSE.
+
+## Data analysis
+Zoals in Milestone 2 is beschreven blijft de validation RMSE vaak hangen op een waarde tussen 0.94 en 1. Dit zou kunnen komen door zogenaamde zadelpunten, ook omdat we niet met honderden features werken is de kans hierop groter **kan iemand dit dubbel confirmen? haha, ik dacht dat dit uit die video van die andrew kwam**. Als dit het geval is, zou middels het aanpassen van de learning rate de RMSE validatie waarde nog lager kunnen komen. Om deze reden is er o
+
+Om deze reden wordt er gekeken of middels het tunen van de learning rate de validatie RMSE nog kleiner zou kunnen worden
+
+Daarnaast wordt er nog gekeken naar het aanpassen van de learning rate voor optimizer Nadam om te voorkomen dat het model eventueel vast blijft zitten op een zadelpunt. De validation RMSE blijft namelijk na veel verschillende configuraties hangen op een waarde tussen 0.94 en 1.  
