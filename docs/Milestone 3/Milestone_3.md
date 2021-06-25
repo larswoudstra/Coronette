@@ -1,5 +1,5 @@
 # Model 3.1: Keras weight initializers
-Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform (ook wel 'Xavier') weight initializer (zie ook Keras Dense Layer documentatie: https://keras.io/api/layers/core_layers/dense/).
+Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform (ook wel 'Xavier') weight initializer (zie ook [Keras Dense Layer documentatie](https://keras.io/api/layers/core_layers/dense/)).
 
 ## Data analysis
 Tijdens het valideren van ons huidige model die deze initializer gebruikt is het opgevallen dat de RMSE soms op een erg hoge value start (vaak hoger dan 20). Daarnaast wordt in de meeste gevallen  de error geminimaliseerd tot een waarde rond de 1, maar in andere gevallen kan het voorkomen dat de weights zodanig zijn geinitialiseerd dat er meer kans is dat het algoritme vast komt te zitten op zogenaamde 'saddle points'. Dit leidt vervolgens weer tot hoge RMSE waarden bij het convergeren, zoals te zien in de afbeelding hieronder. De RMSE waarde is 7.66.
@@ -87,8 +87,9 @@ De daadwerkelijke prestaties van het model zijn gemeten met de RMSE. De waarden 
 
 ![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/HELVETICA%20TABEL.png)
 
-Er zijn geen hele verrassende resultaten uit de analyses gekomen. Geen enkele configuratie deed het beter dan het beste resultaat tot nu toe (0.92). Een interessante waarneming is wel dat de RMSE met 14 input nodes bijna consistent net wat lager is dan de RMSE met 93 input nodes. Het is dus waarschijnlijk een goede keuze geweest van de onderzoekers om verder te gaan met de 14 beste features.
-In het vervolg is het geen slimme keuze om gebruik te maken van geen hidden layers in het neurale netwerk, want dit leidt niet tot betere resultaten.
+Er zijn geen hele verrassende resultaten uit de analyses gekomen. Geen enkele configuratie deed het beter dan het beste resultaat tot nu toe (0.92). Een interessante waarneming is wel dat de RMSE met 14 input nodes bijna consistent net wat lager is dan de RMSE met 93 input nodes. Het is dus waarschijnlijk een goede keuze geweest van de onderzoekers om verder te gaan met de 14 beste features. In het vervolg is het geen slimme keuze om gebruik te maken van geen hidden layers in het neurale netwerk, want dit leidt niet tot betere resultaten.
+
+Aangezien er nu slechts sprake is van één gewicht per feature, maakt dit de interpretatie van de gewichten ook makkelijker. Door de gewichten van het model te printen is duidelijk geworden dat het percentage *Covid-like illnesses* het grootste gewicht toegewezen krijgt, en dus de belangrijkste voorspeller lijkt te zijn. Het percentage positieve Covid-19-gevallen lijkt daarna de sterkste voorspeller te zijn. Het model zonder hidden layers geeft dus hogere validatiekosten dan een model met hidden layers, maar het geeft wel een duidelijke indicatie over welke feature de target value het best voorspelt.
 
 # Model 3.5: Learning Rates
 
