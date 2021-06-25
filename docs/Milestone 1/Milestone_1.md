@@ -1,5 +1,6 @@
 # Machine Learning Project: Algoritme voor de voorspelling van het dagelijks aantal COVID besmettingen
-### Door: Merel, Nina, Kelly en Lars
+### Onderzoekers: Merel, Nina, Kelly en Lars
+### Supervisors: Tim en Wouter
 
 In dit project is er onderzoek gedaan naar een algoritme dat de dagelijkse COVID-19 besmettingen kan voorspellen (d.w.z., positief getest).
 
