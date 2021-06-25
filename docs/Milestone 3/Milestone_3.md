@@ -124,4 +124,8 @@ Daarnaast kan er onderzocht worden waarom de test data gemiddeld een 0.08% lager
 
 ![Tabel verschillen](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Verschillen_tabel_folds_test.png)
 
-Tenslotte willen we benadrukken dat het feit dat er al kleine RMSE waarden zijn gevonden bij 'enkel' 14 features betekent dat ons model goed bruikbaar is in de echte wereld. In andere woorden, men heeft maar 14 verschillende soort  . Dit komt waarschijnlijk omdat het probleem ook simpeler is dan gedacht; 93 features zijn **niet** noodzakelijk om een relatief goede voorspelling te maken.
+Tenslotte willen we benadrukken dat het feit dat er al kleine RMSE waarden zijn gevonden bij 'enkel' 14 features betekent dat ons model goed bruikbaar is in de *echte wereld*. In andere woorden, men heeft maar 14 verschillende datapunten (features) nodig om ons model te gebruiken en een goede voorspelling te maken. Dit komt waarschijnlijk omdat het probleem ook simpeler is dan gedacht; 93 features zijn **niet** noodzakelijk om een relatief goede voorspelling te maken.
+
+Al met al lijkt ons model dus een goede voorspeller, ook als men kijkt naar het casus zelf. Het lager inschatten van het aantal COVID-19 besmettingen zou intuitief kwalijker zijn dan een te hoge inschatting (d.w.z., instanties zoals de overheid of  ziekenhuizen kunnen maar beter voorbereid zijn op het 'ergste'). De histogram in het kopje *Verschillen analyseren* geeft een een mooie normaalverdeling weer
+
+Deze specifieke casus waarbij COVID-19 gevallen voorspeel, is het kwalijker als eer te laaag wordt ingeschat /... is een lage inschatting intuitief kwalijker dan een te hoge inschatting (d.w.z., je kan maar beter voorbereid zijn op het 'ergste').
