@@ -13,7 +13,7 @@ Om te bepalen hoe goed het model nu daadwerkelijk is, wordt er gebruik gemaakt v
 --
 
 ## Data pipeline
-De validatiedata heeft in veel van de gevallen een hoge loss. Daarom wordt er gezocht naar een betere optimizer voor het Neural Network. De eerste optimizer die in Milestone 1 is gebruikt is de 'adam' optimizer. Om te bepalen welke optimizer het beste past bij de data, zijn alle optimizers van Keras geprobeerd met verschillende learning rates. Om te bepalen welke optimizer met welke learning rate het beste bij het model past, wordt de RMSE loss opnieuw geplot.
+De validatiedata heeft in veel van de gevallen een hoge loss. Daarom wordt er gezocht naar een betere optimizer voor het Neural Network. De eerste optimizer die in Milestone 1 is gebruikt is de 'adam' optimizer. Om te bepalen welke optimizer het beste past bij de data, zijn alle optimizers met de bijbehorende learning rates van Keras geprobeerd. Om te bepalen welke optimizer het beste bij het model past, wordt de RMSE loss opnieuw geplot.
 
 ## Model training
 Om een eerste indruk te krijgen van de verschillende optimizers en deze goed te kunnen vergelijken wordt er in eerste instantie gewerkt met 100 epochs. Een analyse van iedere mogelijke optimizer met 100 epochs en ieders default learning rate - 0.01 voor SGD en  0.001 voor de overige optimizers - wijst een aantal interessante dingen uit. Zo blijken SGD (Validatie RMSE = 7.81), Adam (Validatie RMSE = 1.27), Adadelta (Validatie RMSE = 3.26) en Adagrad (Validatie RMSE = 2.20) niet de beste keuzes te zijn, omdat deze modellen al vrij snel in het trainingproces (bijvoorbeeld na 20 epochs) al niet verder lijken te leren met nog relatief hoge kosten.
@@ -35,9 +35,9 @@ Er wordt dus nog steeds full batch gradient descent gebruikt, maar dan nu met de
 ## Data Pipeline
 In Milestone 1 is er gebruikgemaakt van de train_test_split-functie van sklearn om de data te verdelen in 70% trainingdata en 30% validatiedata.
 
-Er wordt verwacht dat de pieken in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.  
+Er wordt verwacht dat de oscillaties in de grafiek veroorzaakt worden door een te kleine validatieset, die bovendien niet representatief is voor de data waarvoor het model getraind is. Om dit op te lossen is er gebruik gemaakt van K-fold cross validation met shuffle en 5 folds.  
 
-Er is tevens nagedacht om de K-folds te stratificeren met StratifiedKfold zodat er een goede ratio is van samples tussen de staten. Dit zou kunnen zorgen voor validatiedata met nog een hogere representativiteit. Echter bleek na het uitproberen van de StratifiedKfold en het lezen van de documentatie dat de targets (‘tested_positive’ in dit geval) categorische waarden moeten aannemen, wat hier dus niet het geval is. Om deze reden is er besloten om toch te werken met een klassieke K-fold cross validation. Het risico blijft dat de validatiedata niet representatief zou kunnen zijn door bijvoorbeeld samples die enkel uit twee staten komen, echter is dit in de praktijk tot dusver niet voorgekomen.
+Er is tevens nagedacht om de K-folds te stratificeren met StratifiedKfold zodat er een goede ratio is van samples tussen de staten. Dit zou kunnen zorgen voor validatiedata met nog een hogere representativiteit. Echter bleek na het uitproberen van de StratifiedKfold en het lezen van de documentatie dat de targets (‘tested_positive’ in dit geval) categorische waarden moeten aannemen, wat hier dus niet het geval is. Om deze reden is er besloten om toch te werken met een klassieke K-fold cross validation. Het risico blijft dat de validatiedata niet representatief zou kunnen zijn door bijvoorbeeld samples die enkel uit twee staten komen, echter is dit in de praktijk tot dusver geen probleem geweest.
 
 ## Model training
 Voor iedere fold is een model getraind met alle features (93) en optimizer Nadam om het effect van de K-fold te laten zien ten opzichte van het baseline model van Milestone 1. Zowel de modellen van de K-fold als het baseline model had de architectuur 93x93x1.
@@ -48,7 +48,7 @@ Om het model te kunnen evalueren is de RMSE van alle 5 folds gemiddeld genomen. 
 ![Baseline model met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/baselinemodel_nadam_k93.png)
 ![Model na k-fold met 93 features en Nadam](https://github.com/larswoudstra/Coronette/blob/main/docs/images/k_fold_k93_1hidden.png)
 
-Aangezien er minder spikes te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. Dit lijkt dus opgelost te worden met K-fold cross validation. Daarom wordt deze methode in het vervolg ook gebruikt om het model te evalueren.  
+Aangezien er minder oscillaties te zien zijn, kan er waarschijnlijk geconcludeerd worden dat deze inderdaad veroorzaakt werden door niet-representatieve validatiedata. Dit lijkt dus opgelost te worden met K-fold cross validation. Daarom wordt de K-fold cross validation methode in het vervolg ook gebruikt om het model te evalueren.  
 
 # Model 2.4: Feature selection
 
