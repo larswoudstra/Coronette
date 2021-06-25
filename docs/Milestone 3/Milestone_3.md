@@ -43,7 +43,7 @@ Het netwerk is getraind met 700 epochs en een batch size van 70, omdat uit eerde
 ## Model evaluation
 RMSE is gebruikt om de uiteindelijke kwaliteit van het model te bepalen. Hoe lager de RMSE, hoe beter. Er is gekeken naar de validatie-RMSE. Er is ook gekeken of het model overfit door de training- en validatie-RMSE tegen elkaar te plotten. In onderstaande tabel staan de geprobeerde configuraties met de bijbehorende RMSE.
 
-![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Final_tabel_dropout.png)
+![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Schermafbeelding_batchnorm_dropout_netjes.png)
 
 In de tabel is  te zien dat er met grote hidden layers, Dropout en BatchNormalization een aantal keren overfitting optrad. Dit was af te lezen in de bijbehorende plot, want de validatiekosten gingen omhoog, terwijl de trainingkosten verder naar beneden gingen.
 
