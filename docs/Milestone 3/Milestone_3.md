@@ -123,3 +123,5 @@ Op de laatste dag van het onderzoek werd geconcludeerd dat sommige aanpassingen 
 Daarnaast kan er onderzocht worden waarom de test data gemiddeld een 0.08% lagere afwijking heeft dan de validatie afwijking met k-fold cross validation. In onderstaande tabel zijn de gemiddelde waarden van alle 14 features per k-fold en de gemiddelde waarden van alle 14 features van de test-data te zien. Deze tabel laat zien dat ook de gemiddelde verschillen tussen de validatiedata en testdata erg klein zijn.
 
 ![Tabel verschillen](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Verschillen_tabel_folds_test.png)
+
+Tenslotte willen we benadrukken dat het feit dat er al kleine RMSE waarden zijn gevonden bij 'enkel' 14 features betekent dat ons model goed bruikbaar is in de echte wereld. In andere woorden, men heeft maar 14 verschillende soort  . Dit komt waarschijnlijk omdat het probleem ook simpeler is dan gedacht; 93 features zijn **niet** noodzakelijk om een relatief goede voorspelling te maken.
