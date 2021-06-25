@@ -106,7 +106,7 @@ Voor het trainen met de verschillende learning rates zijn er iedere keer 700 epo
 ## Model evaluation
 Zoals te zien in de tabel hieronder heeft het tunen van de learning rates geen positief effect gehad op de validatie RMSE. De default learning rate voor Nadam blijkt toch de beste te zijn, daarom zal deze ook gehandhaafd worden in het eindmodel.
 
-![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_learning_rates.png)
+![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/tabel_learning_rates_final.png)
 
 # Conclusie
 Na het runnen van het model met alle bovenstaande configuraties met de test data is er een RMSE van 0.92 bereikt. Dit betekent dat de gemiddelde afwijking van het voorspelde percentage positieve covid-19 tests 0.92% is. Al met al kan er geconcludeerd worden dat dit een ontzettend accuraat model is om het aantal positieve covid-19 tests te kunnen voorspellen. Het model gaf de volgende learning curve:
