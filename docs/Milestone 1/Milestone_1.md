@@ -1,3 +1,8 @@
+# Machine Learning project: Algoritme voor de voorspelling van het aantal COVID gevallen voor een dag
+### Door: Merel, Nina, Kelly en Lars
+
+In dit project is er onderzoek gedaan naar een algoritme dat de dagelijkse COVID gevallen kan voorspellen.
+
 # Data analysis
 De data die voor dit onderzoek gebruikt wordt, is afkomstig van [Kaggle](https://www.kaggle.com/c/ml2021spring-hw1/data). Met deze data wordt het percentage nieuwe positieve Covid-19 testuitslagen getracht te voorspellen in 40 verschillende staten in de Verenigde Staten. Per staat zijn ongeveer 66 steekproeven gedaan, waarbij iedere steekproef van een groep mensen uit een staat dient als een gemiddelde schatting voor de gehele staat. In de data komt een sample dus overeen met een steekproef.
 
