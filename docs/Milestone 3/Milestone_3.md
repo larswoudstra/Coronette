@@ -5,7 +5,7 @@ Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform (ook wel 'Xa
 Tijdens het valideren van ons huidige model die deze initializer gebruikt is het opgevallen dat de RMSE soms op een erg hoge value start (vaak hoger dan 20). Daarnaast wordt in de meeste gevallen  de error geminimaliseerd tot een waarde rond de 1, maar in andere gevallen kan het voorkomen dat de weights zodanig zijn geinitialiseerd dat er meer kans is dat het algoritme vast komt te zitten op zogenaamde 'saddle points'. Dit leidt vervolgens weer tot hoge RMSE waarden bij het convergeren, zoals te zien in de afbeelding hieronder. De RMSE waarde is 7.66.
 
 ![Afbeelding met het probleem van de default initializer](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Default_initializer_problem.png)
-*Let op de schaal van de figuur*
+*Note: Let op de schaal van de figuur.*
 
 ## Data pipeline
 Om dit probleem op te lossen zijn er andere initializers voorgesteld in dit project. Keras' default weight initializer werkt het beste op symmetrische activatie functies, zoals tanh en sigmoid (voor referentie, zie: https://towardsdatascience.com/weight-initialization-in-neural-networks-a-journey-from-the-basics-to-kaiming-954fb9b47c79). In het huidige neurale netwerk worden er ReLU activatiefuncties gebruikt, deze zijn in tegenstelling tot de hiervoor genoemde activatiefuncties niet symmetrisch. Om deze reden hebben He et. al (2005) onderzoek gedaan naar een geschikte weight initializator voor dergelijke asymmetrische non-lineaire activatiefuncties. 'He' initialization werkt met getallen die uit een normaalverdeling komen en vermenigvuldigd worden met *sqrt(2)/sqrt(n)*, waarbij *n* het aantal inputs van de vorige layer voorstelt (in ons geval dus de 'output nodes', omdat we werken met een fully connected neuraal netwerk). He initialisatie geeft dan uiteindelijk getallen met een variantie van 1 voor deze type activatiefuncties.
@@ -24,10 +24,10 @@ Als de 'He' initializer wordt toegepast op de configuratie zoals deze is gebruik
 
 ![Afbeelding van de oplossing m.b.v. de He initializer](https://github.com/larswoudstra/Coronette/blob/main/docs/images/He_initializer_solution.png)
 
-Vanaf dit punt zullen we dan ook verder werken met de He initializer.
+Vanaf dit punt zullen we dan ook verder werken met de **He initializer**.
 
 # Model 3.2: Dropout en Batch Normalization
-In een poging ons model nog verder te verbeteren, is er gekozen om te kijken naar de effecten van een zeer complex netwerk, in combinatie met Dropout en BatchNormalization. Uiteindelijk is uit de analyses gebleken dat het model overduidelijk beter werkt zonder Dropout en BatchNormalization
+In een poging ons model nog verder te verbeteren, is er gekozen om te kijken naar de effecten van een zeer complex netwerk, in combinatie met Dropout en BatchNormalization. Uiteindelijk is uit de analyses gebleken dat het model overduidelijk beter werkt zonder Dropout en BatchNormalization.
 
 ## Data analysis
 De relevante data analysis voor dit subhoofdstuk is terug te vinden aan het begin van dit hoofdstuk. Er is gekozen om gebruik te maken van de 14 beste features, om hiermee verschillende combinaties van layers/nodes te vergelijken. De data is gesplitst in 80% trainingdata en 20% testdata. Bij het toetsen van de verschillende combinaties is het model getraind met deze trainingdata en getest met de testdata. Hierdoor zijn de resultaten goed vergelijkbaar, want alle modellen zijn met exact dezelfde data getraind en getest.
