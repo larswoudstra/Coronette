@@ -1,5 +1,5 @@
 # Model 3.1: Keras weight initializers
-Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform (ook wel 'Xavier') weight initializer (zie ook Keras Dense Layer documentatie: https://keras.io/api/layers/core_layers/dense/).
+Tot nu toe is er gebruikt gemaakt van Keras' default Glorot Uniform (ook wel 'Xavier') weight initializer (zie ook [Keras Dense Layer documentatie](https://keras.io/api/layers/core_layers/dense/)).
 
 ## Data analysis
 Tijdens het valideren van ons huidige model die deze initializer gebruikt is het opgevallen dat de RMSE soms op een erg hoge value start (vaak hoger dan 20). Daarnaast wordt in de meeste gevallen  de error geminimaliseerd tot een waarde rond de 1, maar in andere gevallen kan het voorkomen dat de weights zodanig zijn geinitialiseerd dat er meer kans is dat het algoritme vast komt te zitten op zogenaamde 'saddle points'. Dit leidt vervolgens weer tot hoge RMSE waarden bij het convergeren, zoals te zien in de afbeelding hieronder. De RMSE waarde is 7.66.
@@ -11,7 +11,7 @@ Tijdens het valideren van ons huidige model die deze initializer gebruikt is het
 Om dit probleem op te lossen zijn er andere initializers voorgesteld in dit project. Keras' default weight initializer werkt het beste op symmetrische activatie functies, zoals tanh en sigmoid (voor referentie, zie: https://towardsdatascience.com/weight-initialization-in-neural-networks-a-journey-from-the-basics-to-kaiming-954fb9b47c79). In het huidige neurale netwerk worden er ReLU activatiefuncties gebruikt, deze zijn in tegenstelling tot de hiervoor genoemde activatiefuncties niet symmetrisch. Om deze reden hebben He et. al (2005) onderzoek gedaan naar een geschikte weight initializator voor dergelijke asymmetrische non-lineaire activatiefuncties. 'He' initialization werkt met getallen die uit een normaalverdeling komen en vermenigvuldigd worden met *sqrt(2)/sqrt(n)*, waarbij *n* het aantal inputs van de vorige layer voorstelt (in ons geval dus de 'output nodes', omdat we werken met een fully connected neuraal netwerk). He initialisatie geeft dan uiteindelijk getallen met een variantie van 1 voor deze type activatiefuncties.
 
 ## Model training
-Het netwerk is getraind met drie verschillende initializers: de default Glorot Uniform (Xavier) initializer, de He initializer en de RandomNormal initializer. De laatste initializer genereert getallen uit een normaalverdeling zoals de He initializer dat doet, maar vermenigvuldigd dit niet met een bepaalde waarde die gerelateerd is aan het aantal inputs van de vorige layer. Voor het trainen zijn er 400 epochs en een batch size van 40 gebruikt omdat we voornamelijk geinteresseerd zijn in de beginwaarde van de RMSE na de initialisering en kan er al na een paar honderd epochs aan de hand van het verloop van de RMSE bepaald worden of de RMSE op een waarde rond de 1 zal zitten. *Dit betekent wel dat de exacte RMSE waarde niet overeen zal komen met de eerdere RMSE waarden met batch sizes van 70 en 700 epochs. Dit is echter niet noodzakelijk om de verschillen tussen de verschillende initializers zichtbaar te maken.* Verder komt het model overeen met het huidig gebruikte model met een architectuur van 14, 5, 1 en een Nadam optimizer. Er is gevalideerd over 5 folds en hiervan is de gemiddelde RMSE waarde genomen.
+Het netwerk is getraind met drie verschillende initializers: de default Glorot Uniform (Xavier) initializer, de He initializer en de RandomNormal initializer. De laatste initializer genereert getallen uit een normaalverdeling zoals de He initializer dat doet, maar vermenigvuldigd dit niet met een bepaalde waarde die gerelateerd is aan het aantal inputs van de vorige layer. Voor het trainen zijn er 400 epochs en een batch size van 40 gebruikt omdat we voornamelijk geïnteresseerd zijn in de beginwaarde van de RMSE na de initialisering en kan er al na een paar honderd epochs aan de hand van het verloop van de RMSE bepaald worden of de RMSE op een waarde rond de 1 zal zitten. *Dit betekent wel dat de exacte RMSE waarde niet overeen zal komen met de eerdere RMSE waarden met batch sizes van 70 en 700 epochs. Dit is echter niet noodzakelijk om de verschillen tussen de verschillende initializers zichtbaar te maken.* Verder komt het model overeen met het huidig gebruikte model met een architectuur van 14, 5, 1 en een Nadam optimizer. Er is gevalideerd over 5 folds en hiervan is de gemiddelde RMSE waarde genomen.
 
 ## Model evaluation
 In de afbeelding hieronder is het verschil te zien tussen de verschillende initializers (He, Glorot Uniform (Xavier) en RandomNormal).
@@ -43,7 +43,7 @@ Het netwerk is getraind met 700 epochs en een batch size van 70, omdat uit eerde
 ## Model evaluation
 RMSE is gebruikt om de uiteindelijke kwaliteit van het model te bepalen. Hoe lager de RMSE, hoe beter. Er is gekeken naar de validatie-RMSE. Er is ook gekeken of het model overfit door de training- en validatie-RMSE tegen elkaar te plotten. In onderstaande tabel staan de geprobeerde configuraties met de bijbehorende RMSE.
 
-![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/HOPELIJK%20HET%20LAAT.png)
+![Tabel met configuraties](https://github.com/larswoudstra/Coronette/blob/main/docs/images/LAATSTE%20tabel.png)
 
 In de tabel is  te zien dat er met grote hidden layers, Dropout en BatchNormalization een aantal keren overfitting optrad. Dit was af te lezen in de bijbehorende plot, want de validatiekosten gingen omhoog, terwijl de trainingkosten verder naar beneden gingen.
 
@@ -87,8 +87,9 @@ De daadwerkelijke prestaties van het model zijn gemeten met de RMSE. De waarden 
 
 ![Tabel met resultaten](https://github.com/larswoudstra/Coronette/blob/main/docs/images/HELVETICA%20TABEL.png)
 
-Er zijn geen hele verrassende resultaten uit de analyses gekomen. Geen enkele configuratie deed het beter dan het beste resultaat tot nu toe (0.92). Een interessante waarneming is wel dat de RMSE met 14 input nodes bijna consistent net wat lager is dan de RMSE met 93 input nodes. Het is dus waarschijnlijk een goede keuze geweest van de onderzoekers om verder te gaan met de 14 beste features.
-In het vervolg is het geen slimme keuze om gebruik te maken van geen hidden layers in het neurale netwerk, want dit leidt niet tot betere resultaten.
+Er zijn geen hele verrassende resultaten uit de analyses gekomen. Geen enkele configuratie deed het beter dan het beste resultaat tot nu toe (0.92). Een interessante waarneming is wel dat de RMSE met 14 input nodes bijna consistent net wat lager is dan de RMSE met 93 input nodes. Het is dus waarschijnlijk een goede keuze geweest van de onderzoekers om verder te gaan met de 14 beste features. In het vervolg is het geen slimme keuze om gebruik te maken van geen hidden layers in het neurale netwerk, want dit leidt niet tot betere resultaten.
+
+Aangezien er nu slechts sprake is van één gewicht per feature, maakt dit de interpretatie van de gewichten ook makkelijker. Door de gewichten van het model te printen is duidelijk geworden dat het percentage *Covid-like illnesses* het grootste gewicht toegewezen krijgt, en dus de belangrijkste voorspeller lijkt te zijn. Het percentage positieve Covid-19-gevallen lijkt daarna de sterkste voorspeller te zijn. Het model zonder hidden layers geeft dus hogere validatiekosten dan een model met hidden layers, maar het geeft wel een duidelijke indicatie over welke feature de target value het best voorspelt.
 
 # Model 3.5: Learning Rates
 
@@ -124,4 +125,8 @@ Daarnaast kan er onderzocht worden waarom de test data gemiddeld een 0.08% lager
 
 ![Tabel verschillen](https://github.com/larswoudstra/Coronette/blob/main/docs/images/Verschillen_tabel_folds_test.png)
 
-Tenslotte willen we benadrukken dat het feit dat er al kleine RMSE waarden zijn gevonden bij 'enkel' 14 features betekent dat ons model goed bruikbaar is in de echte wereld. In andere woorden, men heeft maar 14 verschillende soort  . Dit komt waarschijnlijk omdat het probleem ook simpeler is dan gedacht; 93 features zijn **niet** noodzakelijk om een relatief goede voorspelling te maken.
+Tenslotte willen we benadrukken dat het feit dat er al kleine RMSE waarden zijn gevonden bij 'enkel' 14 features betekent dat ons model goed bruikbaar is in de *echte wereld*. In andere woorden, men heeft maar 14 verschillende datapunten (features) nodig om ons model te gebruiken en een goede voorspelling te maken. Dit komt waarschijnlijk omdat het probleem ook simpeler is dan gedacht; 93 features zijn **niet** noodzakelijk om een relatief goede voorspelling te maken.
+
+Al met al lijkt ons model dus een goede voorspeller, ook als men kijkt naar de casus zelf. Het lager inschatten van het aantal COVID-19 besmettingen zou intuïtief kwalijker zijn dan een te hoge inschatting (d.w.z., instanties zoals de overheid of  ziekenhuizen kunnen maar beter voorbereid zijn op het 'ergste'). De histogram in het kopje *Verschillen analyseren* geeft een mooie normaalverdeling weer en daarmee is de kans op kwalijke inschattingen ook klein.
+
+**DISCLAIMER: wij zijn niet verantwoordelijk voor medische conclusies die getrokken worden a.d.h.v. ons model.**
