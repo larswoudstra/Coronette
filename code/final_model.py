@@ -131,29 +131,25 @@ def kfold_NN(train_k_best, train_targets):
         rmse_train += np.asarray(history.history['root_mean_squared_error'])
         rmse_val += np.asarray(history.history['val_root_mean_squared_error'])
 
-    rmse_train = rmse_train / fold
-    rmse_val = rmse_val / fold
+    rmse_train_avg = rmse_train / fold
+    rmse_val_avg = rmse_val / fold
 
-    print(f'The average train RMSE is: {rmse_train[-1]:.4f}')
-    print(f'The average validation RMSE is: {rmse_val[-1]:.4f}')
+    print(f'The average train RMSE is: {rmse_train_avg[-1]:.4f}')
+    print(f'The average validation RMSE is: {rmse_val_avg[-1]:.4f}')
 
-    plot_RMSE(rmse_train, rmse_val)
+    plot_RMSE(rmse_train_avg, rmse_val_avg)
 
 
 # Part 4: model evaluation
 
-def plot_RMSE(rmse_train, rmse_val, fold=5):
+def plot_RMSE(rmse_train, rmse_val):
     """Plots the average RMSE for the training and validation data."""
 
-    # calculate average RMSE
-    rmse_train_avg = rmse_train / fold
-    rmse_val_avg = rmse_val / fold
-
     # plot the average RMSE
-    plt.plot(rmse_train_avg)
-    plt.plot(rmse_val_avg)
+    plt.plot(rmse_train)
+    plt.plot(rmse_val)
     plt.legend(['RMSE train', 'RMSE val'])
-    plt.title(f'The RMSE value is: {rmse_val_avg[-1]:.2f}')
+    plt.title(f'The RMSE value is: {rmse_val[-1]:.2f}')
     plt.show()
 
 def plot_differences(y_preds, y_targets):
@@ -180,7 +176,7 @@ def test_NN(train_k_best, train_targets, test_k_best, test_targets):
     rmse_train = np.asarray(history.history['root_mean_squared_error'])
     rmse_test = np.asarray(history.history['val_root_mean_squared_error'])
 
-    plot_RMSE(rmse_train, rmse_test, fold=1)
+    plot_RMSE(rmse_train, rmse_test)
 
     plot_differences(predictions, test_targets)
 
